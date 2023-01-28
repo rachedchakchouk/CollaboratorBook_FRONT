@@ -12,7 +12,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/component/alert',
-    title: 'Alert',
+    title: 'Collaborators',
     icon: 'bi bi-bell',
     class: '',
     extralink: false,
@@ -85,6 +85,30 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/component/home',
     title: 'Home',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/steps',
+    title: 'Steps',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/newOffice',
+    title: 'newOffice',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/component/offices',
+    title: 'Offices',
     icon: 'bi bi-people',
     class: '',
     extralink: false,

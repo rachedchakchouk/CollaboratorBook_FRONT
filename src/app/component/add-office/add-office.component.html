@@ -1,0 +1,101 @@
+
+<div class="container">
+  <div class="card">
+    <form [formGroup]="officeForm">
+        <div class="row">
+            <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="name"
+                    type="text"
+                    required
+                    formControlName="name"
+                  />
+                  <label igxLabel for="name" id="name"
+                    > Name</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="mobile"
+                    type="number"
+                    required
+                    formControlName="mobile"
+                  />
+                  <label igxLabel for="mobile" id="mobile"
+                    > mobile</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="phone"
+                    type="number"
+                    required
+                    formControlName="phone"
+                  />
+                  <label igxLabel for="phone" id="phone"
+                    > phone</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="fax"
+                    type="number"
+                    
+                    formControlName="fax"
+                  />
+                  <label igxLabel for="fax" id="fax"
+                    > Fax</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="address"
+                    type="text"
+                    required
+                    formControlName="address"
+                  />
+                  <label igxLabel for="address" id="address"
+                    > Address</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="email"
+                    type="email"
+                    required
+                    formControlName="email"
+                  />
+                  <label igxLabel for="email" id="email"
+                    > Email</label
+                  >
+                </igx-input-group>
+              </div>
+            
+        </div>
+
+    </form>
+    <div class="buttons">
+        <button class="btn btn-danger" style="float: left;">Cancel</button>
+
+        <button class="btn btn-success" style="float: right;" (click)="addOffice()">Add</button>
+      </div>
+  </div>
+
+</div>

@@ -1,3 +1,4 @@
+import { Employee } from './../../../models/employee';
 import { Contract } from './../../../models/contract';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -22,7 +23,9 @@ export class ContractService {
   addToEmployeeUrl=this.accessUrl+'/addtoEmployee/'
   updateContractUrl=this.accessUrl+'/update/'
   archiveContractUrl=this.accessUrl+'/archive/'
+  noarchiveContractUrl=this.accessUrl+'/noarchive/'
   deleteContractUrl=this.accessUrl+'/delete/'
+  employeeFormContractUrl=this.accessUrl+'/employeeFormContract/'
   constructor(private http:HttpClient) { }
   getall(){
     return this.http.get<Contract[]>(this.accessUrl);
@@ -55,15 +58,21 @@ export class ContractService {
     return this.http.put(this.addToEmployerUrl+idContract+'/'+idEmployer,null)
   };
   addToEmployee(idEmployee:number,idContract:number){
-    return this.http.put(this.addToEmployeeUrl+idEmployee+'/'+idEmployee,null)
+    return this.http.put(this.addToEmployeeUrl+idEmployee+'/'+idContract,null)
   };
   updateContract(id:number,c:Contract){
     return this.http.put<Contract>(this.updateContractUrl+id,c)
   };
   archiveContract(id:number){
-    return this.http.put(this.archiveContractUrl+id,null)
+    return this.http.delete(this.archiveContractUrl+id)
+  };
+  noarchiveContract(id:number){
+    return this.http.delete(this.noarchiveContractUrl+id)
   };
   deleteContract(id:number){
     return this.http.delete(this.deleteContractUrl+id)
   };
+  getEmployeeFromContract(id:number){
+    return this.http.get<Employee>(this.employeeFormContractUrl+id)
+  }
 }

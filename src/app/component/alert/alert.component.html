@@ -1,190 +1,1314 @@
-<div class="row">
-  <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ========== Basic Alert ========== -->
-    <!-- ==================================-->
-    <div class="card w-100">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Basic Alert</h4>
-      </div>
-      <div class="card-body border-top">
-        <p *ngFor="let alert of alerts">
-          <ngb-alert [type]="alert.type" [dismissible]="false" class="customize-alert fs-5">
-            {{ alert.type }} - {{ alert.message }}
-          </ngb-alert>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ======== Outline Alert ========= -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Outline Alert</h4>
-      </div>
-      <div class="card-body border-top">
-        <ngb-alert
-          class="
-            bg-transparent
-            border-primary border
-            text-primary
-            d-flex
-            align-items-center
-            fs-5
-          "
+<div class="card">
+  <h5>Collaborator</h5>
+  <p-tabView>
+      <p-tabPanel>
+        <ng-template pTemplate = "header">
+          
+          <span  pBadge  value="{{employees?.length}}" >All</span>
+          
+      </ng-template>
+        <div class="card">
+          <p-dataView
+            #dv
+            [value]="employees"
+            [paginator]="true"
+            [rows]="4"
+            layout="list"
+          >
+            <ng-template pTemplate="header">
+              <div class="flex flex-column md:flex-row md:justify-content-between">
+              
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+              </div>
+            </ng-template>
+        
+            <ng-template let-employee pTemplate="listItem">
+              <div class="col-12">
+                <div class="product-list-item">
+                  <img [src]="employee.url" [alt]="" />
+                  <div class="product-list-detail">
+                    <div class="product-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </div>
+                    <div class="product-description">
+                      {{ employee.professionalMail }}
+                    </div>
+                  </div>
+                  <div class="product-list-action">
+                    <div>
+                      <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                    </div>
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-info"
+                      type="button"
+                      label="DETAILS"
+                      class="p-button-info"
+                      (click)="getDetail(employee.id)"
+                    ></button>
+                   
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-employee pTemplate="gridItem">
+              <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                  
+                   
+                      <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                  </div>
+                  <div class="product-grid-item-content">
+                    
+                      <img [src]="employee.url" alt="" />
+                
+                    <div class="product-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </div>
+                    <div class="product-description">
+                      {{ employee.professionalMail }}
+                   
+                  </div>
+                  </div>
+                  <div class="product-grid-item-bottom">
+                    
+                      <button pButton pRipple type="button" icon="pi pi-info" class=" p-button-info p-button-outlined" (click)="getDetail(employee.id)"></button>
+                     
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        
+          <p-dialog
+            [(visible)]="detailDialogue"
+            [style]="{ width: '1000px' }"
+            header="Employee Informations"
+            [modal]="true"
+            styleClass="p-fluid"
+          >
+            <ng-template pTemplate="content">
+              <div class="main-body">
+                <div class="row gutters-sm">
+                  <div class="col-md-4 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                          <img id="logo" alt="Image not chosen" [src]="employee?.url" />
+                          <div class="mt-3">
+                            <h4>{{ employee?.firstName }} {{ employee?.lastName }}</h4>
+                            <p class="text-secondary mb-1">
+                              {{ employee?.job.name }}
+                            </p>
+                            <p class="text-muted font-size-sm">
+                              {{ dep?.name }},{{ office?.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card mt-3">
+                      <h6 [hidden]="archivedContract?.length != 0">
+                        No Classed Contract to show
+                      </h6>
+                      <!-- TO add somthing -->
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">First Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.firstName }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Last Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.lastName }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Birth Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.birthDate }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Adress</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.adresse }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalPhone }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalMail }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Family Sitaution</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.statusF }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Child In Charge</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.childNumber }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">CIN</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.cin }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Delevery Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.deleveryDate }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalPhone }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalMail }}
+                              
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <hr />
+                        <h6>{{employee?.posts?.length}}</h6>
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+                 
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+              
+            </ng-template>
+          </p-dialog>
+        
+        
+        </div>
+      </p-tabPanel>
+      <p-tabPanel  >
+        <ng-template pTemplate = "header">
+          
+          <span  pBadge  value="{{employeesByOffice?.length}}" >{{officeTitle}}</span>
+          
+      </ng-template>
+        <div class="card">
+         <h5>Employee List of {{officeTitle}} </h5> 
+          <p-dataView
+            #dv
+            [value]="employeesByOffice"
+            [paginator]="true"
+            [rows]="4"
+            layout="list"
+          >
+            <ng-template pTemplate="header">
+              <div class="flex flex-column md:flex-row md:justify-content-between">
+               
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+              </div>
+            </ng-template>
+        
+            <ng-template let-employee pTemplate="listItem">
+              <div class="col-12">
+                <div class="product-list-item">
+                  <img [src]="employee.url" [alt]="" />
+                  <div class="product-list-detail">
+                    <div class="product-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </div>
+                    <div class="product-description">
+                      {{ employee.professionalMail }}
+                    </div>
+                  </div>
+                  <div class="product-list-action">
+                    <div>
+                      <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                    </div>
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-info"
+                      type="button"
+                      label="DETAILS"
+                      class="p-button-info"
+                      (click)="getDetail(employee.id)"
+                    ></button>
+                 
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-employee pTemplate="gridItem">
+              <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                  
+                   
+                      <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                  </div>
+                  <div class="product-grid-item-content">
+                    
+                      <img [src]="employee.url" alt="" />
+                
+                    <div class="product-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </div>
+                    <div class="product-description">
+                      {{ employee.professionalMail }}
+                   
+                  </div>
+                  </div>
+                  <div class="product-grid-item-bottom">
+                    
+                      <button pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-info p-button-outlined" (click)="getDetail(employee.id)"></button>
+                      
+                     
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        
+          <p-dialog
+            [(visible)]="detailDialogue"
+            [style]="{ width: '1200px' }"
+            header="Employee Informations"
+            [modal]="true"
+            styleClass="p-fluid"
+          >
+            <ng-template pTemplate="content">
+            
+              <div class="main-body">
+                <div class="row gutters-sm">
+                  <div class="col-md-4 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                          <img id="logo" alt="Image not chosen" [src]="employee?.url" />
+                          <div class="mt-3">
+                            <h4>{{ employee?.firstName }} {{ employee?.lastName }}</h4>
+                            <p class="text-secondary mb-1">
+                              {{ employee?.job.name }}
+                            </p>
+                            <p class="text-muted font-size-sm">
+                              {{ dep?.name }},{{ office?.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card mt-3">
+                      <h6 [hidden]="archivedContract?.length != 0">
+                        No Classed Contract to show
+                      </h6>
+                      <!-- TO add somthing -->
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">First Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.firstName }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Last Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.lastName }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Birth Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.birthDate }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Adress</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.adresse }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalPhone }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalMail }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Family Sitaution</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.statusF }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Child In Charge</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.childNumber }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">CIN</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.cin }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Delevery Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.deleveryDate }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalPhone }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalMail }}
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                      </div>
+                    </div>
+                    <div class="row gutters-sm" [hidden]="contract != null">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h6 class="d-flex align-items-center mb-3">
+                            <i class="material-icons text-info mr-2">assignment</i>No
+                            Contract
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="row gutters-sm" [hidden]="contract == null">
+                      <div class="col-sm-6 mb-3">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="d-flex align-items-center mb-3">
+                              <i class="material-icons text-info mr-2">assignment</i
+                              >Contract Informations
+                            </h6>
+                            <small>Start Date</small>
+                            <div>
+                              {{ contract?.startDate }}
+                            </div>
+                            <hr />
+                            <small>Gross Salary</small>
+                            <div></div>
+                            <hr />
+        
+                            <small>Net Salary</small>
+                            <div></div>
+                            <hr />
+                            <small>Type</small>
+                            <div></div>
+                            <hr />
+                            <small>Duration</small>
+                            <div></div>
+                            <hr />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-3">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="d-flex align-items-center mb-3">
+                              <i class="material-icons text-info mr-2">assignment</i>
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+              
+            </ng-template>
+          </p-dialog>
+        
+         
+        </div>
+    </p-tabPanel>
+    
+      <p-tabPanel  >
+        <ng-template pTemplate = "header">
+          
+          <span  pBadge  value="{{employeesByDepartement?.length}}" >{{depTitle}} </span>
+          
+      </ng-template>
+      <div class="card">
+        <p-dataView
+          #dv
+          [value]="employeesByDepartement"
+          [paginator]="true"
+          [rows]="4"
+          layout="list"
         >
-          <i
-            name="Info"
-            class="feather-sm flex-shrink-0 d-flex me-2"
-          ></i>
-          A simple primary light alert
-        </ngb-alert>
-        <ngb-alert
-          class="
-            bg-transparent
-            border-secondary border
-            text-secondary
-            d-flex
-            align-items-center
-            fs-5
-          "
+          <ng-template pTemplate="header">
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+             
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+          </ng-template>
+      
+          <ng-template let-employee pTemplate="listItem">
+            <div class="col-12">
+              <div class="product-list-item">
+                <img [src]="employee.url" [alt]="" />
+                <div class="product-list-detail">
+                  <div class="product-name">
+                    {{ employee.firstName }} {{ employee.lastName }}
+                  </div>
+                  <div class="product-description">
+                    {{ employee.professionalMail }}
+                  </div>
+                </div>
+                <div class="product-list-action">
+                  <div>
+                    <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                    <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                    <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                  </div>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-info"
+                    type="button"
+                    label="DETAILS"
+                    class="p-button-info"
+                    (click)="getDetail(employee.id)"
+                  ></button>
+                  
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template let-employee pTemplate="gridItem">
+            <div class="p-col-12 p-md-4">
+              <div class="product-grid-item card">
+                <div class="product-grid-item-top">
+                
+                 
+                    <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                    <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                    <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                </div>
+                <div class="product-grid-item-content">
+                  
+                    <img [src]="employee.url" alt="" />
+              
+                  <div class="product-name">
+                    {{ employee.firstName }} {{ employee.lastName }}
+                  </div>
+                  <div class="product-description">
+                    {{ employee.professionalMail }}
+                 
+                </div>
+                </div>
+                <div class="product-grid-item-bottom">
+                  
+                    <button pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-info p-button-outlined" (click)="getDetail(employee.id)"></button>
+                   
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataView>
+      
+        <p-dialog
+          [(visible)]="detailDialogue"
+          [style]="{ width: '1000px' }"
+          header="Employee Informations"
+          [modal]="true"
+          styleClass="p-fluid"
         >
-          <i
-            name="Info"
-            class="feather-sm flex-shrink-0 d-flex me-2"
-          ></i>
-          A simple secondary light alert
-        </ngb-alert>
-        <ngb-alert
-          class="
-            bg-transparent
-            border-success border
-            text-success
-            d-flex
-            align-items-center
-            fs-5
-          "
-        >
-          <i
-            name="Info"
-            class="feather-sm flex-shrink-0 d-flex me-2"
-          ></i>
-          A simple success light alert
-        </ngb-alert>
-        <ngb-alert
-          class="
-            bg-transparent
-            border-danger border
-            text-danger
-            d-flex
-            align-items-center
-            fs-5
-          "
-        >
-          <i
-            name="Info"
-            class="feather-sm flex-shrink-0 d-flex me-2"
-          ></i>
-          A simple danger light alert
-        </ngb-alert>
-        <ngb-alert
-          class="
-            bg-transparent
-            border-warning border
-            text-warning
-            d-flex
-            align-items-center
-            fs-5
-          "
-        >
-          <i
-            name="Info"
-            class="feather-sm flex-shrink-0 d-flex me-2"
-          ></i>
-          A simple warning light alert
-        </ngb-alert>
-        <ngb-alert
-          class="
-            bg-transparent
-            border-info border
-            text-info
-            d-flex
-            align-items-center
-            fs-5
-          "
-        >
-          <i
-            name="Info"
-            class="feather-sm flex-shrink-0 d-flex me-2"
-          ></i>
-          A simple info light alert
-        </ngb-alert>
+          <ng-template pTemplate="content">
+            <div class="main-body">
+              <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex flex-column align-items-center text-center">
+                        <img id="logo" alt="Image not chosen" [src]="employee?.url" />
+                        <div class="mt-3">
+                          <h4>{{ employee?.firstName }} {{ employee?.lastName }}</h4>
+                          <p class="text-secondary mb-1">
+                            {{ employee?.job.name }}
+                          </p>
+                          <p class="text-muted font-size-sm">
+                            {{ dep?.name }},{{ office?.name }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card mt-3">
+                    <h6 [hidden]="archivedContract?.length != 0">
+                      No Classed Contract to show
+                    </h6>
+                    <!-- TO add somthing -->
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">First Name</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.firstName }}
+                          </div>
+                        </div>
+      
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Last Name</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.lastName }}
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Birth Date</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.birthDate }}
+                          </div>
+                        </div>
+      
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Adress</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.adresse }}
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Personal Phone</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.personalPhone }}
+                          </div>
+                        </div>
+      
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Personal Email</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.personalMail }}
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Family Sitaution</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.statusF }}
+                          </div>
+                        </div>
+      
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Child In Charge</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.childNumber }}
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">CIN</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.cin }}
+                          </div>
+                        </div>
+      
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Delevery Date</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.deleveryDate }}
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Professional Phone</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.professionalPhone }}
+                          </div>
+                        </div>
+      
+                        <div class="col-sm-6">
+                          <h6 class="mb-0">Professional Email</h6>
+                          <div class="col-sm-9 text-secondary">
+                            {{ employee?.professionalMail }}
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                    </div>
+                  </div>
+                  <div class="row gutters-sm" [hidden]="contract != null">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="d-flex align-items-center mb-3">
+                          <i class="material-icons text-info mr-2">assignment</i>No
+                          Contract
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="row gutters-sm" [hidden]="contract == null">
+                    <div class="col-sm-6 mb-3">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h6 class="d-flex align-items-center mb-3">
+                            <i class="material-icons text-info mr-2">assignment</i
+                            >Contract Informations
+                          </h6>
+                          <small>Start Date</small>
+                          <div>
+                            {{ contract?.startDate }}
+                          </div>
+                          <hr />
+                          <small>Gross Salary</small>
+                          <div></div>
+                          <hr />
+      
+                          <small>Net Salary</small>
+                          <div></div>
+                          <hr />
+                          <small>Type</small>
+                          <div></div>
+                          <hr />
+                          <small>Duration</small>
+                          <div></div>
+                          <hr />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h6 class="d-flex align-items-center mb-3">
+                            <i class="material-icons text-info mr-2">assignment</i>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+      
+          <ng-template pTemplate="footer">
+            
+          </ng-template>
+        </p-dialog>
+      
+        
       </div>
-    </div>
-  </div>
-
-  <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ======= Self Closable Alert ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Self Closing Alert</h4>
-      </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Static self-closing alert that disappears after 20 seconds (refresh
-          the page if it has already disappeared)
-        </h6>
-        <ngb-alert type="info" class="font-medium fs-5" *ngIf="!staticAlertClosed" (close)="staticAlertClosed = true"
-          >Check out our awesome new features!</ngb-alert
-        >
-        <p>
-          Show a self-closing success message that disappears after 5 seconds.
-        </p>
-        <ngb-alert
-          *ngIf="successMessage"
-          type="success" class="font-medium fs-5"
-          (close)="successMessage = null"
-          >{{ successMessage }}</ngb-alert
-        >
-        <p>
-          <button class="btn btn-primary" (click)="changeSuccessMessage()">
-            Change message
-          </button>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ======= Custom Alert ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Custom Alert</h4>
-      </div>
-      <div class="card-body border-top">
-        <ngb-alert type="custom" [dismissible]="false"
-          ><strong>Whoa!</strong> This is a custom alert.</ngb-alert
-        >
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Global Configuration of Alert</h4>
-      </div>
-      <div class="card-body border-top">
-        <p>
-          <ngb-alert type="secondary" class="font-medium fs-5">
-            This alert's type is success and it's not dismissible because the
-            config has been customized
-          </ngb-alert>
-        </p>
-      </div>
-    </div>
-  </div>
+    </p-tabPanel>
+    <p-tabPanel  >
+      <ng-template pTemplate = "header">
+        
+        <span  pBadge  value="{{employeesByjob?.length}}" >{{jobtitle}} </span>
+        
+    </ng-template>
+      
+        <div class="card">
+          <p-dataView
+            #dv
+            [value]="employeesByjob"
+            [paginator]="true"
+            [rows]="4"
+            layout="list"
+          >
+            <ng-template pTemplate="header">
+              <div class="flex flex-column md:flex-row md:justify-content-between">
+               
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+              </div>
+            </ng-template>
+        
+            <ng-template let-employee pTemplate="listItem">
+              <div class="col-12">
+                <div class="product-list-item">
+                  <img [src]="employee.url" [alt]="" />
+                  <div class="product-list-detail">
+                    <div class="product-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </div>
+                    <div class="product-description">
+                      {{ employee.professionalMail }}
+                    </div>
+                  </div>
+                  <div class="product-list-action">
+                    <div>
+                      <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                    </div>
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-info"
+                      type="button"
+                      label="DETAILS"
+                      class="p-button-info"
+                      (click)="getDetail(employee.id)"
+                    ></button>
+                    
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-employee pTemplate="gridItem">
+              <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                  
+                   
+                      <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                      <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                  </div>
+                  <div class="product-grid-item-content">
+                    
+                      <img [src]="employee.url" alt="" />
+                
+                    <div class="product-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </div>
+                    <div class="product-description">
+                      {{ employee.professionalMail }}
+                   
+                  </div>
+                  </div>
+                  <div class="product-grid-item-bottom">
+                    
+                      <button pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-info p-button-outlined" (click)="getDetail(employee.id)"></button>
+                     
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        
+          <p-dialog
+            [(visible)]="detailDialogue"
+            [style]="{ width: '1000px' }"
+            header="Employee Informations"
+            [modal]="true"
+            styleClass="p-fluid"
+          >
+            <ng-template pTemplate="content">
+              <div class="main-body">
+                <div class="row gutters-sm">
+                  <div class="col-md-4 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                          <img id="logo" alt="Image not chosen" [src]="employee?.url" />
+                          <div class="mt-3">
+                            <h4>{{ employee?.firstName }} {{ employee?.lastName }}</h4>
+                            <p class="text-secondary mb-1">
+                              {{ employee?.job.name }}
+                            </p>
+                            <p class="text-muted font-size-sm">
+                              {{ dep?.name }},{{ office?.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card mt-3">
+                      <h6 [hidden]="archivedContract?.length != 0">
+                        No Classed Contract to show
+                      </h6>
+                      <!-- TO add somthing -->
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">First Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.firstName }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Last Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.lastName }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Birth Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.birthDate }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Adress</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.adresse }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalPhone }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalMail }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Family Sitaution</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.statusF }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Child In Charge</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.childNumber }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">CIN</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.cin }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Delevery Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.deleveryDate }}
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalPhone }}
+                            </div>
+                          </div>
+        
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalMail }}
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                      </div>
+                    </div>
+                    <div class="row gutters-sm" [hidden]="contract != null">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h6 class="d-flex align-items-center mb-3">
+                            <i class="material-icons text-info mr-2">assignment</i>No
+                            Contract
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="row gutters-sm" [hidden]="contract == null">
+                      <div class="col-sm-6 mb-3">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="d-flex align-items-center mb-3">
+                              <i class="material-icons text-info mr-2">assignment</i
+                              >Contract Informations
+                            </h6>
+                            <small>Start Date</small>
+                            <div>
+                              {{ contract?.startDate }}
+                            </div>
+                            <hr />
+                            <small>Gross Salary</small>
+                            <div></div>
+                            <hr />
+        
+                            <small>Net Salary</small>
+                            <div></div>
+                            <hr />
+                            <small>Type</small>
+                            <div></div>
+                            <hr />
+                            <small>Duration</small>
+                            <div></div>
+                            <hr />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-3">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="d-flex align-items-center mb-3">
+                              <i class="material-icons text-info mr-2">assignment</i>
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+              
+            </ng-template>
+          </p-dialog>
+        
+         
+        </div>
+      </p-tabPanel>
+     
+        <p-tabPanel  >
+          <ng-template pTemplate = "header">
+            
+            <span  pBadge  value="{{projectsListe?.length}} Prj" >Projects</span>
+            
+        </ng-template>
+        <div   class="card" *ngFor="let p of projectsListe">
+          <p-tabView>
+          
+            <p-tabPanel  >
+              <ng-template pTemplate = "header">
+                
+                <span  pBadge  value="{{p.employeeList?.length}} " >{{p.name}}</span>
+                
+            </ng-template>
+            <div class="card">
+            
+              <p-dataView
+                #dv
+                [value]="p.employeeList"
+                [paginator]="true"
+                [rows]="3"
+                layout="list"
+              >
+              
+            
+                <ng-template let-employee pTemplate="listItem">
+                  <div class="col-12">
+                    <div class="product-list-item">
+                      <img [src]="employee.url" [alt]="" />
+                      <div class="product-list-detail">
+                        <div class="product-name">
+                          {{ employee.firstName }} {{ employee.lastName }}
+                        </div>
+                        <div class="product-description">
+                          {{ employee.professionalMail }}
+                        </div>
+                      </div>
+                      <div class="product-list-action">
+                        <div>
+                          <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+                          <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+                          <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+                        </div>
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-info"
+                          type="button"
+                          label="DETAILS"
+                          class="p-button-info"
+                          (click)="getDetail(employee.id)"
+                        ></button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+               
+              </p-dataView>
+            
+              <p-dialog
+                [(visible)]="detailDialogue"
+                [style]="{ width: '1000px' }"
+                header="Employee Informations"
+                [modal]="true"
+                styleClass="p-fluid"
+              >
+                <ng-template pTemplate="content">
+                  <div class="main-body">
+                    <div class="row gutters-sm">
+                      <div class="col-md-4 mb-3">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                              <img id="logo" alt="Image not chosen" [src]="employee?.url" />
+                              <div class="mt-3">
+                                <h4>{{ employee?.firstName }} {{ employee?.lastName }}</h4>
+                                <p class="text-secondary mb-1">
+                                  {{ employee?.job.name }}
+                                </p>
+                                <p class="text-muted font-size-sm">
+                                  {{ dep?.name }},{{ office?.name }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card mt-3">
+                          <h6 [hidden]="archivedContract?.length != 0">
+                            No Classed Contract to show
+                          </h6>
+                          <!-- TO add somthing -->
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">First Name</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.firstName }}
+                                </div>
+                              </div>
+            
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Last Name</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.lastName }}
+                                </div>
+                              </div>
+                              <hr />
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Birth Date</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.birthDate }}
+                                </div>
+                              </div>
+            
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Adress</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.adresse }}
+                                </div>
+                              </div>
+                              <hr />
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Personal Phone</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.personalPhone }}
+                                </div>
+                              </div>
+            
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Personal Email</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.personalMail }}
+                                </div>
+                              </div>
+                              <hr />
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Family Sitaution</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.statusF }}
+                                </div>
+                              </div>
+            
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Child In Charge</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.childNumber }}
+                                </div>
+                              </div>
+                              <hr />
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">CIN</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.cin }}
+                                </div>
+                              </div>
+            
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Delevery Date</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.deleveryDate }}
+                                </div>
+                              </div>
+                              <hr />
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Professional Phone</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.professionalPhone }}
+                                </div>
+                              </div>
+            
+                              <div class="col-sm-6">
+                                <h6 class="mb-0">Professional Email</h6>
+                                <div class="col-sm-9 text-secondary">
+                                  {{ employee?.professionalMail }}
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                          </div>
+                        </div>
+                        <div class="row gutters-sm" [hidden]="contract != null">
+                          <div class="card h-100">
+                            <div class="card-body">
+                              <h6 class="d-flex align-items-center mb-3">
+                                <i class="material-icons text-info mr-2">assignment</i>No
+                                Contract
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+            
+                        <div class="row gutters-sm" [hidden]="contract == null">
+                          <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                              <div class="card-body">
+                                <h6 class="d-flex align-items-center mb-3">
+                                  <i class="material-icons text-info mr-2">assignment</i
+                                  >Contract Informations
+                                </h6>
+                                <small>Start Date</small>
+                                <div>
+                                  {{ contract?.startDate }}
+                                </div>
+                                <hr />
+                                <small>Gross Salary</small>
+                                <div></div>
+                                <hr />
+            
+                                <small>Net Salary</small>
+                                <div></div>
+                                <hr />
+                                <small>Type</small>
+                                <div></div>
+                                <hr />
+                                <small>Duration</small>
+                                <div></div>
+                                <hr />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                              <div class="card-body">
+                                <h6 class="d-flex align-items-center mb-3">
+                                  <i class="material-icons text-info mr-2">assignment</i>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+            
+                <ng-template pTemplate="footer">
+                  
+                </ng-template>
+              </p-dialog>
+            
+             
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+        </div>
+      </p-tabPanel>
+      
+     
+  </p-tabView>
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

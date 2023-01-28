@@ -1,3 +1,5 @@
+import { Post } from './post';
+import { Project } from './project';
 export class Employee{
   id!: number;
   firstName! : String;
@@ -14,8 +16,17 @@ export class Employee{
   password! : String;
   holidayNumber! : number;
   folder! : String;
+  statusF!: String;
   //lastDay! : Date;
   archived! : boolean;
   jobId! : number;
   companyId!:number;
+  role!:String;
+  url!:String;
+  office!:String;
+  department!:String;
+  job!:String;
+  posts!:Post[];
+  projects!:Project[];
+  ActiveProject!:Project[];
 }

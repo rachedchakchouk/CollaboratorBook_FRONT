@@ -1,3 +1,28 @@
+
+
+// Uncomment the following lines if you want to add a custom palette:
+// $primary: #731963 !default;
+// $secondary: #ce5712 !default;
+// $app-palette: palette($primary, $secondary);
+
+/* autoprefixer grid: on */
+@use 'igniteui-angular/theming' as *;
+
+@include core();
+@include typography($font-family: $material-typeface, $type-scale: $material-type-scale);
+@include theme($default-palette);
+// CSS Reset, comment out if not required or using a different module
+@import '~minireset.css/minireset';
 /* You can add global styles to this file, and also import other style files */
 
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800');
+$custom-input-group: input-group-theme(
+  $filled-text-color: #288a54,
+  $focused-text-color: #174f30,
+  $idle-text-color: #288a54,
+  $idle-bottom-line-color: #288a54,
+  $interim-bottom-line-color: #288a54,
+  $hover-bottom-line-color: #288a54,
+  $focused-secondary-color: #174f30,
+  $box-background: #eeeeee
+);

@@ -1,13 +1,14 @@
 import { Holday } from './../../../models/holday';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaveService {
-  accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/holidays'
+  //accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/holidays'
+  accessUrl='http://localhost:8081/RH/holidays'
+
   getbyIdUrl=this.accessUrl+'/byId/'
   getByEmployeeUrl=this.accessUrl+'/byemployee/'
   getActiveByEmployeeUrl=this.accessUrl+'/active/byemployee/'
@@ -38,8 +39,8 @@ prouveUrl=this.accessUrl+'/prouve/'
   getArchivedByEmployee(id:number){
     return this.http.get<Holday[]>(this.getArchivedByEmployeeUrl+id)
   };
-  newHolday(h:Holday){
-    return this.http.post<Holday>(this.newHoldayUrl,h)
+  newHolday(h:Holday,id:number){
+    return this.http.post<Holday>(this.newHoldayUrl+"/"+id,h)
   };
   addToEmployee(idHolday:number,idEmployee:number){
     return this.http.put(this.addToEmployeeUrl+idHolday+'/'+idEmployee,null)

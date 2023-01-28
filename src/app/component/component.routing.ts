@@ -1,3 +1,5 @@
+import { OfficesComponent } from './offices/offices.component';
+import { AddOfficeComponent } from './add-office/add-office.component';
 import { Routes } from '@angular/router';
 import { NgbdpaginationBasicComponent } from './pagination/pagination.component';
 import { NgbdAlertBasicComponent } from './alert/alert.component';
@@ -9,6 +11,7 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
 import { HomeComponent } from './home/home.component';
+import { StepsComponent } from './steps/steps.component';
 
 
 export const ComponentsRoutes: Routes = [
@@ -16,11 +19,19 @@ export const ComponentsRoutes: Routes = [
 		path: '',
 		children: [
 			{
+				path: 'offices',
+				component: OfficesComponent
+			},
+			{
+				path: 'newOffice',
+				component: AddOfficeComponent
+			},
+			{
 				path: 'table',
 				component: TableComponent
 			},
 			{
-				path: 'card',
+				path: 'employee',
 				component: CardsComponent
 			},
 			{
@@ -44,12 +55,16 @@ export const ComponentsRoutes: Routes = [
 				component: NgbdnavBasicComponent
 			},
 			{
-				path: 'buttons',
+				path: 'employees',
 				component: ButtonsComponent
 			},
 			{
 				path: 'home',
 				component: HomeComponent
+			},
+			{
+				path: 'newemployee',
+				component: StepsComponent
 			}
 		]
 	}

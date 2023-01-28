@@ -1,13 +1,14 @@
 import { Reclamation } from './../../../models/reclamation';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReclamationService {
-  accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/Reclamations'
+ // accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/Reclamations'
+  accessUrl='http://localhost:8081/RH/Reclamations'
   findbyidUrl=this.accessUrl+'/getbyId/'
   getBySourceUrl=this.accessUrl+'/getbysource/'
   getActiveBySourceUrl=this.accessUrl+'/active/getbysource/'

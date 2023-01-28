@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/notifications'
+  //accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/notifications'
+  accessUrl='http://localhost:8081/RH/holidays'
   findbyidUrl=this.accessUrl+'/getbyId/'
   findByEmployeeUrl=this.accessUrl+'/byemployee/'
   findActiveByEmployeeUrl=this.accessUrl+'/active/byemployee/'

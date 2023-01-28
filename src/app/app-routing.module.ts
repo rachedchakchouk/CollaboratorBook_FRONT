@@ -1,4 +1,3 @@
-import { EmployeeComponent } from './employee/employee.component';
 import { UpdateProfileComponent } from "./component/autentification/update-profile/update-profile.component";
 import { SignupComponent } from "./component/autentification/signup/signup.component";
 import { NgModule } from "@angular/core";
@@ -41,7 +40,6 @@ export const Approutes: Routes = [
     component: FullComponent,
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
-      {path:"employee",component:EmployeeComponent},
       {
         path: "dashboard",
         loadChildren: () =>

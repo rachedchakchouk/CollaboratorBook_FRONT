@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
 import { Clause } from './../../../models/clause';
 import { HttpClient } from '@angular/common/http';
@@ -35,7 +36,7 @@ export class ClauseService {
   constructor(private http:HttpClient) { }
 
 
-  getall(){
+  getall():Observable<Clause[]>{
     return this.http.get<Clause[]>(this.accessUrl);
   };
   post(c:Clause){

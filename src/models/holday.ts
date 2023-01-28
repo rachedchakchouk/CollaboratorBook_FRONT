@@ -3,5 +3,5 @@ export class Holday{
   startDate! : Date;
   status!: String ;
   archived!: boolean ;
-  duration! : String;
+  typeLeave! : String;
 }

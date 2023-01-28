@@ -4,7 +4,15 @@ export class Document{
   docType! : String;
   archived! : boolean;
   fileType! : string;
-  data!: any;
+  data!: Blob;
   fileSize!:number;
   downloadUrl!:String;
 }
+
+
+
+
+
+
+
+;

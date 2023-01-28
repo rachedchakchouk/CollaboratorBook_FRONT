@@ -1,13 +1,13 @@
 import { Company } from './../../../models/company';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
-  accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/Companies';
+  //accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/Companies';
+  accesurl='http://localhost:8082/business/Companies';
   posturl=this.accesurl+'/newCompany';
   geturl=this.accesurl+'/getCompanyById/';
   getbyemployeeidUrl=this.accesurl+'/getCompanyByEmployeeId/';

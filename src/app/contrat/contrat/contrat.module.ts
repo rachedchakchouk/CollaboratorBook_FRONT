@@ -8,9 +8,9 @@ import { ContratRoutingModule } from './contrat-routing.module';
 import { AjouterContratComponent } from './ajouter-contrat/ajouter-contrat.component';
 import { ClosesComponent } from './closes/closes.component';
 import { AjouterclosesComponent } from './closes/ajoutercloses/ajoutercloses.component';
+import { ContractComponent } from './contract/contract.component';
 
 import {TableModule} from 'primeng/table';
-import { ContractComponent } from './contract/contract.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
@@ -28,7 +28,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
-
+import {InputSwitchModule} from 'primeng/inputswitch';
 @NgModule({
   declarations: [
     AjouterContratComponent,
@@ -59,7 +59,8 @@ import {AccordionModule} from 'primeng/accordion';     //accordion and accordion
     InputNumberModule,
     CardModule,
     DividerModule,
-    AccordionModule
+    AccordionModule,
+    InputSwitchModule
   ]
   
 })

@@ -58,45 +58,37 @@
   </div>
 </div> -->
 <p-table [value]="clauses" [paginator]="true" [rows]="10">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>description</th>
-            <th>action</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-clause>
-        <tr>
-            <td>{{clause.id}}</td>
-            <td>{{clause.title}}</td>
-            <td>{{clause.description}}</td>
-            <td>{{clause.creationDate}}</td>
-            
-            <td>
-                <h5 class="mb-0 fw-normal">
-                  <button
-                    class="btn btn-sm btn-danger"
-                    (click)="archive(clause.id)"
-                    [hidden]="clause.archived==true"
-                  >
-                    Archive
-                  </button>
-                </h5>
-              
-                <h5 class="mb-0 fw-normal">
-                  <button
-                    class="btn btn-sm btn-success"
-                    (click)="noarchive(clause.id)"
-                    [hidden]="clause.archived==false"
-                    
-                  >
-                    desarchive
-                  </button>
-                </h5>
-              </td>
-        </tr>
-    </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>description</th>
+      <th>creation date</th>
+      <th>action</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-clause>
+    <tr>
+      <td>{{clause.id}}</td>
+      <td><input type="text" pInputText [value]="clause.title"> </td>
+      <td><input type="text" pInputText [value]="clause.description"></td>
+      <td>{{clause.creationDate}}</td>
+
+      <td>
+        <h5 class="mb-0 fw-normal">
+          <button class="btn btn-sm btn-danger" (click)="archive(clause.id)" [hidden]="clause.archived==true">
+            Archive
+          </button>
+        </h5>
+
+        <h5 class="mb-0 fw-normal">
+          <button class="btn btn-sm btn-success" (click)="noarchive(clause.id)" [hidden]="clause.archived==false">
+            desarchive
+          </button>
+        </h5>
+        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-outlined" (click)="update(clause.id,clause)"></button>
+
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
-
-

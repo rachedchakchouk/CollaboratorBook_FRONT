@@ -3,144 +3,489 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Project Listing</h4>
-        <h5 class="card-subtitle text-muted">Overview of the projects</h5>
+        <h6 >Total projects : {{projects?.length}}</h6>
+        <div><button pButton pRipple type="button" label="+Add New Project" class="p-button-warning p-button-text"(click)="openAdd()"></button>
+        </div>
+        <h5 class="card-subtitle text-muted">Overview of the active projects</h5>
         <div class="table-responsive">
           <table class="table align-middle text-nowrap">
               <thead>
                   <tr>
-                      <th class="text-dark font-medium fs-4">Team Lead</th>
-                      <th class="text-dark font-medium fs-4">Project</th>
+                      <th class="text-dark font-medium fs-4">Title Of Project</th>
+                      <th class="text-dark font-medium fs-4">Project Description</th>
+                      <th class="text-dark font-medium fs-4">Client</th>
+                      <th class="text-dark font-medium fs-4">StartDate</th>
+                      <th class="text-dark font-medium fs-4">DeadLine</th>
+                      <th class="text-dark font-medium fs-4">Number of Collaborator</th>
                       <th class="text-dark font-medium fs-4">Status</th>
-                      <th class="text-dark font-medium fs-4">Weeks</th>
-                      <th class="text-dark font-medium fs-4">Budget</th>
+                      <th class="text-dark font-medium fs-4">More</th>
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor='let ts of topSelling'>
+                  <tr *ngFor="let p of projects">
                       <td>
                           <div class="d-flex align-items-center">
-                              <img [src]=ts.image alt="user" width="45" class="rounded-circle">
                               <div class="ms-3">
-                                  <h5 class="mb-0 font-medium">{{ts.uname}}</h5>
-                                  <span class="text-muted">{{ts.gmail}}</span>
+                                  <h5 class="mb-0 font-medium"></h5>
+                                  <span class="text-muted"> {{p?.name}}</span>
                               </div>
                           </div>
                       </td>
-                      <td class="fs-4">{{ts.productName}}</td>
+                      <td class="fs-4"> <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                            <h5 class="mb-0 font-medium"></h5>
+                            <span class="text-muted"> {{p?.description}}</span>
+                        </div>
+                    </div></td>
                       <td>
-                          <span class="p-2 bg-{{ts.status}} rounded-circle d-inline-block ms-3"></span>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <span class="text-muted"> {{p?.client}}</span>
+                            </div>
+                        </div>
                       </td>
                       
                       <td>
-                          <h5 class="mb-0 fw-normal">{{ts.weeks}}</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <span class="text-muted"*ngIf="p?.startDate!=null"> {{p?.startDate}}</span>
+                                <span class="text-muted"*ngIf="p?.startDate==null"> No startDate</span>
+                            </div>
+                        </div>
                       </td>
                       <td>
-                          <h5 class="mb-0 fw-normal">{{ts.budget}}</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                             
+                                <span class="text-muted"*ngIf="p?.deadLine!=null"> {{p?.deadLine}}</span>
+                                <span class="text-muted"*ngIf="p?.deadLine==null"> No DeadLine</span>
+                            </div>
+                        </div>
                       </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <span class="text-muted"*ngIf="p?.employeeList!=null"> {{p?.employeeList?.length}}</span>
+                                <span class="text-muted"*ngIf="p?.employeeList==null"> 0</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <p-tag *ngIf="p.deadLine!=null && p.finalDate!=null && p.finalDate<=p.deadLine" styleClass="mr-2" icon="pi pi-check" severity="success" value="finished in time"></p-tag>
+                                <p-tag *ngIf="p.deadLine!=null && p.finalDate!=null && p.finalDate>p.deadLine" styleClass="mr-2" icon="pi pi-check" severity="danger" value="finished out of time "></p-tag>
+                                <p-tag *ngIf="p.deadLine!=null && p.finalDate==null && p.deadLine>currentDate&& p.startDate>currentDate" styleClass="mr-2" icon="pi pi-check" severity="danger" value="out of time"></p-tag>
+                                <p-tag *ngIf="p.deadLine!=null && p.finalDate==null && p.deadLine<=currentDate&& p.startDate>currentDate" styleClass="mr-2" icon="pi pi-check" severity="warning" value="in progress"></p-tag>
+                                <p-tag *ngIf="p.startDate!=null && p.startDate<=currentDate" styleClass="mr-2" icon="pi pi-check" severity="info" value="attending"></p-tag>
+                                <p-tag *ngIf="p.startDate==null || p.deadLine==null" styleClass="mr-2" icon="pi pi-check" severity="info" value="check project"></p-tag>
+
+                                
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div><button pButton pRipple type="button"icon="pi pi-pencil" label="Manage" class="p-button-warning p-button-text"></button>
+                        </div>
+                        <div><button pButton pRipple type="button"icon="pi pi-check" label="Finish" class="p-button-success p-button-text"></button>
+                        </div>                   
+                     </td>
                   </tr>              
               </tbody>
           </table>
       </div>
       </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Table with Border</h4>
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle text-nowrap">
-                    <thead>
-                        <tr>
-                            <th class="text-dark font-medium fs-4">#</th>
-                            <th class="text-dark font-medium fs-4">First Name</th>
-                            <th class="text-dark font-medium fs-4">Last Name</th>
-                            <th class="text-dark font-medium fs-4">Username</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor='let tr of trow; index as i'>
-                            <td>
-                                {{ i + 1 }}
-                            </td>
-                            <td>
-                                {{tr.fname}}
-                            </td>
-                            <td>
-                                {{tr.lname}}
-                            </td>
-                            <td>
-                                {{tr.uname}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <h5 class="card-subtitle text-muted">Overview of the active projects</h5>
+        <div class="table-responsive">
+          <table class="table align-middle text-nowrap">
+              <thead>
+                  <tr>
+                      <th class="text-dark font-medium fs-4">Title Of Project</th>
+                      <th class="text-dark font-medium fs-4">Project Description</th>
+                      <th class="text-dark font-medium fs-4">Client</th>
+                      <th class="text-dark font-medium fs-4">StartDate</th>
+                      <th class="text-dark font-medium fs-4">DeadLine</th>
+                      <th class="text-dark font-medium fs-4">Number of Collaborator</th>
+                      <th class="text-dark font-medium fs-4">Status</th>
+                      <th class="text-dark font-medium fs-4">More</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let p of projects">
+                      <td>
+                          <div class="d-flex align-items-center">
+                              <div class="ms-3">
+                                  <h5 class="mb-0 font-medium"></h5>
+                                  <span class="text-muted"> {{p?.name}}</span>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="fs-4"> <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                            <h5 class="mb-0 font-medium"></h5>
+                            <span class="text-muted"> {{p?.description}}</span>
+                        </div>
+                    </div></td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <span class="text-muted"> {{p?.client}}</span>
+                            </div>
+                        </div>
+                      </td>
+                      
+                      <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <span class="text-muted"*ngIf="p?.startDate!=null"> {{p?.startDate}}</span>
+                                <span class="text-muted"*ngIf="p?.startDate==null"> No startDate</span>
+                            </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                             
+                                <span class="text-muted"*ngIf="p?.deadLine!=null"> {{p?.deadLine}}</span>
+                                <span class="text-muted"*ngIf="p?.deadLine==null"> No DeadLine</span>
+                            </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <span class="text-muted"*ngIf="p?.employeeList!=null"> {{p?.employeeList?.length}}</span>
+                                <span class="text-muted"*ngIf="p?.employeeList==null"> 0</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <h5 class="mb-0 font-medium"></h5>
+                                <p-tag *ngIf="p?.deadLine!=null && p?.finalDate!=null && p?.finalDate<=p?.deadLine" styleClass="mr-2" icon="pi pi-check" severity="success" value="finished in time"></p-tag>
+                                <p-tag *ngIf="p?.deadLine!=null && p?.finalDate!=null && p?.finalDate>p?.DeadLine" styleClass="mr-2" icon="pi pi-check" severity="danger" value="finished out of time "></p-tag>
+                                <p-tag *ngIf="p?.deadLine!=null && p?.finalDate==null && p?.deadLine>currentDate" styleClass="mr-2" icon="pi pi-check" severity="danger" value="out of time"></p-tag>
+                                <p-tag *ngIf="p?.deadLine!=null && p?.finalDate==null && p?.deadLine<=currentDate" styleClass="mr-2" icon="pi pi-check" severity="warning" value="in progress"></p-tag>
+                                <p-tag *ngIf="p?.startDate!=null && p?.startDate<currentDate" styleClass="mr-2" icon="pi pi-check" severity="info" value="attending"></p-tag>
+                                <p-tag *ngIf="p?.startDate!=null && p?.startDate<currentDate" styleClass="mr-2" icon="pi pi-check" severity="info" value="attending"></p-tag>
+                                <p-tag *ngIf="p?.startDate==null || p?.deadLine==null" styleClass="mr-2" icon="pi pi-check" severity="info" value="check project"></p-tag>
+
+                                
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div><button pButton pRipple type="button"icon="pi pi-pencil" label="Manage" class="p-button-warning p-button-text"></button>
+                        </div>
+                        <div><button pButton pRipple type="button"icon="pi pi-check" label="Finish" class="p-button-success p-button-text"></button>
+                        </div>                   
+                     </td>
+                  </tr>              
+              </tbody>
+          </table>
+      </div>
+      </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Table Hover</h4>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle text-nowrap table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="text-dark font-medium fs-4">#</th>
-                            <th class="text-dark font-medium fs-4">First Name</th>
-                            <th class="text-dark font-medium fs-4">Last Name</th>
-                            <th class="text-dark font-medium fs-4">Username</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor='let tr of trow; index as i'>
-                            <td>
-                                {{ i + 1 }}
-                            </td>
-                            <td>
-                                {{tr.fname}}
-                            </td>
-                            <td>
-                                {{tr.lname}}
-                            </td>
-                            <td>
-                                {{tr.uname}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <p-dialog [(visible)]="addDialogue" [style]="{ width: '1000px' ,height:'auto'   } " header="office detail" [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    
+    <div class="field">
+      <form [formGroup]="projectForm">
+        <div class="row">
+            <div class="col-sm-6">
+                <label >Title Of Project</label>
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText formControlName="name"> 
+                    <label for="float-input">Title Of Project</label>
+                </span>
+              </div>
+              <div class="col-sm-6">
+                <label >Project description</label>
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText formControlName="description"> 
+                    <label for="float-input">Project description</label>
+                </span>
+              </div>
+              <div class="col-sm-6">
+                <label >Name of the client</label>
+                <span class="p-float-label">
+                    
+                    <input id="float-input" type="text" pInputText formControlName="client"> 
+                    <label for="float-input">Name of the client</label>
+                </span>
+              </div>
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6">
+        
+                    <label for="dateformat">Start Date</label>
+                    <input id="float-input" type="date" pInputText formControlName="startDate" > 
+
+               
+              </div>
+              <div class="col-sm-6">
+                
+                    <label for="dateformat">DeadLine Date</label>
+                    <input id="float-input" type="date" pInputText formControlName="deadLine" > 
+
+                
+              </div>
+
+             
+            
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Table Striped</h4>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle text-nowrap table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-dark font-medium fs-4">#</th>
-                            <th class="text-dark font-medium fs-4">First Name</th>
-                            <th class="text-dark font-medium fs-4">Last Name</th>
-                            <th class="text-dark font-medium fs-4">Username</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor='let tr of trow; index as i'>
-                            <td>
-                                {{ i + 1 }}
-                            </td>
-                            <td>
-                                {{tr.fname}}
-                            </td>
-                            <td>
-                                {{tr.lname}}
-                            </td>
-                            <td>
-                                {{tr.uname}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+    </form>
+    <p-table #dt [value]="employees" [(selection)]="selectedEmployees" dataKey="id" [rowHover]="true"
+    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            List of employees
+            <span class="p-input-icon-left">
+            </span>
         </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="name" style="min-width: 14rem">
+                <div class="flex justify-content-between align-items-center">
+                    Name
+                    <p-sortIcon field="name"></p-sortIcon>
+                    <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="country.name"style="min-width: 14rem">
+                <div class="flex justify-content-between align-items-center">
+                    OFFice
+                    <p-sortIcon field="country.name"></p-sortIcon>
+                    <p-columnFilter type="text" field="country.name" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="representative.name" style="min-width: 14rem">
+                <div class="flex justify-content-between align-items-center">
+                    Department
+                    <p-sortIcon field="representative.name"></p-sortIcon>
+                    <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                        <ng-template pTemplate="header">
+                            <div class="px-3 pt-3 pb-0">
+                                <span class="font-bold">Agent Picker</span>
+                            </div>
+                        </ng-template>
+                        <!-- <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                <ng-template let-option pTemplate="item">
+                                    <div class="p-multiselect-representative-option">
+                                        <img [alt]="option.label" src="assets/showcase/images/demo/avatar/{{option.image}}" width="32" style="vertical-align: middle" />
+                                        <span class="ml-1">{{option.name}}</span>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+                        </ng-template> -->
+                    </p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="date" style="min-width: 10rem">
+                <div class="flex justify-content-between align-items-center">
+                    Job
+                    <p-sortIcon field="date"></p-sortIcon>
+                    <p-columnFilter type="date" field="date" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="balance" style="min-width: 10rem">
+                <div class="flex justify-content-between align-items-center">
+                    Number of Projects
+                    <p-sortIcon field="balance"></p-sortIcon>
+                    <p-columnFilter type="numeric" field="balance" display="menu" currency="USD" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+          
+           
+            <th style="width: 5rem"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-employee>
+        <tr class="p-selectable-row">
+            <td>
+                <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+            </td>
+            <td>
+                <span class="p-column-title">Employee</span>
+                <img *ngIf="employee.url!=null" [src]='employee.url' width="30">
+                <img *ngIf="employee.url==null" src='.\assets\images\users\user.jpg' width="30">
+
+                {{employee.firstName}} {{employee.lastName}}
+            </td>
+            <td>
+                <span class="p-column-title">Office</span>
+                
+                <span class="image-text">{{employee.office}}</span>
+            </td>
+            <td>
+                <span class="p-column-title">Department</span>
+                
+                <span class="image-text">{{employee.department}}</span>
+            </td>
+            <td>
+                <span class="p-column-title">Job</span>
+                
+                <span class="image-text">{{employee.job}}</span>
+            </td>
+            <td>
+                <span class="p-column-title">number of Projects</span>
+                <span class="image-text">{{employee.projects?.length}}</span>
+
+            </td>
+          
+           
+            
+        </tr>
+    </ng-template>
+    <!-- <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No customers found.</td>
+        </tr>
+    </ng-template> -->
+</p-table>
+  
     </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+    ></button>
+    <button pButton pRipple label="Save" icon="pi pi-save
+    " class="p-button-text" (click)="addproject()" ></button>
+  </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="editDialogue" [style]="{ width: '1000px' }" header="office detail" [modal]="true"
+styleClass="p-fluid">
+<ng-template pTemplate="content">
+  
+  <div class="field">
+    <form [formGroup]="officeForm">
+      <h5>In total there are {{depSize}} DEPARTMENTS</h5>
+      <div class="row">
+          <div class="col-sm-6">
+              <igx-input-group>
+                <input
+                  igxInput
+                  name="name"
+                  type="text"
+                  required
+                  formControlName="name"
+                  [(ngModel)]="office.name"
+                />
+                <label igxLabel for="name" id="name"
+                  > Name</label
+                >
+              </igx-input-group>
+            </div>
+            <div class="col-sm-6">
+              <igx-input-group>
+                <input
+                  igxInput
+                  name="mobile"
+                  type="number"
+                  required
+                  [(ngModel)]="office.mobile"
+                  formControlName="mobile"
+                />
+                <label igxLabel for="mobile" id="mobile"
+                  > mobile</label
+                >
+              </igx-input-group>
+            </div>
+            <div class="col-sm-6">
+              <igx-input-group>
+                <input
+                  igxInput
+                  name="phone"
+                  type="number"
+                  required
+                  formControlName="phone"
+                  [(ngModel)]="office.phone"
+                />
+                <label igxLabel for="phone" id="phone"
+                  > phone</label
+                >
+              </igx-input-group>
+            </div>
+            <div class="col-sm-6">
+              <igx-input-group>
+                <input
+                  igxInput
+                  name="fax"
+                  type="number"
+                  [(ngModel)]="office.fax"
+                  formControlName="fax"
+                />
+                <label igxLabel for="fax" id="fax"
+                  > Fax</label
+                >
+              </igx-input-group>
+            </div>
+            <div class="col-sm-6">
+              <igx-input-group>
+                <input
+                  igxInput
+                  name="address"
+                  type="text"
+                  required
+                  [(ngModel)]="office.address"
+                  formControlName="address"
+                />
+                <label igxLabel for="address" id="address"
+                  > Address</label
+                >
+              </igx-input-group>
+            </div>
+            <div class="col-sm-6">
+              <igx-input-group>
+                <input
+                  igxInput
+                  name="email"
+                  type="email"
+                  required
+                  formControlName="email"
+                  [(ngModel)]="office.email"
+                />
+                <label igxLabel for="email" id="email"
+                  > Email</label
+                >
+              </igx-input-group>
+            </div>
+          
+      </div>
+
+  </form>
+
   </div>
-</div>
+
+</ng-template>
+
+<ng-template pTemplate="footer">
+
+  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+  ></button>
+  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" ></button>
+</ng-template>
+</p-dialog>
+   

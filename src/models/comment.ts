@@ -3,4 +3,6 @@ export class Comment{
   text! : String;
   date! : Date;
   archived! : boolean;
+  writer!:String;
+  writerUrl!:String;
 }

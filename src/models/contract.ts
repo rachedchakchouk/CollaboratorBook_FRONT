@@ -1,3 +1,4 @@
+import { Clause } from './clause';
 export class Contract{
   id! : number;
  startDate! : Date;
@@ -8,4 +9,7 @@ export class Contract{
  eId!: number;
  contractType! : String;
  duration! : String;
+ empFullName!:String;
+ empURl!:String;
+ clauses!:Clause[];
 }

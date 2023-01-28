@@ -1,0 +1,238 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="New"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        style="margin-right: 10px;"
+        (click)="openDialogAddOffice()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="deleteSelectedcoffices()"
+        [disabled]="!selectedoffices || !selectedoffices.length"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="offices"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="[
+
+
+
+  
+      'id',
+      'name',
+      'mobile',
+      'phone',
+      'fax',
+      'address',
+      'email'
+    ]"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [(selection)]="selectedoffices"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Manage Offices</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="id" style="min-width: 5rem">
+          Id<p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th pSortableColumn="startDate">
+          Name<p-sortIcon field="startDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="contractType" style="min-width: 10rem">
+            mobile<p-sortIcon field="grossSalary"></p-sortIcon>
+        </th>
+        <th pSortableColumn="duration ">
+            phone <p-sortIcon field="contractType"></p-sortIcon>
+        </th>
+        <th pSortableColumn="inventoryStatus" style="min-width: 10rem">
+            address <p-sortIcon field="duration"></p-sortIcon>
+        </th>
+        <th pSortableColumn="inventoryStatus" style="min-width: 10rem">
+            email <p-sortIcon field="duration"></p-sortIcon>
+        </th>
+       
+        <th>Action</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-office>
+      <tr>
+        <td><p-tableCheckbox [value]="office"></p-tableCheckbox></td>
+        <td>{{ office.id }}</td>
+        <td>{{ office.name }}</td>
+        <td>{{ office.mobile }}</td>
+        <td>{{ office.phone }}</td>
+        <td>{{ office.address }}</td>
+        <td>{{ office.email }}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            style="margin-right: 10px;"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-info"
+            class="p-button-rounded p-button-info"
+            (click)="OfficeDetail(office.id)"
+            (click)="Departmentsize(office.id)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ offices ? offices.length : 0 }} offices.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="detailDialogue" [style]="{ width: '1000px' }" header="office detail" [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    
+    <div class="field">
+      <form [formGroup]="officeForm">
+        <h5>In total there are {{depSize}} DEPARTMENTS</h5>
+        <div class="row">
+            <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="name"
+                    type="text"
+                    required
+                    formControlName="name"
+                    [(ngModel)]="office.name"
+                  />
+                  <label igxLabel for="name" id="name"
+                    > Name</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="mobile"
+                    type="number"
+                    required
+                    [(ngModel)]="office.mobile"
+                    formControlName="mobile"
+                  />
+                  <label igxLabel for="mobile" id="mobile"
+                    > mobile</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="phone"
+                    type="number"
+                    required
+                    formControlName="phone"
+                    [(ngModel)]="office.phone"
+                  />
+                  <label igxLabel for="phone" id="phone"
+                    > phone</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="fax"
+                    type="number"
+                    [(ngModel)]="office.fax"
+                    formControlName="fax"
+                  />
+                  <label igxLabel for="fax" id="fax"
+                    > Fax</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="address"
+                    type="text"
+                    required
+                    [(ngModel)]="office.address"
+                    formControlName="address"
+                  />
+                  <label igxLabel for="address" id="address"
+                    > Address</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="email"
+                    type="email"
+                    required
+                    formControlName="email"
+                    [(ngModel)]="office.email"
+                  />
+                  <label igxLabel for="email" id="email"
+                    > Email</label
+                  >
+                </igx-input-group>
+              </div>
+            
+        </div>
+
+    </form>
+  
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+    ></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

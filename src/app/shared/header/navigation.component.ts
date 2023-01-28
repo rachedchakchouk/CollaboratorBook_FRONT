@@ -1,3 +1,6 @@
+import { Document } from './../../../models/document';
+import { DocumentService } from './../../services/RH/document.service';
+import { Router } from '@angular/router';
 import { EmployeeService } from "./../../services/RH/employee.service";
 import {
   Component,
@@ -17,23 +20,42 @@ declare var $: any;
   templateUrl: "./navigation.component.html",
 })
 export class NavigationComponent implements OnInit {
+  urlprofileimg!:String;
+  profilimg!:Document;
+  idUpdate!:Number;
+
+
   @Output() toggleSidebar = new EventEmitter<void>();
 
   public config: PerfectScrollbarConfigInterface = {};
 
   public showSearch = false;
   employe: Employee = new Employee();
+  arch:boolean=true;
   constructor(
     private modalService: NgbModal,
-    private employeeService: EmployeeService
+    private documentService: DocumentService,
+    private employeeService: EmployeeService,
+    private route:Router
   ) {}
   ngOnInit() {
+    this.employeeService.findArchivedByCompany(Number(localStorage.getItem("companyid"))).subscribe((rsl)=>{if(rsl.length!=0){this.arch=false}else{this.arch=true}})
     this.employeeService
       .getEmployeebyId(Number(localStorage.getItem("idemployee")))
       .subscribe((res) => {
-        console.log(res);
         this.employe = res;
       });
+      this.documentService.getaciveProfileimgByEmployee(Number(localStorage.getItem("idemployee"))).subscribe((dat)=>{
+        
+        
+       
+        
+        this.profilimg =dat[0];
+        this.urlprofileimg=this.profilimg.downloadUrl;
+        
+        
+    
+        });
   }
 
   // This is for Notifications
@@ -130,4 +152,12 @@ export class NavigationComponent implements OnInit {
       icon: "de",
     },
   ];
+  updateEmployee(){
+    this.idUpdate=(Number(localStorage.getItem("idemployee")));
+    this.route.navigate(["/component/badges"],{state:{data:this.idUpdate}})}
+  logout(){
+    localStorage.clear()
+    this.route.navigate(['/'])
+    
+  }
 }

@@ -1,15 +1,18 @@
 import { Project } from './../../../models/project';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/projects'
+ // accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/projects'
+  accessUrl='http://localhost:8081/RH/projects'
   getByIdUrl=this.accessUrl+'/'
   getByEmployeeUrl=this.accessUrl+'/byemployee/'
+  getByCompanyUrl=this.accessUrl+'/ByCompany/'
+  getActiveByCompanyUrl=this.accessUrl+'/active/ByCompany/'
+  getArchivedByCompanyUrl=this.accessUrl+'/archived/ByCompany/'
   getActiveByEmployeeUrl=this.accessUrl+'/active/byemployee/'
   getArchivedByEmployeeUrl=this.accessUrl+'/archived/byemployee/'
   newProjectUrl=this.accessUrl+'/newProject'
@@ -29,11 +32,21 @@ export class ProjectService {
     return this.http.get<Project[]>(this.getByEmployeeUrl+id) 
    };
    getActiveByEmployee(id:number){
-    return this.http.get<Project[]>(this.getArchivedByEmployeeUrl+id) 
+    return this.http.get<Project[]>(this.getActiveByEmployeeUrl+id) 
    };
    getArchivedByEmployee(id:number){
     return this.http.get<Project[]>(this.getArchivedByEmployeeUrl+id) 
    };
+   getByCompany(id:number){
+    return this.http.get<Project[]>(this.getByCompanyUrl+id) 
+   };
+   getActiveByCompany(id:number){
+    return this.http.get<Project[]>(this.getActiveByCompanyUrl+id) 
+   };
+   getArchivedByCompany(id:number){
+    return this.http.get<Project[]>(this.getArchivedByCompanyUrl+id) 
+   };
+   
   newProject(p:Project){
     return this.http.post<Project>(this.newProjectUrl,p)
   };

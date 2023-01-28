@@ -1,3 +1,7 @@
+import { Employee } from "./../../../../models/employee";
+import { EmployeeService } from "./../../../services/RH/employee.service";
+import { Company } from "./../../../../models/company";
+import { CompanyService } from "./../../../services/Buissness/company.service";
 import { AjouterclosesComponent } from "./../closes/ajoutercloses/ajoutercloses.component";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
@@ -24,12 +28,14 @@ export class AjouterContratComponent implements OnInit {
   clause!: Clause;
   type!: String[];
   duration!: String[];
-  selectedclauses: Clause[]=[];
+  selectedclauses: Clause[] = [];
   //startDate!:Date;
   contractForm!: FormGroup;
-
+  company!: Company;
+  idEmployer!: number;
+  employees!: Employee[];
   gs!: number;
-  f_duratin: boolean = true;
+  f_duratin: boolean = false;
 
   constructor(
     private clauseService: ClauseService,
@@ -39,13 +45,19 @@ export class AjouterContratComponent implements OnInit {
     private fb: FormBuilder,
     public dialogService: DialogService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private companyService: CompanyService,
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit() {
+   
     this.clauseService
-      .getall()
-      .subscribe((data: Clause[]) => (this.clauses = data));
+      .getActiveByCompany(Number(localStorage.getItem("companyid")))
+      .subscribe((data: Clause[]) => {
+        this.clauses = data;
+      });
+
     this.type = ["CDI", "CDD", "CIVP", "INTERSHIP"];
     this.duration = [
       "ONE_MONTH",
@@ -64,7 +76,11 @@ export class AjouterContratComponent implements OnInit {
         Validators.min(0),
         Validators.max(5000),
       ]),
-      netSalary: new FormControl("", Validators.required),
+      netSalary: new FormControl("", [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(5000),
+      ]),
       contractType: new FormControl("CDI", Validators.required),
     });
   }
@@ -90,6 +106,11 @@ export class AjouterContratComponent implements OnInit {
             .newcontract(this.contractForm.value)
             .subscribe((res: any) => {
               console.log(res);
+              this.contractservice
+                .addToEmployer(res["id"], this.idEmployer)
+                .subscribe((data) => {
+                  console.log(data);
+                });
 
               this.selectedclauses.forEach((element) => {
                 this.clauseService
@@ -113,8 +134,11 @@ export class AjouterContratComponent implements OnInit {
     console.log(event.value);
     this.contractForm.value.contractType = event.value;
     if (this.contractForm.value.contractType == "CDI") {
-      this.f_duratin = true;
       this.contractForm.value.duration = "UNLIMITED";
+      this.contractForm.patchValue({
+        duration: "UNLIMITED",
+      });
+      this.f_duratin = true;
     }
     if (this.contractForm.value.contractType == "CIVP") {
       this.contractForm.value.duration = "ONE_YEAR";
@@ -123,6 +147,7 @@ export class AjouterContratComponent implements OnInit {
       });
       this.f_duratin = true;
     }
+    // else this.f_duratin = false;
   }
   onChangeDuration(event: any) {
     console.log(event.value);
@@ -134,5 +159,9 @@ export class AjouterContratComponent implements OnInit {
       width: "70%",
       closable: true,
     });
+  }
+  onSelectEmployee() {}
+  cancel(){
+    this.router.navigate(["contract"]);
   }
 }

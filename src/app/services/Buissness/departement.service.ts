@@ -1,13 +1,14 @@
+import { Office } from './../../../models/office';
 import { Department } from './../../../models/department';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartementService {
-  accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/Departments';
+  //accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/Departments';
+  accesurl='http://localhost:8082/business/Departments';
   posturl=this.accesurl+'/newDepartment';
   getByOfficeurl=this.accesurl+'/byOffice/';
   getActiveByOfficeUrl=this.accesurl+'/active/byOffice/';
@@ -18,6 +19,7 @@ export class DepartementService {
   addToOfficeurl=this.accesurl+'/addToOffice/';
   archivedepartmenturl=this.accesurl+'/archive/';
   deleteurl=this.accesurl+'/delete/';
+  getOfficeUrl=this.accesurl+'/getOffice/';
   constructor(private http:HttpClient) { }
   getall(){
     return this.http.get<Department[]>(this.accesurl)
@@ -50,5 +52,8 @@ export class DepartementService {
   };
   delete(id:number){
     return this.http.delete(this.deleteurl+id)
+  };
+  getOffice(id:number){
+    return this.http.get<Office>(this.getOfficeUrl+id)
   };
 }

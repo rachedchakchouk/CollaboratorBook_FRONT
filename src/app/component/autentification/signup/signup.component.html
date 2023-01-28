@@ -1,1 +1,124 @@
-<p>signup works!</p>
+<section class="h-100 h-custom gradient-custom-2">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <form >
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-6">
+  
+                  <div class="form-group p-5">
+  
+                    <h3 class="fw-normal mb-5" style="color: black;">Company Infomation</h3>
+  
+ 
+  
+                    <div class="row">
+                      <div class="col-md-6 mb-4 pb-2">
+  
+                        <div class="form-outline">
+                          <input name="cname" type="text" id="form3Examplev2" class="form-control form-control-lg" [(ngModel)]="company.name"/>
+                          <label class="form-label" for="form3Examplev2">Company name</label>
+                        </div>
+  
+                      </div>
+                      <div class="col-md-6 mb-4 pb-2">
+  
+                        <div class="form-outline">
+                          <input name="cemail"  type="text" id="form3Examplev3" class="form-control form-control-lg"  [(ngModel)]="company.email"/>
+                          <label class="form-label" for="form3Examplev3">Company E_mail</label>
+                        </div>
+  
+                      </div>
+                    </div>
+  
+  
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline">
+                        <input  name="cadresse" type="text" id="form3Examplev4" class="form-control form-control-lg" [(ngModel)]="company.address" />
+                        <label class="form-label" for="form3Examplev4">Adresse</label>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+  
+                        <div class="form-outline">
+                          <input    name="cphone" type="text" id="form3Examplev5" class="form-control form-control-lg"  [(ngModel)]="company.phone" />
+                          <label class="form-label" for="form3Examplev5">Phone Number</label>
+                        </div>
+  
+                      </div>
+                      <div class="col-md-6">
+  
+                        <div class="form-outline">
+                          <input name="cmobile" type="text" id="form3Examplev6" class="form-control form-control-lg"  [(ngModel)]="company.mobile"/>
+                          <label class="form-label" for="form3Examplev6">Mobile Number</label>
+                        </div>
+  
+  
+                      </div>
+                    </div>
+  
+                  </div>
+  
+                </div>
+  
+                <div class="col-lg-6 bg-indigo text-white">
+                  <div class="p-5">
+                    <h3 class="fw-normal mb-5">Manager Details</h3>
+  
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline form-white">
+                        <input  name="mfname" type="text" id="form3Examplea2" class="form-control form-control-lg"  [(ngModel)]="company.managerFirstName"/>
+                        <label class="form-label" for="form3Examplea2">First Name</label>
+                      </div>
+                    </div>
+  
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline form-white">
+                        <input  name="mlname" type="text" id="form3Examplea3" class="form-control form-control-lg"  [(ngModel)]="company.managerLastName" />
+                        <label class="form-label" for="form3Examplea3">Last Name</label>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-5 mb-4 pb-2">
+  
+                        <div class="form-outline form-white">
+                          <input name="mphone"   type="text" id="form3Examplea4" class="form-control form-control-lg"  [(ngModel)]="company.managerPhoneNumber"/>
+                          <label class="form-label" for="form3Examplea4">Pro Phone Number</label>
+                        </div>
+  
+                      </div>
+  
+                    </div>
+  
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline form-white">
+                        <input  name="memail" type="text" id="form3Examplea6" class="form-control form-control-lg"  [(ngModel)]="company.managerEmail"/>
+                        <label class="form-label" for="form3Examplea6">Professional Email</label>
+                      </div>
+                    </div>
+  
+  
+                    <div class="form-check d-flex justify-content-start mb-4 pb-3">
+                      <input class="form-check-input me-3" type="checkbox" value="" id="form2Example3c" />
+                      <label class="form-check-label text-white" for="form2Example3">
+                        I do accept the <a href="#!" class="text-white"><u>Terms and Conditions</u></a> of your
+                        site.
+                      </label>
+                    </div>
+  
+                    <button type="submit" class="btn btn-light btn-lg"
+                            data-mdb-ripple-color="dark" (click)="register()" >Register</button>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+        </div>
+  

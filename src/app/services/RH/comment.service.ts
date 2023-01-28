@@ -1,12 +1,15 @@
+import { Employee } from './../../../models/employee';
+import { Comment } from './../../../models/comment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
-  accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/comment';
+  //accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/comment';
+  accessUrl='http://localhost:8081/RH/comment';
+
   postUrl=this.accessUrl+'/newComment'
   getbyPostUrl=this.accessUrl+'/post/'
   showActiveCommentsUrl=this.accessUrl+'/active/post/'
@@ -15,10 +18,11 @@ export class CommentService {
   updateUrl=this.accessUrl+'/update/'
   archiveUrl=this.accessUrl+'/archive/'
   //{commentId}/{postId}
-  addToPostUrl=this.accessUrl+'addtoPost/'
+  addToPostUrl=this.accessUrl+'/addtoPost/'
   //{commentId}/{employeeId}
-  addToEmployeeUrl=this.accessUrl+'addtoemployee/'
-  deleteUrl=this.accessUrl+'delete/'
+  addToEmployeeUrl=this.accessUrl+'/addtoemployee/'
+  deleteUrl=this.accessUrl+'/delete/'
+  getWriterUrl=this.accessUrl+'/getwriter/'
   constructor(private http:HttpClient) { }
   getall(){
     return this.http.get<Comment[]>(this.accessUrl);
@@ -42,7 +46,7 @@ export class CommentService {
     return this.http.put<Comment>(this.updateUrl+id,c)
   };
   archive(id:number){
-    return this.http.put(this.archiveUrl+id,null)
+    return this.http.delete(this.archiveUrl+id)
   };
   addToPost(commentId:number,postId:number){
     return this.http.put(this.addToPostUrl+commentId+'/'+postId,null)
@@ -53,4 +57,7 @@ export class CommentService {
   delete(id:number){
     return this.http.delete(this.deleteUrl+id)
   };
+  getWriter(id:number){
+    return this.http.get<Employee>(this.getWriterUrl+id)
+  }
 }

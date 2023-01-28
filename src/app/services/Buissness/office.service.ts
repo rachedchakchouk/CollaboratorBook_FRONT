@@ -1,13 +1,13 @@
 import { Office } from './../../../models/office';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfficeService {
-  accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/offices';
+  //accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/offices';
+  accesurl='http://localhost:8082/business/offices';
   getByCompanyUrl=this.accesurl+'/byCompany/';
   getActiveByCompanyUrl=this.accesurl+'/active/byCompany/';
   getArchivedByCompanyUrl=this.accesurl+'/active/byCompany/';

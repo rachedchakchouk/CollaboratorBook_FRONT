@@ -1,166 +1,408 @@
-<div class="row">
-  <!-- ---------------------------------------------- -->
-  <!-- 1. Badges -->
-  <!-- ---------------------------------------------- -->
-  <div class="col-12">
-    <!-- ---------------------
-                    start Badges
-                ---------------- -->
-    <div class="card w-100">
-      <div class="border-bottom p-3">
-        <h4 class="card-title mb-0">Badges</h4>
-      </div>
-      <div class="card-body">
-        <h1>Example heading <span class="badge bg-secondary">New</span></h1>
-        <h2>Example heading <span class="badge bg-secondary">New</span></h2>
-        <h3>Example heading <span class="badge bg-secondary">New</span></h3>
-        <h4>Example heading <span class="badge bg-secondary">New</span></h4>
-        <h5>Example heading <span class="badge bg-secondary">New</span></h5>
-        <h6>Example heading <span class="badge bg-secondary">New</span></h6>
-      </div>
-    </div>
-    <!-- ---------------------
-                    end Badges
-                ---------------- -->
-  </div>
-  <!-- ---------------------------------------------- -->
-  <!-- 2. Badges with button -->
-  <!-- ---------------------------------------------- -->
-  <div class="col-12">
-    <!-- ---------------------
-                    start Badges with button
-                ---------------- -->
-    <div class="card w-100">
-      <div class="border-bottom p-3">
-        <h4 class="card-title mb-0">Badges with button</h4>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-2">
-            <button
-              type="button"
-              class="
-                btn
-                btn-outline-primary
-                w-100
-                d-block
-              "
-            >
-            Notifications <span class="badge bg-dark">1</span>
-            </button>
+<div class="card">
+  <div class="container">
+    <div class="main-body">
+      <div class="row gutters-sm">
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img [src]="employee?.url" alt="">
+               
+            </div>
+            
           </div>
-          <div class="col-md-2">
-            <button
-              type="button"
-              class="
-                btn
-                btn-outline-info
-                w-100
-                d-block
-              "
-            >
-              Notifications <span class="badge bg-dark">1</span>
-            </button>
+      
+            <div class="card mt-3">
+            
+            </div>
           </div>
-          <div class="col-md-2">
-            <button
-              type="button"
-              class="
-                btn
-                btn-outline-danger
-                w-100
-                d-block
-              "
-            >
-              Notifications <span class="badge bg-dark">1</span>
-            </button>
-          </div>
-          <div class="col-md-2">
-            <button
-              type="button"
-              class="
-                btn
-                btn-outline-success
-                w-100
-                d-block
-              "
-            >
-              Notifications <span class="badge bg-dark">1</span>
-            </button>
-          </div>
-          <div class="col-md-2">
-            <button
-              type="button"
-              class="
-                btn
-                btn-outline-warning
-                w-100
-                d-block
-              "
-            >
-              Notifications <span class="badge bg-dark">1</span>
-            </button>
+         
+        </div>
+        
+        <div class="col-md-8">
+         
+          <div class="card mb-3">
+            <div class="card-body">
+              <h6 class="mb-5" style="margin-top: 20px; margin-right: 2rem;">Employee Informations</h6> 
+              <h4 class="mb-5" style="margin-top: 20px; margin-right: 2rem;">{{employee?.firstName}} {{employee?.lastName}}</h4>
+              <p class="mb-5" style="margin-top: 20px; margin-right: 2rem;"><i class="pi pi-envelope"></i>   {{employee?.professionalMail}} </p>
+              <p class="mb-5" style="margin-top: 20px; margin-right: 2rem;"><i class="pi pi-phone"></i>  00216   {{employee?.professionalPhone}} </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- ---------------------
-                    end Badges with button
-                ---------------- -->
   </div>
-  <!-- ---------------------------------------------- -->
-  <!-- 3. Badges -->
-  <!-- ---------------------------------------------- -->
-  <div class="col-12">
-    <!-- ---------------------
-                    start Badges with Background
-                ---------------- -->
-    <div class="card w-100">
-      <div class="border-bottom p-3">
-        <h4 class="card-title mb-0">Badges with Background</h4>
-      </div>
-      <div class="card-body">
-        <span class="mb-1 me-2 badge bg-primary">Primary</span>
-        <span class="mb-1 me-2 badge bg-secondary">Secondary</span>
-        <span class="mb-1 me-2 badge bg-success">Success</span>
-        <span class="mb-1 me-2 badge bg-danger">Danger</span>
-        <span class="mb-1 me-2 badge bg-warning">Warning</span>
-        <span class="mb-1 me-2 badge bg-info">Info</span>
-        <span class="mb-1 me-2 badge bg-light text-dark">Light</span>
-        <span class="mb-1 me-2 badge bg-dark">Dark</span>
-        
-      </div>
-    </div>
-    <!-- ---------------------
-                    end Badges with Background
-                ---------------- -->
+</div>
+<div class="card">
+  <div class="container">
+    <div class="main-body">
+     
+              
+              <p-tabView>
+                  <p-tabPanel header="about " leftIcon="pi pi-id-card" tooltip="about">
+                    <h5>Personal informations</h5>
+                    <div class="card">
+                      
+                      <div class="flex">
+                        <div class="row">
+                          <div class="col-sm-6"></div>
+                          <div class="col-sm-6"><p-button  icon="pi pi-user-edit"  *ngIf="employee?.id==iduser">edit </p-button></div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">First Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{employee?.firstName}} 
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Last Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{employee?.lastName}} 
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Birth Date </h6>
+                            <div class="col-sm-9 text-secondary">
+                             
+                  <p-calendar  dateFormat="yy-mm-dd"  inputId="dateformat"   placeholder={{employee?.birthDate}}> </p-calendar>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Adress</h6>
+                            <div class="col-sm-9 text-secondary">
+                              <span class="p-input-icon-left">
+                                <i class="pi pi-pencil"></i>
+                                <input type="text" class="p-inputtext-sm" pInputText [placeholder]="employee?.adresse"  />
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              <span class="p-input-icon-left">
+                                <i class="pi pi-pencil"></i>
+                                <input type="number" class="p-inputtext-sm" pInputText [placeholder]="employee?.personalPhone"  />
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              <span class="p-input-icon-left">
+                                <i class="pi pi-pencil"></i>
+                                <input type="email" class="p-inputtext-sm" pInputText [placeholder]="employee?.personalMail"  />
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Family Sitaution</h6>
+                            <div class="col-sm-9 text-secondary">
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Child In Charge</h6>
+                            <div class="col-sm-9 text-secondary">
+                              <span class="p-input-icon-left">
+                                <i class="pi pi-pencil"></i>
+                                <input type="number" class="p-inputtext-sm" pInputText [placeholder]="employee?.childNumber"  />
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">CIN</h6>
+                            <div class="col-sm-9 text-secondary">
+                              <span class="p-input-icon-left">
+                                <i class="pi pi-pencil"></i>
+                                <input type="number" class="p-inputtext-sm" pInputText [placeholder]="employee?.cin"  />
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Delevery Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                            </div>
+                          </div>
+                         
+                        </div>
+                        
+                        
+                      
+                       
+                          
+                      
+                          
+                      </div>
+                  </div>
+                  </p-tabPanel>
+                  <p-tabPanel header="published" leftIcon="pi pi-share-alt" tooltip="published">
+                    <div class="col-md-8">
+                      <div class="feed">
+                        <!-- <form [formGroup]="postForm">
+                          <div class="share border bg-white">
+                            <div class="d-flex flex-row inputs p-2 py-4">
+                              <img
+                                *ngIf="urlprofileimg != null"
+                                class="rounded-circle"
+                                src="{{ urlprofileimg }}"
+                                width="40"
+                              />
+                              <img
+                                *ngIf="urlprofileimg == null"
+                                class="rounded-circle"
+                                src="../assets/images/users/user.jpg"
+                                width="40"
+                              />
+                    
+                              <input
+                                type="text"
+                                class="border-0 form-control share-input"
+                                [placeholder]="
+                                  'Share your thoughts ' + user?.firstName + ' ' + user?.lastName
+                                "
+                                formControlName="text"
+                              />
+                            </div>
+                            <div class="d-flex flex-row justify-content-between border-top">
+                              <div class="d-flex flex-row publish-options">
+                                <div class="align-items-center border-right p-2 share">
+                                  <div class="publish-button">
+                                    <div
+                                      class="align-items-center border-left p-2 px-5 btn publish"
+                                    >
+                                      <span class="ml-1" (click)="addDocument()">Photo</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="align-items-center border-right p-2 share">
+                                  <div class="publish-button">
+                                    <div
+                                      class="align-items-center border-left p-2 px-5 btn publish"
+                                    >
+                                      <span hidden class="ml-1">Video </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="align-items-center border-right p-2 share">
+                                  <div class="publish-button">
+                                    <div
+                                      class="align-items-center border-left p-2 px-5 btn publish"
+                                    >
+                                      <span hidden class="ml-1">File</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="align-items-center border-right p-2 share">
+                                <div class="publish-button">
+                                  <div class="align-items-center border-left p-2 px-5 btn publish">
+                                    <span class="ml-1" (click)="addnewPost()">Publish</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form> -->
+                    
+                        <div class="feed-post mt-2 border" *ngFor="let post of posts">
+                          <div class="p-2 bg-white">
+                            <div
+                              class="d-flex flex-row justify-content-between align-items-start profile"
+                            >
+                              <div class="d-flex align-items-center">
+                                <img
+                                  *ngIf="post.employeeUrl != null"
+                                  class="rounded-circle img-responsive"
+                                  [src]="post?.employeeUrl"
+                                  width="50"
+                                  height="50"
+                                />
+                                <img
+                                  *ngIf="post.employeeUrl == null"
+                                  class="rounded-circle img-responsive"
+                                  src="../assets/images/users/user.jpg"
+                                  width="50"
+                                  height="50"
+                                />
+                                <div class="d-flex flex-column ml-2">
+                                  <span>{{ post?.employeeFullName }}</span>
+                                  <h6>{{ post?.text }}</h6>
+                                  
+                                </div>
+                              </div>
+                              <i class="fa fa-ellipsis-h text-black-50 mt-2"
+                                >
+                                <span>{{ post?.date }}</span>
+                                <!-- <button pButton pRipple type="button" icon="pi pi-trash
+                                " class="p-button-rounded p-button-warning p-button-text"
+                                (click)="archive(post.id)"
+                                ></button> -->
+                                </i
+                              >
+                            </div>
+                            <div class="profile-content">
+                              <div *ngIf="post?.photo != null" class="content-image">
+                                <img [src]="post?.photo" />
+                              </div>
+                            </div>
+                            <div class="profile-engagements">
+                            <div class="share border bg-white">
+                              <a *ngIf="post?.comments?.length>1 && post?.comments!=null">{{post?.comments?.length}} comments</a>
+                              <div 
+                              style="margin-top: 2rem; margin-left: 2rem; margin-right: 2rem;"
+                              class="share border bg-white"
+                              *ngFor="let comment of post.comments"
+                              >
+                                <div *ngIf="comment.text !=''"
+                                 
+                                  class="d-flex flex-row justify-content-between align-items-start profile"
+                                  style="margin-left: 2rem; margin-right: 2rem; "
+                                >
+                                  <div class="d-flex align-items-center"  >
+                                    <img 
+                                      *ngIf="comment.writerUrl != null"
+                                      class="rounded-circle img-responsive"
+                                      [src]="comment?.writerUrl"
+                                      width="50"
+                                      height="50"
+                                    />
+                                    <img
+                                      *ngIf="comment.writerUrl == null"
+                                      class="rounded-circle img-responsive"
+                                      src="../assets/images/users/user.jpg"
+                                      width="50"
+                                      height="50"
+                                    />
+                                    <div class="d-flex flex-column ml-2">
+                                      <span>{{ comment?.writer }}</span>
+                                      <span class="time">{{ comment?.text }}</span>
+                                    </div>
+                                  </div>
+                                  <i class="fa fa-ellipsis-h text-black-50 mt-2">
+                                    <div class="profile-content">
+                                      
+                                      <span>{{ comment?.date }}</span>
+                                      <!-- <button pButton pRipple type="button" icon="pi pi-trash
+                                      " class="p-button-rounded p-button-secondary p-button-text"
+                                      (click)="archiveComment(comment.id)"
+                                      ></button> -->
+                                    </div>
+                                  </i>
+                                </div>
+                              </div>
+                            </div>
+                              <!-- <div class="feed">
+                                <form [formGroup]="commentForm">
+                                  <div class="d-flex flex-row inputs p-2 py-4">
+                                    <img
+                                      *ngIf="urlprofileimg != null"
+                                      class="rounded-circle"
+                                      src="{{ urlprofileimg }}"
+                                      width="40"
+                                    />
+                                    <img
+                                      *ngIf="urlprofileimg == null"
+                                      class="rounded-circle"
+                                      src="../assets/images/users/user.jpg"
+                                      width="40"
+                                    />
+                    
+                                    <input
+                                      type="text"
+                                      class="border-0 form-control share-input"
+                                      [placeholder]="' Comment this post ' + user?.firstName + '!'"
+                                      formControlName="text"
+                                    />
+                                  </div>
+                                  <div class="d-flex flex-row justify-content-between border-top">
+                                    <div class="d-flex flex-row publish-options"></div>
+                                    <div class="align-items-center border-right p-2 share">
+                                      <div class="publish-button">
+                                        <div
+                                          class="align-items-center border-left p-2 px-5 btn publish"
+                                        >
+                                          <span class="ml-1" (click)="addnewComment(post.id)"
+                                            >Comment</span
+                                          >
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+                      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+                      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    </div>
+                  </p-tabPanel>
+                  <p-tabPanel header="Documents" leftIcon="pi pi-images"  tooltip="Documents">
+                    <div class="card">
+                      <p-tabView>
+                        <p-tabPanel header="all" leftIcon="pi pi-images"  tooltip="all Documents">
+                          <p-galleria #galleria [(value)]="allDocs"  [numVisible]="5" [containerStyle]="{'max-width':'640px'}" [containerClass]="galleriaClass()" [showThumbnails]="showThumbnails"
+                          [showItemNavigators]="true" [showItemNavigatorsOnHover]="true" [circular]="true" [autoPlay]="false" [transitionInterval]="3000"> 
+                      <ng-template pTemplate="item" let-item>
+                          <img [src]="item.downloadUrl" [ngStyle]="{'width': !fullscreen ? '100%' : '', 'display': !fullscreen ? 'block' : ''}" />
+                      </ng-template>
+                      <ng-template pTemplate="thumbnail" let-item>
+                          <div class="grid grid-nogutter justify-content-center">
+                              <img [src]="item.downloadUrl" />
+                          </div>
+                      </ng-template>
+                      <ng-template pTemplate="footer" let-item>
+                          <div class="custom-galleria-footer">
+                              <button type="button" pButton icon="pi pi-list" (click)="onThumbnailButtonClick()"></button>
+                              
+                              <!-- <button type="button" pButton [icon]="fullScreenIcon()"  class="fullscreen-button"></button> -->
+                          </div>
+                      </ng-template>
+                      </p-galleria>
+                        </p-tabPanel>
+                        <p-tabPanel header="Photo profile" leftIcon="pi pi-image"  tooltip="Photo">
+                          <p-image [src]="employee?.url"  width="250" [preview]="true"></p-image>
+                        </p-tabPanel>
+                      </p-tabView>
+                      
+                  </div>
+                  </p-tabPanel>
+                  <p-tabPanel header="contract" leftIcon="pi pi-file"  tooltip="contract">
+                    <div class="card">
+                      <h5 *ngIf="contract?.contractType=='CDD'" >  The fixed-term employment contract </h5>
+                      <h5 *ngIf="contract?.contractType=='CIVP'" > the contract of initiation to professional life    </h5>
+                      <h5 *ngIf="contract?.contractType=='CDI'" > Permanent contract </h5>
+                      <h5 *ngIf="contract?.contractType=='INTERSHIP'" > Intership contract </h5>
+                      <p> the company  {{company?.name}} presented by {{manager?.firstName}} {{manager?.lastName}} </p>
+                      <p> recruite  {{employee?.firstName}} {{employee?.lastName}} </p>
+                      <p> for the period of {{contract?.duration}} started at {{contract?.startDate}}</p>
+                      <p> and paied {{contract?.grossSalary}}TND as a GrossSalary </p>
+                      <p> every part in this contract need to respect all the clauses of contract </p>
+                      <div *ngFor="let c of contract?.clauses">
+                        <h6>Clause {{c.title}}:</h6>
+                        <p>{{c.description}}</p>
+
+                      </div>
+                      
+                  </div>
+                  </p-tabPanel>
+                  <p-tabPanel header="Projects" leftIcon="pi pi-list"  tooltip="Projects">
+                    <div class="card">
+                      <p-timeline [value]="projects" layout="horizontal" align="alternate">
+                        <ng-template pTemplate="content" let-project>
+                            {{project.name}}
+                        </ng-template>
+                        <ng-template pTemplate="opposite" let-project>
+                             {{project.startDate}}
+                        </ng-template>
+                    </p-timeline>
+                  </div>
+                  </p-tabPanel>
+              </p-tabView>
+              <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger" (click)="close()"></button>
+    
   </div>
-  <!-- ---------------------------------------------- -->
-  <!-- 3. Badges Pill -->
-  <!-- ---------------------------------------------- -->
-  <div class="col-12">
-    <!-- ---------------------
-                    start Badges Pill with Background
-                ---------------- -->
-    <div class="card w-100">
-      <div class="border-bottom p-3">
-        <h4 class="card-title mb-0">Badges Pill with Background</h4>
-      </div>
-      <div class="card-body">
-        <span class="mb-1 me-2 badge rounded-pill bg-primary">Primary</span>
-        <span class="mb-1 me-2 badge rounded-pill bg-secondary">Secondary</span>
-        <span class="mb-1 me-2 badge rounded-pill bg-success">Success</span>
-        <span class="mb-1 me-2 badge rounded-pill bg-danger">Danger</span>
-        <span class="mb-1 me-2 badge rounded-pill bg-warning"
-          >Warning</span
-        >
-        <span class="mb-1 me-2 badge rounded-pill bg-info">Info</span>
-        <span class="mb-1 me-2 badge rounded-pill bg-light text-dark">Light</span>
-        <span class="mb-1 me-2 badge rounded-pill bg-dark">Dark</span>
-      </div>
-    </div>
-    <!-- ---------------------
-                    end Badges Pill with Background
-                ---------------- -->
-  </div>
+ 
+</div>
 </div>

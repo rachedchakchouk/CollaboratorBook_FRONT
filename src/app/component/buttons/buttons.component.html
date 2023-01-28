@@ -1,327 +1,339 @@
-<div class="row">
-  <div class="col-lg-12">
-    <!-- ==================================-->
-    <!-- ======= General Button ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">General Buttons</h4>
+<div class="card">
+  <p-dataView
+    #dv
+    [value]="employees"
+    [paginator]="true"
+    [rows]="9"
+    layout="grid"
+  >
+    <ng-template pTemplate="header">
+      <div class="flex flex-column md:flex-row md:justify-content-between">
+        <button
+          pButton
+          pRipple
+          type="button"
+          [hidden]="deletefList"
+          label="Deleted Liste"
+          class="p-button-warning"
+          (click)="deletedListe()"
+        ></button>
+        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
       </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn btn-success</code> to quickly create a General
-          btn.
-        </h6>
-        <div class="button-group">
-          <button
-            type="button"
-            *ngFor="let buttondata of buttonsdata"
-            class="btn btn-{{ buttondata.btn }}"
-          >
-            {{ buttondata.btn }}
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ==================================-->
-  <!-- ======= Outline Button ===== -->
-  <!-- ==================================-->
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Button with outline</h4>
-      </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn btn-outline-success</code> to quickly create a
-          General btn.
-        </h6>
-        <div class="button-group">
-          <button
-            type="button"
-            *ngFor="let buttondata of buttonsdata"
-            class="btn btn-outline-{{ buttondata.btn }}"
-          >
-            {{ buttondata.btn }}
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ==================================-->
-  <!-- ======= Outline Button ===== -->
-  <!-- ==================================-->
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Rounded Buttons</h4>
-      </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn btn-rounded btn-success</code> to quickly
-          create a General btn.
-        </h6>
-        <div class="button-group">
-          <!-- <button
-            type="button"
-            *ngFor="let buttondata of buttonsdata"
-            class="btn btn-rounded btn-{{ buttondata.btn }}"
-          >
-            {{ buttondata.btn }}
-          </button> -->
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ==================================-->
-  <!-- ======= Button size ===== -->
-  <!-- ==================================-->
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Button Sizes</h4>
-      </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn btn-lg btn-success</code> to quickly create a
-          General btn.
-        </h6>
-        <div class="button-group">
-          <button type="button" class="btn btn-lg btn-primary">
-            Large .btn-lg
-          </button>
-          <button type="button" class="btn btn-secondary">Normal .btn</button>
-          <button type="button" class="btn btn-sm btn-success">
-            Small .btn-sm
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </ng-template>
 
-<div class="row">
-  <div class="col-12">
-    <!-- ==================================-->
-    <!-- ======= block Button ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Block buttons</h4>
+    <ng-template let-employee pTemplate="listItem">
+      <div class="col-12">
+        <div class="product-list-item">
+          <img [src]="employee.url" [alt]="" />
+          <div class="product-list-detail">
+            <div class="product-name">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </div>
+            <div class="product-description">
+              {{ employee.professionalMail }}
+            </div>
+          </div>
+          <div class="product-list-action">
+            <div>
+              <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+              <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+              <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+            </div>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-info"
+              type="button"
+              label="DETAILS"
+              class="p-button-info"
+              (click)="getDetail(employee.id)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              type="button"
+              label="UPDATE"
+              class="p-button-warning"
+              (click)="updateEmployee(employee.id)"
+            ></button>
+          </div>
+        </div>
       </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn d-block w-100 btn-success</code> to quickly create
-          a General btn.
-        </h6>
-        <div class="row button-group">
+    </ng-template>
+    <ng-template let-employee pTemplate="gridItem">
+      <div class="p-col-12 p-md-4">
+        <div class="product-grid-item card">
+          <div class="product-grid-item-top">
+          
+           
+              <p-tag *ngIf="employee.role=='ADMIN'" styleClass="mr-2" icon="pi pi-user" severity="danger" [value]="employee.role"></p-tag>
+              <p-tag *ngIf="employee.role=='EMPLOYEE'" styleClass="mr-2" icon="pi pi-user" severity="success" [value]="employee.role"></p-tag>
+              <p-tag *ngIf="employee.role=='HUM_RES'" styleClass="mr-2" icon="pi pi-user" severity="warning" [value]="employee.role"></p-tag>
+          </div>
+          <div class="product-grid-item-content">
+            
+              <img [src]="employee.url" alt="" />
+        
+            <div class="product-name">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </div>
+            <div class="product-description">
+              {{ employee.professionalMail }}
+           
+          </div>
+          </div>
+          <div class="product-grid-item-bottom">
+            
+              <button pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-info p-button-outlined" (click)="getDetail(employee.id)"></button>
+              <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-outlined" (click)="updateEmployee(employee.id)"></button>
+             
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+
+  <p-dialog
+    [(visible)]="detailDialogue"
+    [style]="{ width: '1000px' }"
+    header="Employee Informations"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="main-body">
+        <div class="row gutters-sm">
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img id="logo" alt="Image not chosen" [src]="employee?.url" />
+                  <div class="mt-3">
+                    <h4>{{ employee?.firstName }} {{ employee?.lastName }}</h4>
+                    <p class="text-secondary mb-1">
+                      {{ employee?.job.name }}
+                    </p>
+                    <p class="text-muted font-size-sm">
+                      {{ dep?.name }},{{ office?.name }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-3">
+              <h6 [hidden]="archivedContract?.length != 0">
+                No Classed Contract to show
+              </h6>
+              <!-- TO add somthing -->
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">First Name</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.firstName }}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Last Name</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.lastName }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Birth Date</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.birthDate }}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Adress</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.adresse }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Personal Phone</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.personalPhone }}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Personal Email</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.personalMail }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Family Sitaution</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.statusF }}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Child In Charge</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.childNumber }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">CIN</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.cin }}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Delevery Date</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.deleveryDate }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Professional Phone</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.professionalPhone }}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <h6 class="mb-0">Professional Email</h6>
+                    <div class="col-sm-9 text-secondary">
+                      {{ employee?.professionalMail }}
+                    </div>
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </div>
+            <div class="row gutters-sm" [hidden]="contract != null">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2">assignment</i>No
+                    Contract
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="row gutters-sm" [hidden]="contract == null">
+              <div class="col-sm-6 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6 class="d-flex align-items-center mb-3">
+                      <i class="material-icons text-info mr-2">assignment</i
+                      >Contract Informations
+                    </h6>
+                    <small>Start Date</small>
+                    <div>
+                      {{ contract?.startDate }}
+                    </div>
+                    <hr />
+                    <small>Gross Salary</small>
+                    <div></div>
+                    <hr />
+
+                    <small>Net Salary</small>
+                    <div></div>
+                    <hr />
+                    <small>Type</small>
+                    <div></div>
+                    <hr />
+                    <small>Duration</small>
+                    <div></div>
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6 class="d-flex align-items-center mb-3">
+                      <i class="material-icons text-info mr-2">assignment</i>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Delete"
+        [hidden]="employee.role=='ADMIN'"
+        class="p-button-rounded p-button-danger"
+        (click)="Delete(employee.id)"
+      ></button>
+    </ng-template>
+  </p-dialog>
+
+  <p-dialog
+    [(visible)]="archviedListe"
+    [style]="{ width: '1000px' }"
+    header="Employee Informations"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <p-dataView
+        #dv
+        [value]="aEmployees"
+        [paginator]="true"
+        [rows]="9"
+        layout="list"
+      >
+        <ng-template pTemplate="header">
           <div
-            class="col-lg-2 col-md-4 d-grid"
-            *ngFor="let buttondata of buttonsdata"
-          >
-            <button type="button" class="btn btn-{{ buttondata.btn }}">
-              {{ buttondata.btn }}
-            </button>
+            class="flex flex-column md:flex-row md:justify-content-between"
+          ></div>
+        </ng-template>
+        <ng-template let-aemployee pTemplate="listItem">
+          <div class="col-12">
+            <div class="product-list-item">
+              <img [src]="aemployee.url" [alt]="" />
+              <div class="product-list-detail">
+                <div class="product-name">
+                  {{ aemployee.firstName }} {{ aemployee.lastName }}
+                </div>
+                <div class="product-description">
+                  {{ aemployee.professionalMail }}
+                </div>
+                <div>{{ aemployee.birthDate }}</div>
+              </div>
+              <div class="product-list-action">
+                <p-button
+                  pRipple
+                  label="activate"
+                  icon="pi pi-linkedin"
+                  (click)="reactivate(aemployee.id)"
+                ></p-button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </ng-template>
+      </p-dataView>
+    </ng-template>
 
-    <!-- ==================================-->
-    <!-- ======= block Outline ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Block outline buttons</h4>
-      </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn btn-outline-success</code> to quickly create a
-          General btn.
-        </h6>
-        <div class="row button-group">
-          <div
-            class="col-lg-2 col-md-4 d-grid"
-            *ngFor="let buttondata of buttonsdata"
-          >
-            <button type="button" class="btn btn-outline-{{ buttondata.btn }}">
-              {{ buttondata.btn }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ==================================-->
-    <!-- ======= large block Button ===== -->
-    <!-- ==================================-->
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Large Block buttons</h4>
-      </div>
-      <div class="card-body border-top">
-        <h6 class="card-subtitle fw-normal mb-3">
-          Use a classes <code>btn d-block w-100 btn-lg btn-success</code> to quickly
-          create a General btn.
-        </h6>
-        <div class="row button-group">
-          <div
-            class="col-lg-2 col-md-4 d-grid"
-            *ngFor="let buttondata of buttonsdata"
-          >
-            <button type="button" class="btn btn-lg btn-{{ buttondata.btn }}">
-              {{ buttondata.btn }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Row -->
-<!-- ==================================-->
-<!-- =======checkbox Button ===== -->
-<!-- ==================================-->
-<div class="row">
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Checkbox buttons</h4>
-      </div>
-      <div class="card-body border-top">
-        <div
-          class="btn-group"
-          role="group"
-          aria-label="Basic checkbox toggle button group"
-        >
-          <input
-            type="checkbox"
-            class="btn-check"
-            [(ngModel)]="model.left"
-            id="btncheck1"
-          />
-          <label class="btn btn-outline-primary" for="btncheck1">Left</label>
-
-          <input
-            type="checkbox"
-            class="btn-check"
-            [(ngModel)]="model.middle"
-            id="btncheck2"
-          />
-          <label class="btn btn-outline-primary" for="btncheck2">Middle</label>
-
-          <input
-            type="checkbox"
-            class="btn-check"
-            [(ngModel)]="model.right"
-            id="btncheck3"
-          />
-          <label class="btn btn-outline-primary" for="btncheck3">Right</label>
-        </div>
-        <pre class="p-2 bg-light rounded-3 mt-3"><code >{{ model | json }}</code></pre>
-      </div>
-    </div>
-  </div>
-  <!-- ==================================-->
-  <!-- =======checbox Button ===== -->
-  <!-- ==================================-->
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Checkbox buttons(Reactive Forms)</h4>
-      </div>
-      <div class="card-body border-top">
-        <form [formGroup]="checkboxGroupForm">
-          <div class="btn-group btn-group-toggle">
-            <input
-              type="checkbox"
-              class="btn-check"
-              formControlName="left"
-              id="btncheck4"
-            />
-            <label class="btn btn-outline-primary" for="btncheck4">Left</label>
-
-            <input
-              type="checkbox"
-              class="btn-check"
-              formControlName="middle"
-              id="btncheck5"
-            />
-            <label class="btn btn-outline-primary" for="btncheck5"
-              >Middle</label
-            >
-
-            <input
-              type="checkbox"
-              class="btn-check"
-              formControlName="right"
-              id="btncheck6"
-            />
-            <label class="btn btn-outline-primary" for="btncheck6">Right</label>
-          </div>
-        </form>
-        <pre class="p-2 bg-light rounded-3 mt-3"><code>{{ checkboxGroupForm.value | json }}</code></pre>
-      </div>
-    </div>
-  </div>
-  <!-- ==================================-->
-  <!-- =======Radio Button ===== -->
-  <!-- ==================================-->
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Radio Buttons</h4>
-      </div>
-      <div class="card-body border-top">
-        <div
-          class="btn-group btn-group-toggle"
-          ngbRadioGroup
-          name="radioBasic"
-          [(ngModel)]="model1"
-        >
-          <label ngbButtonLabel class="btn-primary">
-            <input ngbButton type="radio" [value]="1" /> Left (pre-checked)
-          </label>
-          <label ngbButtonLabel class="btn-primary">
-            <input ngbButton type="radio" value="middle" /> Middle
-          </label>
-          <label ngbButtonLabel class="btn-primary">
-            <input ngbButton type="radio" [value]="false" /> Right
-          </label>
-        </div>
-        <pre class="p-2 bg-light rounded-3 mt-3 fs-4">{{ model1 }}</pre>
-      </div>
-    </div>
-  </div>
-  <!-- ==================================-->
-  <!-- =======Radio Button ===== -->
-  <!-- ==================================-->
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="p-3">
-        <h4 class="card-title mb-0">Radio Buttons(Reactive Forms)</h4>
-      </div>
-      <div class="card-body border-top">
-        <form [formGroup]="radioGroupForm">
-          <div
-            class="btn-group btn-group-toggle"
-            ngbRadioGroup
-            name="radioBasic"
-            formControlName="model"
-          >
-            <label ngbButtonLabel class="btn-primary">
-              <input ngbButton type="radio" [value]="1" /> Left (pre-checked)
-            </label>
-            <label ngbButtonLabel class="btn-primary">
-              <input ngbButton type="radio" value="middle" /> Middle
-            </label>
-            <label ngbButtonLabel class="btn-primary">
-              <input ngbButton type="radio" [value]="false" /> Right
-            </label>
-          </div>
-        </form>
-        <pre class="p-2 bg-light rounded-3 mt-3 fs-4">{{ radioGroupForm.value["model"] }}</pre>
-      </div>
-    </div>
-  </div>
+    <ng-template pTemplate="footer"> </ng-template>
+  </p-dialog>
 </div>

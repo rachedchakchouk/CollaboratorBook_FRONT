@@ -1,13 +1,14 @@
+import { Employee } from './../../../models/employee';
 import { Post } from './../../../models/post';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/post'
+  //accessUrl=environment.gatewayUrl+'/RH-SERVICE/RH/post'
+  accessUrl='http://localhost:8081/RH/post'
   showByCompanyPostUrl=this.accessUrl+'/'
   showActivePostUrl=this.accessUrl+'/active/'
   showArchivedPostUrl=this.accessUrl+'/archived/'
@@ -20,6 +21,7 @@ export class PostService {
   updatePostUrl=this.accessUrl+'/update/'
   archivePostUrl=this.accessUrl+'/archivepost/'
   removePostUrl=this.accessUrl+'/deletepost/'
+  getEmployeeUrl=this.accessUrl+'/employeebypost/'
   constructor(private http:HttpClient) { }
   showByCompanyPost(id:number){
     return this.http.get<Post[]>(this.showByCompanyPostUrl+id)
@@ -49,9 +51,12 @@ export class PostService {
     return this.http.put<Post>(this.updatePostUrl+id,p)
   };
   archivePost(id:number){
-    return this.http.put(this.archivePostUrl+id,null)
+    return this.http.delete(this.archivePostUrl+id)
   };
   removePost(id:number){
     return this.http.delete(this.removePostUrl+id)
   };
+  getEmployee(id:number){
+    return this.http.get<Employee>(this.getEmployeeUrl+id)
+  }
 }

@@ -1,0 +1,1052 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+
+<!-- <pre>{{ employeeForm.value | json }}</pre> -->
+<div class="container">
+  <div class="card">
+    <igx-stepper #stepper [linear]="linear">
+      <ng-template igxStepActiveIndicator>
+        <igx-icon>edit</igx-icon>
+      </ng-template>
+
+      <igx-step #step1 [isValid]="employeeForm.valid">
+        <span igxStepTitle>Personal Informations</span>
+        <div igxStepContent>
+          <form [formGroup]="employeeForm">
+            <div class="row">
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="firstName"
+                    type="text"
+                    required
+                    formControlName="firstName"
+                  />
+                  <label igxLabel for="firstName" id="firstName"
+                    >First Name</label
+                  >
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="lastName"
+                    type="text"
+                    required
+                    formControlName="lastName"
+                  />
+                  <label igxLabel for="lastName" id="lastName">Last Name</label>
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-date-picker formControlName="birthDate">
+                  <label igxLabel>BirthDate</label>
+                </igx-date-picker>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="adress"
+                    type="text"
+                    required
+                    formControlName="adresse"
+                  />
+                  <label igxLabel for="adress" id="adress">Adress</label>
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <igx-prefix>+216</igx-prefix>
+                  <label igxLabel for=" phone">Personal Phone</label>
+                  <input
+                    igxInput
+                    name="phone"
+                    type="tel"
+                    formControlName="personalPhone"
+                  />
+                  <igx-icon igxSuffix>phone</igx-icon>
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="personalMail"
+                    type="email"
+                    required
+                    email
+                    formControlName="personalMail"
+                  />
+                  <label igxLabel for="personalMail" id="personalMail"
+                    >Personnal Email</label
+                  >
+                  <igx-icon igxSuffix>mail</igx-icon>
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group
+                  #inputGroup
+                  [igxToggleAction]="dropDown"
+                  class="input-group"
+                >
+                  <input
+                    #input
+                    class="input"
+                    type="text"
+                    igxInput
+                    [igxDropDownItemNavigation]="dropDown"
+                    readonly="true"
+                    placeholder="Family Sitaution"
+                    [value]="dropDown.selectedItem?.value"
+                    (keydown.ArrowDown)="openDropDown()"
+                  />
+                  <igx-suffix
+                    igxButton="icon"
+                    class="dropdownToggleButton"
+                    igxRipple
+                  >
+                    <igx-icon
+                      >arrow_drop{{
+                        dropDown.collapsed ? "_down" : "_up"
+                      }}</igx-icon
+                    >
+                  </igx-suffix>
+                </igx-input-group>
+                <span> {{ dropDown.selectedItem?.value }}</span>
+
+                <igx-drop-down #dropDown [width]="'180px'">
+                  <igx-drop-down-item
+                    *ngFor="let item of items"
+                    [value]="item.field"
+                  >
+                    {{ item.field }}
+                  </igx-drop-down-item>
+                </igx-drop-down>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="fullName"
+                    type="number"
+                    required="required"
+                    formControlName="childNumber"
+                  />
+                  <label igxLabel for="fullName">Child in charge</label>
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-input-group>
+                  <input
+                    igxInput
+                    name="fullName"
+                    type="number"
+                    required="required"
+                    formControlName="cin"
+                  />
+                  <label igxLabel for="fullName">CIN</label>
+                </igx-input-group>
+              </div>
+              <div class="col-sm-6">
+                <igx-date-picker formControlName="deleveryDate">
+                  <label igxLabel>DeleveryDate</label>
+                </igx-date-picker>
+              </div>
+              <div class="col-sm-6" id="sample-column">
+                <igx-input-group id="sample-column">
+                  <label igxLabel> Profil picture</label>
+
+                  <input
+                    igxInput
+                    (change)="uploadNew($event.target.files)"
+                    id="fileUpload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+
+                  />
+
+                  <igx-hint>Upload a file to begin...</igx-hint>
+                </igx-input-group>
+                
+              </div>
+              <div class="col-sm-6">
+             <img *ngIf="imageUrl!=null" class="logo1" alt="Image not chosen" [src]="imageUrl" /> 
+
+              </div>
+            </div>
+          </form>
+          <div class="sample-step-actions">
+            <button
+              igxButton="raised"
+              (click)="stepper.next()"
+              (click)="onChangeFamilysituation()"
+              style="background-color: blue; color: white"
+            >
+              NEXT
+            </button>
+          </div>
+        </div>
+      </igx-step>
+
+      <igx-step #step2 [isValid]="employeeForm1.valid">
+        <span igxStepTitle>Professional Informations</span>
+        <div igxStepContent>
+          <form [formGroup]="employeeForm1">
+            <igx-input-group>
+              <igx-prefix>+216</igx-prefix>
+              <label igxLabel for=" phone">ProfessionalPhone</label>
+              <input
+                igxInput
+                name="phone"
+                type="tel"
+                required
+                formControlName="professionalPhone"
+              />
+              <igx-icon igxSuffix>phone</igx-icon>
+            </igx-input-group>
+            <igx-input-group>
+              <input
+                igxInput
+                name="personalMail"
+                type="email"
+                required
+                email
+                formControlName="professionalMail"
+              />
+              <label igxLabel for="personalMail" id="personalMail"
+                >Professional Email</label
+              >
+              <igx-icon igxSuffix>mail</igx-icon>
+            </igx-input-group>
+            <igx-input-group>
+              <input
+                igxInput
+                name="folder"
+                type="text"
+                required
+                formControlName="folder"
+              />
+              <label igxLabel for="folder" id="folder">folder</label>
+            </igx-input-group>
+          </form>
+          <div class="sample-step-actions">
+            <button igxButton="raised" (click)="stepper.prev()">
+              Previous
+            </button>
+            <button
+              igxButton="raised"
+              (click)="stepper.next()"
+              [disabled]="!employeeForm1.valid && stepper.linear"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </igx-step>
+
+      <igx-step #step3 [optional]="false">
+        <span igxStepTitle>Position</span>
+
+        <div igxStepContent>
+          <form #form3="ngForm" [formGroup]="employeeForm">
+            <igx-input-group
+              #inputGroup
+              [igxToggleAction]="dropDown0"
+              class="input-group"
+            >
+              <input
+                #input
+                class="input"
+                type="text"
+                igxInput
+                [igxDropDownItemNavigation]="dropDown0"
+                readonly="true"
+                placeholder="Office"
+                [value]="selctedOffice?.name"
+                (keydown.ArrowDown)="openDropDown()"
+              />
+              <igx-suffix
+                igxButton="icon"
+                class="dropdownToggleButton"
+                igxRipple
+              >
+                <igx-icon
+                  >arrow_drop{{
+                    dropDown.collapsed ? "_down" : "_up"
+                  }}</igx-icon
+                >
+              </igx-suffix>
+            </igx-input-group>
+
+            <igx-drop-down
+              #dropDown0
+              [width]="'180px'"
+              (selectionChanging)="onSelection($event)"
+            >
+              <igx-drop-down-item
+                id="searchItem"
+                *ngFor="let item of offices"
+                [value]="item.id"
+              >
+                {{ item.name }}
+              </igx-drop-down-item>
+            </igx-drop-down>
+            <div class="button-sample">
+              <button
+                igxButton="flat"
+                igxRipple
+                (click)="openDialogAddOffice()"
+              >
+                + add new Office
+              </button>
+            </div>
+            <igx-input-group
+              #inputGroup
+              [igxToggleAction]="dropDown01"
+              class="input-group"
+            >
+              <input
+                #input
+                class="input"
+                type="text"
+                igxInput
+                [igxDropDownItemNavigation]="dropDown01"
+                readonly="true"
+                placeholder="Department"
+                [value]="selctedDepartement?.name"
+                (keydown.ArrowDown)="openDropDown01()"
+              />
+              <igx-suffix
+                igxButton="icon"
+                class="dropdownToggleButton"
+                igxRipple
+              >
+                <igx-icon
+                  >arrow_drop{{
+                    dropDown.collapsed ? "_down" : "_up"
+                  }}</igx-icon
+                >
+              </igx-suffix>
+            </igx-input-group>
+
+            <igx-drop-down
+              #dropDown01
+              [width]="'180px'"
+              (selectionChanging)="onSelectiondep($event)"
+            >
+              <igx-drop-down-item
+                *ngFor="let item of departments"
+                [value]="item.id"
+              >
+                {{ item.name }}
+              </igx-drop-down-item>
+            </igx-drop-down>
+            <div class="button-sample">
+              <button
+                igxButton="flat"
+                igxRipple
+                (click)="openDialogAddDepartement()"
+                [disabled]="addDEP == null"
+              >
+                + add new department
+              </button>
+            </div>
+            <igx-input-group
+              #inputGroup1
+              [igxToggleAction]="dropDown1"
+              class="input-group"
+            >
+              <input
+                #input1
+                class="input"
+                type="text"
+                igxInput
+                [igxDropDownItemNavigation]="dropDown1"
+                readonly="true"
+                placeholder="job"
+                [value]="selctedJob?.name"
+                (keydown.ArrowDown)="openDropDown()"
+              />
+              <igx-suffix
+                igxButton="icon"
+                class="dropdownToggleButton"
+                igxRipple
+              >
+                <igx-icon
+                  >arrow_drop{{
+                    dropDown.collapsed ? "_down" : "_up"
+                  }}</igx-icon
+                >
+              </igx-suffix>
+            </igx-input-group>
+
+            <igx-drop-down
+              #dropDown1
+              [width]="'180px'"
+              (selectionChanging)="onSelectionjob($event)"
+            >
+              <igx-drop-down-item *ngFor="let item of jobs" [value]="item.id">
+                {{ item.name }}
+              </igx-drop-down-item>
+            </igx-drop-down>
+            <div class="button-sample">
+              <button
+                igxButton="flat"
+                igxRipple
+                (click)="openDialogAddJob()"
+                [disabled]="addJob == null"
+              >
+                + add new job
+              </button>
+            </div>
+          </form>
+          <div class="sample-step-actions">
+            <button igxButton="raised" (click)="stepper.prev()">
+              Previous
+            </button>
+            <button igxButton="raised" (click)="stepper.next()">Next</button>
+          </div>
+        </div>
+      </igx-step>
+
+      <igx-step #step4 [isValid]="contractForm">
+        <span igxStepTitle>Contract</span>
+        <div igxStepContent>
+          <div class="card">
+            <h4>New Contract</h4>
+            <div class="card">
+              <div class="p-fluid grid formgrid">
+                <form [formGroup]="contractForm">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <igx-date-picker formControlName="startDate">
+                        <label igxLabel>Start Date</label></igx-date-picker
+                      >
+                    </div>
+
+                    <div class="col-sm-6">
+                      <igx-input-group>
+                        <igx-prefix>TND</igx-prefix>
+                        <label igxLabel for=" grossSalary">grossSalary</label>
+                        <input
+                          igxInput
+                          name="grossSalary"
+                          type="currency"
+                          formControlName="grossSalary"
+                        />
+                        <igx-icon igxSuffix>grossSalary</igx-icon>
+                      </igx-input-group>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <igx-input-group>
+                        <igx-prefix>TND</igx-prefix>
+                        <label igxLabel for=" netSalarys">netSalary</label>
+                        <input
+                          igxInput
+                          name="netSalary"
+                          type="currency"
+                          formControlName="netSalary"
+                        />
+                      </igx-input-group>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <igx-input-group
+                        #inputGroup2
+                        [igxToggleAction]="dropDown2"
+                        class="input-group"
+                      >
+                        <igx-prefix>Contract Type</igx-prefix>
+
+                        <input
+                          #input2
+                          class="input"
+                          type="text"
+                          igxInput
+                          [igxDropDownItemNavigation]="dropDown"
+                          readonly="true"
+                          [value]="dropDown2.selectedItem?.value"
+                          placeholder="contract Type"
+                          (keydown.ArrowDown)="openDropDown2()"
+                        />
+                        <igx-suffix
+                          igxButton="icon"
+                          class="dropdownToggleButton"
+                          igxRipple
+                        >
+                          <igx-icon
+                            >arrow_drop{{
+                              dropDown2.collapsed ? "_down" : "_up"
+                            }}</igx-icon
+                          >
+                        </igx-suffix>
+                      </igx-input-group>
+
+                      <igx-drop-down
+                        #dropDown2
+                        [width]="'180px'"
+                        (selectionChanging)="onChangeContractType($event)"
+                      >
+                        <igx-drop-down-item
+                          *ngFor="let type of types"
+                          [value]="type.type"
+                        >
+                          {{ type.type }}
+                        </igx-drop-down-item>
+                      </igx-drop-down>
+                    </div>
+                    <div class="col-sm-6">
+                      <igx-input-group
+                        #inputGroup3
+                        [igxToggleAction]="dropDown3"
+                        class="input-group"
+                      >
+                        <igx-prefix>Contarct Duration</igx-prefix>
+
+                        <input
+                          #input3
+                          class="input"
+                          type="text"
+                          igxInput
+                          [igxDropDownItemNavigation]="dropDown3"
+                          readonly="true"
+                          [value]="dropDown3.selectedItem?.value"
+                          placeholder="contract duration"
+                          (keydown.ArrowDown)="openDropDown2()"
+                        />
+                        <igx-suffix
+                          igxButton="icon"
+                          class="dropdownToggleButton"
+                          igxRipple
+                        >
+                          <igx-icon
+                            >arrow_drop{{
+                              dropDown2.collapsed ? "_down" : "_up"
+                            }}</igx-icon
+                          >
+                        </igx-suffix>
+                      </igx-input-group>
+
+                      <igx-drop-down
+                        #dropDown3
+                        [width]="'180px'"
+                        (selectionChanging)="onChangeDuration($event)"
+                      >
+                        <igx-drop-down-item
+                          *ngFor="let duration of durations"
+                          [value]="duration.duration"
+                        >
+                          {{ duration.duration }}
+                        </igx-drop-down-item>
+                      </igx-drop-down>
+                    </div>
+                  </div>
+                </form>
+                <div class="p-fluid grid formgrid">
+                  <p-table
+                    #dt
+                    [value]="clauses"
+                    [rows]="5"
+                    [paginator]="true"
+                    [globalFilterFields]="['title', 'description']"
+                    [tableStyle]="{ 'min-width': '75rem' }"
+                    [(selection)]="selectedclauses"
+                    [rowHover]="true"
+                    dataKey="id"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [showCurrentPageReport]="true"
+                  >
+                    <ng-template pTemplate="caption">
+                      <div
+                        class="flex align-items-center justify-content-between"
+                      >
+                        <h6 class="m-0">Select clauses</h6>
+                      </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th style="width: 4rem">
+                          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id" style="min-width: 5rem">
+                          title<p-sortIcon field="title"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="description">description</th>
+                        <th pSortableColumn="creation date">creation date</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-clause>
+                      <tr>
+                        <td>
+                          <p-tableCheckbox [value]="clause"></p-tableCheckbox>
+                        </td>
+                        <td>{{ clause.title }}</td>
+                        <td>{{ clause.description }}</td>
+                        <td>{{ clause.creationDate }}</td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                      <button
+                        pButton
+                        icon="pi pi-plus"
+                        label="clause"
+                        class="p-button-link"
+                        (click)="openDialogAddClause()"
+                      ></button>
+                    </ng-template>
+                  </p-table>
+
+                  <div class="buttons">
+                    <button class="btn btn-danger" style="float: left">
+                      Cancel
+                    </button>
+
+                    <button
+                      class="btn btn-success"
+                      style="float: right"
+                      (click)="addContract()"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sample-step-actions">
+            <button igxButton="raised" (click)="stepper.prev()">
+              Previous
+            </button>
+            <button
+              igxButton="raised"
+              (click)="stepper.next()"
+              (click)="mapFormsToEmployee()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </igx-step>
+      <igx-step #step5>
+        <span igxStepTitle>recap info</span>
+        <div igxStepContent>
+          <div class="card">
+            <div class="container">
+              <div class="main-body">
+                <div class="row gutters-sm">
+                  <div class="col-md-4 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div
+                          class="d-flex flex-column align-items-center text-center"
+                        >
+                        <img id="logo" alt="Image not chosen" [src]="imageUrl"/>
+                          <div class="mt-3">
+                            <h4>
+                              {{ employee?.firstName }} {{ employee?.lastName }}
+                            </h4>
+                            <p class="text-secondary mb-1">
+                              {{ selctedJob?.name }}
+                            </p>
+                            <p class="text-muted font-size-sm">
+                              {{ selctedDepartement?.name }},{{
+                                selctedOffice?.name
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card mt-3">
+                      <!-- TO add somthing -->
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">First Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.firstName }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Last Name</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.lastName }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Birth Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.birthDate }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Adress</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.adresse }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalPhone }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Personal Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.personalMail }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Family Sitaution</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.statusF }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Child In Charge</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.childNumber }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">CIN</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.cin }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Delevery Date</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.deleveryDate }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Phone</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalPhone }}
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6 class="mb-0">Professional Email</h6>
+                            <div class="col-sm-9 text-secondary">
+                              {{ employee?.professionalMail }}
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                      </div>
+                    </div>
+
+                    <div class="row gutters-sm">
+                      <div class="col-sm-6 mb-3">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="d-flex align-items-center mb-3">
+                              <i class="material-icons text-info mr-2"
+                                >assignment</i
+                              >Contract Informations
+                            </h6>
+                            <small>Start Date</small>
+                            <div>
+                              {{ contract?.startDate }}
+                            </div>
+                            <hr />
+                            <small>Gross Salary</small>
+                            <div>
+                              {{ contract?.grossSalary }}
+                            </div>
+                            <hr />
+
+                            <small>Net Salary</small>
+                            <div>
+                              {{ contract?.netSalary }}
+                            </div>
+                            <hr />
+                            <small>Type</small>
+                            <div>
+                              {{ contract?.contractType }}
+                            </div>
+                            <hr />
+                            <small>Duration</small>
+                            <div>
+                              {{ contract?.duration }}
+                            </div>
+                            <hr />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-3">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="d-flex align-items-center mb-3">
+                              <i class="material-icons text-info mr-2"
+                                >assignment</i
+                              >
+                              Clauses {{ selectedclauses.length }}
+                            </h6>
+
+                            <div *ngFor="let c of selectedclauses">
+                              <small>{{ c.title }}</small>
+                              <div>
+                                {{ c.description }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-sm-6">
+              <h5>Employee Informations</h5>
+            </div>
+            <div class="col-sm-6">
+              <img src="{{ url }}" alt="" />
+            </div>
+            <div class="col-sm-6">
+              <label for=""> firstName :</label>
+            </div> -->
+          </div>
+
+          <div class="sample-step-actions">
+            <button igxButton="raised" (click)="stepper.prev()">
+              Previous
+            </button>
+            <button igxButton="raised" (click)="stepper.reset()">Reset</button>
+            <button igxButton="raised" (click)="addEmployee()">confirm</button>
+          </div>
+        </div>
+        
+      </igx-step>
+    </igx-stepper>
+  </div>
+</div>
+<!-- add office -->
+<p-dialog
+  [(visible)]="officeDialogue"
+  [style]="{ width: '1000px' }"
+  header="New Departement"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="field">
+      <form [formGroup]="officeForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="name"
+                type="text"
+                required
+                formControlName="name"
+              />
+              <label igxLabel for="name" id="name"> Name</label>
+            </igx-input-group>
+          </div>
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="mobile"
+                type="number"
+                required
+                formControlName="mobile"
+              />
+              <label igxLabel for="mobile" id="mobile"> mobile</label>
+            </igx-input-group>
+          </div>
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="phone"
+                type="number"
+                required
+                formControlName="phone"
+              />
+              <label igxLabel for="phone" id="phone"> phone</label>
+            </igx-input-group>
+          </div>
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input igxInput name="fax" type="number" formControlName="fax" />
+              <label igxLabel for="fax" id="fax"> Fax</label>
+            </igx-input-group>
+          </div>
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="address"
+                type="text"
+                required
+                formControlName="address"
+              />
+              <label igxLabel for="address" id="address"> Address</label>
+            </igx-input-group>
+          </div>
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="email"
+                type="email"
+                required
+                formControlName="email"
+              />
+              <label igxLabel for="email" id="email"> Email</label>
+            </igx-input-group>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialogAddOffice()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="addOffice()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<!--  fin add office -->
+<!-- add department -->
+<p-dialog
+  [(visible)]="depatementDialogue"
+  [style]="{ width: '1000px' }"
+  header="New Departement"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="field">
+      <form [formGroup]="departementForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="name"
+                type="text"
+                required
+                formControlName="name"
+              />
+              <label igxLabel for="name" id="name"> Name</label>
+            </igx-input-group>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialogAddDepartement()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="addDepartement()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<!--  fin add department -->
+<!--   add job -->
+<p-dialog
+  [(visible)]="jobDialogue"
+  [style]="{ width: '1000px' }"
+  header="contarct Details"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="field">
+      <form [formGroup]="jobForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="name"
+                type="text"
+                required
+                formControlName="name"
+              />
+              <label igxLabel for="name" id="name"> Name</label>
+            </igx-input-group>
+          </div>
+          <div class="col-sm-6">
+            <igx-input-group>
+              <input
+                igxInput
+                name="description"
+                type="text"
+                required
+                formControlName="description"
+              />
+              <label igxLabel for="description" id="description">
+                description</label
+              >
+            </igx-input-group>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialogAddJob()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="newJob()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<!--  fin add job -->

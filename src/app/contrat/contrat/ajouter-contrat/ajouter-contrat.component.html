@@ -23,24 +23,25 @@
 
           <div class="col-sm-6">
             <label>Net Salary</label>
-            <p-inputNumber inputId="minmaxfraction" mode="decimal" [min]="0" [max]="5000" [maxFractionDigits]="3">
+            <p-inputNumber inputId="minmaxfraction" mode="decimal" [minFractionDigits]="3" [maxFractionDigits]="5" formControlName="netSalary">
             </p-inputNumber>
           </div>
 
           <div class="col-sm-6">
-            <h5>Contract Type</h5>
+             <label>Contract Type</label>
             <p-dropdown id="type" placeholder="Select a contract type" formControlName="contractType"
               (onChange)="onChangeContractType($event)" [options]="type" [showClear]="true"></p-dropdown>
 
 
           </div>
           <div class="col-sm-6">
-            <h5>Contract Duration</h5>
+            <label>Contract Duration</label>
             <p-dropdown id="duree" placeholder="Select a contract duration" [options]="duration"
               formControlName="duration" (onChange)="onChangeDuration($event)" [showClear]="true"
               [disabled]="f_duratin">
             </p-dropdown>
           </div>
+          
         </div>
       </form>
       <div class="p-fluid grid formgrid">
@@ -51,6 +52,7 @@
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
               <h5 class="m-0">Select clauses</h5>
+              <p-button></p-button>
             </div>
           </ng-template>
           <ng-template pTemplate="header">
@@ -61,8 +63,10 @@
               <th pSortableColumn="id" style="min-width: 5rem">
                 title<p-sortIcon field="title"></p-sortIcon>
               </th>
-              <th pSortableColumn="startDate">description</th>
+              <th pSortableColumn="description">description</th>
+              <th pSortableColumn="wirter">writer</th>
             </tr>
+            
           </ng-template>
           <ng-template pTemplate="body" let-clause>
             <tr>
@@ -71,21 +75,26 @@
               </td>
               <td>{{ clause.title }}</td>
               <td>{{ clause.description }}</td>
+              <td>{{clause.writer.firstName}} {{clause.writer.lastName}}</td>
+              
             </tr>
           </ng-template>
           <ng-template pTemplate="footer">
-            <button pButton icon="pi pi-plus" label="clause" class="p-button-link"
-              (click)="openDialogAddClause()"></button>
+            <button pButton pRipple icon="pi pi-plus" label="clause" class="p-button-link" (click)="openDialogAddClause()"></button>
           </ng-template>
         </p-table>
 
-        <div class="buttons">
-          <button class="btn btn-danger" style="float: left;">Cancel</button>
-
-          <button class="btn btn-success" style="float: right;" (click)="addContract()">Add</button>
+        <div class="button right">
+          <button pButton pRipple type="button" label="Cancel" styleClass="p-button-sm" class="p-button-danger" (click)="cancel()"></button>
+        </div>
+        <div class="button right">
+          <button pButton pRipple type="button" label="Add" styleClass="p-button-sm" class="p-button-success" (click)="addContract()"></button>
+         
         </div>
       </div>
+     
     </div>
+    
   </div>
 </div>
 

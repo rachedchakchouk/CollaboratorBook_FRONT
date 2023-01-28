@@ -1,14 +1,15 @@
+import { Department } from './../../../models/department';
 import { Company } from './../../../models/company';
 import { Job } from './../../../models/job';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobService {
-  accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/jobs'
+  //accesurl=environment.gatewayUrl+'/BUSINESS-SERVICE/business/jobs'
+  accesurl='http://localhost:8082/business/jobs';
   getByIdUrl=this.accesurl+'/';
   GetByCompanyUrl=this.accesurl+'/jobsbycompany/';
   findByDepartmentUrl=this.accesurl+'/jobsbydepartment/'
@@ -23,6 +24,7 @@ export class JobService {
   archiveUrl=this.accesurl+'/archive/';
   deleteUrl=this.accesurl+'/delete/';
   newJobUrl=this.accesurl+'/newjob';
+  getDepUrl=this.accesurl+'/getdep/'
   constructor(private http:HttpClient) { }
   getall(){
     return this.http.get<Job[]>(this.accesurl)
@@ -66,5 +68,8 @@ export class JobService {
   };
   newJob(j:Job){
     return this.http.post<Job>(this.newJobUrl,j)
+  };
+  getDep(id:number){
+    return this.http.get<Department>(this.getDepUrl+id)
   };
 }
