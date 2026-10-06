@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { SigninComponent } from "./component/autentification/signin/signin.component";
 
 import { FullComponent } from "./layouts/full/full.component";
+import { AuthGuard } from "./core/auth.guard";
 
 export const Approutes: Routes = [
   { path: "", component: SigninComponent, pathMatch: "full" },
@@ -21,6 +22,7 @@ export const Approutes: Routes = [
   {
     path: "update-profile/:id",
     component: UpdateProfileComponent,
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import("./component/autentification/authentification.module").then(
         (m) => m.AuthentificationModule
@@ -38,6 +40,7 @@ export const Approutes: Routes = [
   {
     path: "",
     component: FullComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {

@@ -3,7 +3,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CommonModule, LocationStrategy, PathLocationStrategy, } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "./core/auth.interceptor";
 import { Routes, RouterModule } from "@angular/router";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -59,6 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy,

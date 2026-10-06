@@ -1,27 +1,59 @@
-# NgAdminx
+# CollaboratorBook — Frontend (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
+Angular client of **CollaboratorBook**, an internal social network and HR platform for companies,
+built as my end-of-studies project (PFE, Ditriot Consulting, 2022).
 
-## Development server
+Backend (Spring Boot microservices): [CollaboratorBook_BACK](https://github.com/rachedchakchouk/CollaboratorBook_BACK)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- **Authentication** — sign up, sign in with JWT, profile update, protected pages (route guard) and
+  automatic `Authorization: Bearer` header on API calls (HTTP interceptor)
+- **Company structure** — companies, departments, offices and jobs
+- **HR** — employees, contracts and contract clauses, leave requests, projects, documents, claims
+- **Social** — posts, comments and notifications between colleagues
+- **Dashboard** — key figures and charts
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tech stack
 
-## Build
+Angular 13 · TypeScript 4.4 · RxJS · Bootstrap 5 / ng-bootstrap · PrimeNG · Chart.js (ng2-charts)
+· ngx-toastr · @auth0/angular-jwt
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Project structure
 
-## Running unit tests
+```
+src/app/
+├── core/                 # AuthGuard (route protection) + AuthInterceptor (JWT header)
+├── services/
+│   ├── Security/         # login, users
+│   ├── RH/               # employees, contracts, clauses, documents, posts, notifications…
+│   └── Buissness/        # companies, departments, offices, jobs
+├── component/            # feature screens (authentication, company, departments, offices, jobs, documents…)
+├── contrat/              # contracts module
+├── dashboard/            # dashboard widgets
+├── layouts/, shared/     # main layout, header, sidebar
+src/models/               # TypeScript models
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Run locally
 
-## Running end-to-end tests
+Prerequisites: Node.js 16 (Angular 13), npm, and the backend services running
+(gateway on `http://localhost:8888`).
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```bash
+npm install
+npm start            # ng serve → http://localhost:4200
+```
 
-## Further help
+Production build:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+npx ng build --configuration production
+```
+
+The gateway URL is configured in `src/environments/environment*.ts`.
+
+## Author
+
+**Rached Chakchouk** — Full Stack Software Engineer (Java / Spring Boot / Angular)
+[LinkedIn](https://www.linkedin.com/in/rached-chakchouk) · [Portfolio](https://rached-chakchouk.netlify.app)
