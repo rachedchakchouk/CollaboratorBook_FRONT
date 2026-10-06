@@ -53,6 +53,10 @@ npx ng build --configuration production
 
 The gateway URL is configured in `src/environments/environment*.ts`.
 
+## License
+
+All rights reserved — the code is shared for portfolio review only. See [LICENSE](LICENSE).
+
 ## Author
 
 **Rached Chakchouk** — Full Stack Software Engineer (Java / Spring Boot / Angular)
