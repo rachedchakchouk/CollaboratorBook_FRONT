@@ -19,13 +19,13 @@
       data-toggle="dropdown"
       aria-haspopup="true"
       aria-expanded="false"
-    >
+      >
       <span>Employee</span>
     </a>
     <div ngbDropdownMenu>
       <a class="dropdown-item" href="http://localhost:4200/component/newemployee">add</a>
       <a class="dropdown-item" href="http://localhost:4200/component/employees">ListeEmployee</a>
-   
+
     </div>
   </li>
 </ul>
@@ -44,21 +44,23 @@
       data-toggle="dropdown"
       aria-haspopup="true"
       aria-expanded="false"
-    >
-      <img
-      *ngIf="urlprofileimg!=null"
-        src="{{urlprofileimg}}"
-        alt="user"
-        class="rounded-circle"
-        width="31"
-      />
-      <img
-      *ngIf="urlprofileimg==null"
-        src="../assets/images/users/user.jpg"
-        alt="user"
-        class="rounded-circle"
-        width="31"
-      />
+      >
+      @if (urlprofileimg!=null) {
+        <img
+          src="{{urlprofileimg}}"
+          alt="user"
+          class="rounded-circle"
+          width="31"
+          />
+      }
+      @if (urlprofileimg==null) {
+        <img
+          src="../assets/images/users/user.jpg"
+          alt="user"
+          class="rounded-circle"
+          width="31"
+          />
+      }
       <span class="ms-2">{{employe.firstName}} {{employe.lastName}}</span>
     </a>
     <div class="dropdown-menu-right" ngbDropdownMenu>

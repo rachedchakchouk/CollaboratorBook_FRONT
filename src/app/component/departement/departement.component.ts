@@ -5,9 +5,10 @@ import { Department } from "./../../../models/department";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-departement",
-  templateUrl: "./departement.component.html",
-  styleUrls: ["./departement.component.scss"],
+    selector: "app-departement",
+    templateUrl: "./departement.component.html",
+    styleUrls: ["./departement.component.scss"],
+    standalone: false
 })
 export class DepartementComponent implements OnInit {
   department!: Department;

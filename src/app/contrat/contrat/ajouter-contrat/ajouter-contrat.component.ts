@@ -3,8 +3,8 @@ import { EmployeeService } from "./../../../services/RH/employee.service";
 import { Company } from "./../../../../models/company";
 import { CompanyService } from "./../../../services/Buissness/company.service";
 import { AjouterclosesComponent } from "./../closes/ajoutercloses/ajoutercloses.component";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormControl, Validators } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { ContractService } from "./../../../services/RH/contract.service";
 import { Contract } from "./../../../../models/contract";
 import { Router } from "@angular/router";
@@ -17,10 +17,11 @@ import { DialogService } from "primeng/dynamicdialog";
 import { MessageService, ConfirmationService } from "primeng/api";
 
 @Component({
-  selector: "app-ajouter-contrat",
-  templateUrl: "./ajouter-contrat.component.html",
-  styleUrls: ["./ajouter-contrat.component.scss"],
-  providers: [DatePipe, DialogService, MessageService, ConfirmationService],
+    selector: "app-ajouter-contrat",
+    templateUrl: "./ajouter-contrat.component.html",
+    styleUrls: ["./ajouter-contrat.component.scss"],
+    providers: [DatePipe, DialogService, MessageService, ConfirmationService],
+    standalone: false
 })
 export class AjouterContratComponent implements OnInit {
   contract!: Contract;
@@ -30,7 +31,7 @@ export class AjouterContratComponent implements OnInit {
   duration!: String[];
   selectedclauses: Clause[] = [];
   //startDate!:Date;
-  contractForm!: FormGroup;
+  contractForm!: UntypedFormGroup;
   company!: Company;
   idEmployer!: number;
   employees!: Employee[];
@@ -42,7 +43,7 @@ export class AjouterContratComponent implements OnInit {
     private router: Router,
     private contractservice: ContractService,
     public datepipe: DatePipe,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogService: DialogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -69,19 +70,19 @@ export class AjouterContratComponent implements OnInit {
       "OTHER",
     ];
     this.contractForm = this.fb.group({
-      startDate: new FormControl("", Validators.required),
-      duration: new FormControl("UNLIMITED", Validators.required),
-      grossSalary: new FormControl("", [
+      startDate: new UntypedFormControl("", Validators.required),
+      duration: new UntypedFormControl("UNLIMITED", Validators.required),
+      grossSalary: new UntypedFormControl("", [
         Validators.required,
         Validators.min(0),
         Validators.max(5000),
       ]),
-      netSalary: new FormControl("", [
+      netSalary: new UntypedFormControl("", [
         Validators.required,
         Validators.min(0),
         Validators.max(5000),
       ]),
-      contractType: new FormControl("CDI", Validators.required),
+      contractType: new UntypedFormControl("CDI", Validators.required),
     });
   }
   openNew() {

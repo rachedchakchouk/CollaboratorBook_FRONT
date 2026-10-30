@@ -4,9 +4,10 @@ import { Router } from "@angular/router";
 //declare var $: any;
 
 @Component({
-  selector: "app-full-layout",
-  templateUrl: "./full.component.html",
-  styleUrls: ["./full.component.scss"],
+    selector: "app-full-layout",
+    templateUrl: "./full.component.html",
+    styleUrls: ["./full.component.scss"],
+    standalone: false
 })
 export class FullComponent implements OnInit {
 
@@ -30,7 +31,7 @@ export class FullComponent implements OnInit {
     this.handleSidebar();
   }
 
-  @HostListener("window:resize", ["$event"])
+  @HostListener("window:resize")
   onResize() {
     this.handleSidebar();
   }

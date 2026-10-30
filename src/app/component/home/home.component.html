@@ -1,277 +1,294 @@
 <p-toast></p-toast>
 <div class="row">
 
-<div class="col-md-8">
-  <div class="feed">
-    <form [formGroup]="postForm">
-      <div class="share border bg-white">
-        <div class="d-flex flex-row inputs p-2 py-4">
-          <img
-            *ngIf="urlprofileimg != null"
-            class="rounded-circle"
-            src="{{ urlprofileimg }}"
-            width="40"
-          />
-          <img
-            *ngIf="urlprofileimg == null"
-            class="rounded-circle"
-            src="../assets/images/users/user.jpg"
-            width="40"
-          />
+  <div class="col-md-8">
+    <div class="feed">
+      <form [formGroup]="postForm">
+        <div class="share border bg-white">
+          <div class="d-flex flex-row inputs p-2 py-4">
+            @if (urlprofileimg != null) {
+              <img
+                class="rounded-circle"
+                src="{{ urlprofileimg }}"
+                width="40"
+                />
+            }
+            @if (urlprofileimg == null) {
+              <img
+                class="rounded-circle"
+                src="../assets/images/users/user.jpg"
+                width="40"
+                />
+            }
 
-          <input
-            type="text"
-            class="border-0 form-control share-input"
+            <input
+              type="text"
+              class="border-0 form-control share-input"
             [placeholder]="
               'Share your thoughts ' + user?.firstName + ' ' + user?.lastName
             "
-            formControlName="text"
-          />
-        </div>
-        <div class="d-flex flex-row justify-content-between border-top">
-          <div class="d-flex flex-row publish-options">
-            <div class="align-items-center border-right p-2 share">
-              <div class="publish-button">
-                <div
-                  class="align-items-center border-left p-2 px-5 btn publish"
-                >
-                  <span class="ml-1" (click)="addDocument()">Photo</span>
-                </div>
-              </div>
-            </div>
-            <div class="align-items-center border-right p-2 share">
-              <div class="publish-button">
-                <div
-                  class="align-items-center border-left p-2 px-5 btn publish"
-                >
-                  <span hidden class="ml-1">Video </span>
-                </div>
-              </div>
-            </div>
-            <div class="align-items-center border-right p-2 share">
-              <div class="publish-button">
-                <div
-                  class="align-items-center border-left p-2 px-5 btn publish"
-                >
-                  <span hidden class="ml-1">File</span>
-                </div>
-              </div>
-            </div>
+              formControlName="text"
+              />
           </div>
-          <div class="align-items-center border-right p-2 share">
-            <div class="publish-button">
-              <div class="align-items-center border-left p-2 px-5 btn publish">
-                <span class="ml-1" (click)="addnewPost()">Publish</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-
-    <div class="feed-post mt-2 border" *ngFor="let post of posts">
-      <div class="p-2 bg-white">
-        <div
-          class="d-flex flex-row justify-content-between align-items-start profile"
-        >
-          <div class="d-flex align-items-center">
-            <img
-              *ngIf="post.employeeUrl != null"
-              class="rounded-circle img-responsive"
-              [src]="post?.employeeUrl"
-              width="50"
-              height="50"
-            />
-            <img
-              *ngIf="post.employeeUrl == null"
-              class="rounded-circle img-responsive"
-              src="../assets/images/users/user.jpg"
-              width="50"
-              height="50"
-            />
-            <div class="d-flex flex-column ml-2">
-              <span>{{ post?.employeeFullName }}</span>
-              <h6>{{ post?.text }}</h6>
-              
-            </div>
-          </div>
-          <i class="fa fa-ellipsis-h text-black-50 mt-2"
-            >
-            <span>{{ post?.date }}</span>
-            <button pButton pRipple type="button" icon="pi pi-trash
-            " class="p-button-rounded p-button-warning p-button-text"
-            (click)="archive(post.id)"
-            ></button></i
-          >
-        </div>
-        <div class="profile-content">
-          <div *ngIf="post?.photo != null" class="content-image">
-            <img [src]="post?.photo" />
-          </div>
-        </div>
-        <div class="profile-engagements">
-        <div class="share border bg-white">
-          <a *ngIf="post?.comments?.length>1 && post?.comments!=null">{{post?.comments?.length}} comments</a>
-          <div 
-          style="margin-top: 2rem; margin-left: 2rem; margin-right: 2rem;"
-          class="share border bg-white"
-          *ngFor="let comment of post.comments"
-          >
-            <div *ngIf="comment.text !=''"
-             
-              class="d-flex flex-row justify-content-between align-items-start profile"
-              style="margin-left: 2rem; margin-right: 2rem; "
-            >
-              <div class="d-flex align-items-center"  >
-                <img 
-                  *ngIf="comment.writerUrl != null"
-                  class="rounded-circle img-responsive"
-                  [src]="comment?.writerUrl"
-                  width="50"
-                  height="50"
-                />
-                <img
-                  *ngIf="comment.writerUrl == null"
-                  class="rounded-circle img-responsive"
-                  src="../assets/images/users/user.jpg"
-                  width="50"
-                  height="50"
-                />
-                <div class="d-flex flex-column ml-2">
-                  <span>{{ comment?.writer }}</span>
-                  <span class="time">{{ comment?.text }}</span>
-                </div>
-              </div>
-              <i class="fa fa-ellipsis-h text-black-50 mt-2">
-                <div class="profile-content">
-                  
-                  <span>{{ comment?.date }}</span>
-                  <button pButton pRipple type="button" icon="pi pi-trash
-                  " class="p-button-rounded p-button-secondary p-button-text"
-                  (click)="archiveComment(comment.id)"
-                  ></button>
-                </div>
-              </i>
-            </div>
-          </div>
-        </div>
-          <div class="feed">
-            <form [formGroup]="commentForm">
-              <div class="d-flex flex-row inputs p-2 py-4">
-                <img
-                  *ngIf="urlprofileimg != null"
-                  class="rounded-circle"
-                  src="{{ urlprofileimg }}"
-                  width="40"
-                />
-                <img
-                  *ngIf="urlprofileimg == null"
-                  class="rounded-circle"
-                  src="../assets/images/users/user.jpg"
-                  width="40"
-                />
-
-                <input
-                  type="text"
-                  class="border-0 form-control share-input"
-                  [placeholder]="' Comment this post ' + user?.firstName + '!'"
-                  formControlName="text"
-                />
-              </div>
-              <div class="d-flex flex-row justify-content-between border-top">
-                <div class="d-flex flex-row publish-options"></div>
-                <div class="align-items-center border-right p-2 share">
-                  <div class="publish-button">
-                    <div
-                      class="align-items-center border-left p-2 px-5 btn publish"
+          <div class="d-flex flex-row justify-content-between border-top">
+            <div class="d-flex flex-row publish-options">
+              <div class="align-items-center border-right p-2 share">
+                <div class="publish-button">
+                  <div
+                    class="align-items-center border-left p-2 px-5 btn publish"
                     >
-                      <span class="ml-1" (click)="addnewComment(post.id)"
-                        >Comment</span
-                      >
-                    </div>
+                    <span class="ml-1" (click)="addDocument()">Photo</span>
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</div>
-<!-- <div class="col-4  p-3" >
-<div class="Card ">
-  12365447
-</div>
-<div class="Card ">
-  <h5>Inline</h5>
-  <p-calendar  [inline]="true"></p-calendar>
-</div>
-</div> -->
-</div>
-<p-dialog
-  [(visible)]="docDialog"
-  [style]="{ width: '1000px' }"
-  header="post with image"
-  [modal]="true"
-  styleClass="p-fluid"
->
-  <ng-template pTemplate="content">
-    <div class="field">
-      <form [formGroup]="postForm">
-      <div class="row">
-          <div class="col-sm-6">
-            <input
-            pInputText
-            (change)="uploadNew($event.target.files)"
-            id="fileUpload"
-            type="file"
-            accept="image/*"
-            multiple
-      
-          />
-          </div>
-          <div class="col-sm-6">
-            <img *ngIf="imageUrl!=null" class="logo1" alt="Image not chosen" [src]="imageUrl" /> 
-            <img *ngIf="imageUrl==null" class="logo1" alt="Image not chosen" src=".\assets\images\bg\no image.jpg" />
-          </div>
-          <div class="col-sm-6">
-            <span>Post Text</span>
-            <input
-            pInputText
-            id="fileUpload"
-            type="text"
-            formControlName="text"
-          />
-            
+              <div class="align-items-center border-right p-2 share">
+                <div class="publish-button">
+                  <div
+                    class="align-items-center border-left p-2 px-5 btn publish"
+                    >
+                    <span hidden class="ml-1">Video </span>
+                  </div>
+                </div>
+              </div>
+              <div class="align-items-center border-right p-2 share">
+                <div class="publish-button">
+                  <div
+                    class="align-items-center border-left p-2 px-5 btn publish"
+                    >
+                    <span hidden class="ml-1">File</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="align-items-center border-right p-2 share">
+              <div class="publish-button">
+                <div class="align-items-center border-left p-2 px-5 btn publish">
+                  <span class="ml-1" (click)="addnewPost()">Publish</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </form>
-      </div>
-     
-  </ng-template>
 
-  <ng-template pTemplate="footer">
-    
-    <button
-      pButton
-      pRipple
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button-text"
-      
-      
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="share"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)=" addpostwithimg()"
-    ></button>
-  </ng-template>
-</p-dialog>
+      @for (post of posts; track post) {
+        <div class="feed-post mt-2 border">
+          <div class="p-2 bg-white">
+            <div
+              class="d-flex flex-row justify-content-between align-items-start profile"
+              >
+              <div class="d-flex align-items-center">
+                @if (post.employeeUrl != null) {
+                  <img
+                    class="rounded-circle img-responsive"
+                    [src]="post?.employeeUrl"
+                    width="50"
+                    height="50"
+                    />
+                }
+                @if (post.employeeUrl == null) {
+                  <img
+                    class="rounded-circle img-responsive"
+                    src="../assets/images/users/user.jpg"
+                    width="50"
+                    height="50"
+                    />
+                }
+                <div class="d-flex flex-column ml-2">
+                  <span>{{ post?.employeeFullName }}</span>
+                  <h6>{{ post?.text }}</h6>
+                </div>
+              </div>
+              <i class="fa fa-ellipsis-h text-black-50 mt-2"
+                >
+                <span>{{ post?.date }}</span>
+            <button pButton pRipple type="button" icon="pi pi-trash
+            " class="p-button-rounded p-button-warning p-button-text"
+                  (click)="archive(post.id)"
+                ></button></i
+                >
+              </div>
+              <div class="profile-content">
+                @if (post?.photo != null) {
+                  <div class="content-image">
+                    <img [src]="post?.photo" />
+                  </div>
+                }
+              </div>
+              <div class="profile-engagements">
+                <div class="share border bg-white">
+                  @if (post?.comments?.length>1 && post?.comments!=null) {
+                    <a>{{post?.comments?.length}} comments</a>
+                  }
+                  @for (comment of post.comments; track comment) {
+                    <div
+                      style="margin-top: 2rem; margin-left: 2rem; margin-right: 2rem;"
+                      class="share border bg-white"
+                      >
+                      @if (comment.text !='') {
+                        <div
+                          class="d-flex flex-row justify-content-between align-items-start profile"
+                          style="margin-left: 2rem; margin-right: 2rem; "
+                          >
+                          <div class="d-flex align-items-center"  >
+                            @if (comment.writerUrl != null) {
+                              <img
+                                class="rounded-circle img-responsive"
+                                [src]="comment?.writerUrl"
+                                width="50"
+                                height="50"
+                                />
+                            }
+                            @if (comment.writerUrl == null) {
+                              <img
+                                class="rounded-circle img-responsive"
+                                src="../assets/images/users/user.jpg"
+                                width="50"
+                                height="50"
+                                />
+                            }
+                            <div class="d-flex flex-column ml-2">
+                              <span>{{ comment?.writer }}</span>
+                              <span class="time">{{ comment?.text }}</span>
+                            </div>
+                          </div>
+                          <i class="fa fa-ellipsis-h text-black-50 mt-2">
+                            <div class="profile-content">
+                              <span>{{ comment?.date }}</span>
+                  <button pButton pRipple type="button" icon="pi pi-trash
+                  " class="p-button-rounded p-button-secondary p-button-text"
+                                (click)="archiveComment(comment.id)"
+                              ></button>
+                            </div>
+                          </i>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+                <div class="feed">
+                  <form [formGroup]="commentForm">
+                    <div class="d-flex flex-row inputs p-2 py-4">
+                      @if (urlprofileimg != null) {
+                        <img
+                          class="rounded-circle"
+                          src="{{ urlprofileimg }}"
+                          width="40"
+                          />
+                      }
+                      @if (urlprofileimg == null) {
+                        <img
+                          class="rounded-circle"
+                          src="../assets/images/users/user.jpg"
+                          width="40"
+                          />
+                      }
+                      <input
+                        type="text"
+                        class="border-0 form-control share-input"
+                        [placeholder]="' Comment this post ' + user?.firstName + '!'"
+                        formControlName="text"
+                        />
+                    </div>
+                    <div class="d-flex flex-row justify-content-between border-top">
+                      <div class="d-flex flex-row publish-options"></div>
+                      <div class="align-items-center border-right p-2 share">
+                        <div class="publish-button">
+                          <div
+                            class="align-items-center border-left p-2 px-5 btn publish"
+                            >
+                            <span class="ml-1" (click)="addnewComment(post.id)"
+                              >Comment</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      </div>
+      <!-- <div class="col-4  p-3" >
+      <div class="Card ">
+        12365447
+      </div>
+      <div class="Card ">
+        <h5>Inline</h5>
+        <p-datepicker  [inline]="true"></p-datepicker>
+      </div>
+    </div> -->
+  </div>
+  <p-dialog
+    [(visible)]="docDialog"
+    [style]="{ width: '1000px' }"
+    header="post with image"
+    [modal]="true"
+    styleClass="p-fluid"
+    >
+    <ng-template pTemplate="content">
+      <div class="field">
+        <form [formGroup]="postForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <input
+                pInputText
+                (change)="uploadNew($event.target.files)"
+                id="fileUpload"
+                type="file"
+                accept="image/*"
+                multiple
+
+                />
+            </div>
+            <div class="col-sm-6">
+              @if (imageUrl!=null) {
+                <img class="logo1" alt="Image not chosen" [src]="imageUrl" />
+              }
+              @if (imageUrl==null) {
+                <img class="logo1" alt="Image not chosen" src=".\assets\images\bg\no image.jpg" />
+              }
+            </div>
+            <div class="col-sm-6">
+              <span>Post Text</span>
+              <input
+                pInputText
+                id="fileUpload"
+                type="text"
+                formControlName="text"
+                />
+
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+
+
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="share"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)=" addpostwithimg()"
+      ></button>
+    </ng-template>
+  </p-dialog>

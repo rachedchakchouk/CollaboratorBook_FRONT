@@ -14,9 +14,9 @@ import { OfficeService } from "./../../services/Buissness/office.service";
 import { DatePipe } from "@angular/common";
 import { ContractService } from "./../../services/RH/contract.service";
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from "@angular/forms";
 import { Contract } from "./../../../models/contract";
@@ -44,10 +44,11 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { AjouterclosesComponent } from "../../contrat/contrat/closes/ajoutercloses/ajoutercloses.component";
 
 @Component({
-  selector: "app-steps",
-  templateUrl: "./steps.component.html",
-  styleUrls: ["./steps.component.scss"],
-  providers: [DatePipe, DialogService, MessageService, ConfirmationService],
+    selector: "app-steps",
+    templateUrl: "./steps.component.html",
+    styleUrls: ["./steps.component.scss"],
+    providers: [DatePipe, DialogService, MessageService, ConfirmationService],
+    standalone: false
 })
 export class StepsComponent implements OnInit {
 
@@ -83,14 +84,14 @@ export class StepsComponent implements OnInit {
   jobId!: number;
 
   f_duratin: boolean = true;
-  contractForm!: FormGroup;
-  employeeForm!: FormGroup;
-  employeeForm1!: FormGroup;
-  employeeForm0!: FormGroup;
-  departementForm!: FormGroup;
-  officeForm!: FormGroup;
-  jobForm!: FormGroup;
-  docForm!: FormGroup;
+  contractForm!: UntypedFormGroup;
+  employeeForm!: UntypedFormGroup;
+  employeeForm1!: UntypedFormGroup;
+  employeeForm0!: UntypedFormGroup;
+  departementForm!: UntypedFormGroup;
+  officeForm!: UntypedFormGroup;
+  jobForm!: UntypedFormGroup;
+  docForm!: UntypedFormGroup;
   officeDialogue!: boolean;
   depatementDialogue!: boolean;
   jobDialogue!: boolean;
@@ -106,7 +107,7 @@ export class StepsComponent implements OnInit {
     private router: Router,
     private contractservice: ContractService,
     public datepipe: DatePipe,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogService: DialogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -132,61 +133,61 @@ export class StepsComponent implements OnInit {
       });
     this.employeeForm0 = this.fb.group({});
     this.employeeForm1 = this.fb.group({
-      professionalPhone: new FormControl("", Validators.required),
+      professionalPhone: new UntypedFormControl("", Validators.required),
 
-      professionalMail: new FormControl("", Validators.required),
-      folder: new FormControl("", Validators.required),
+      professionalMail: new UntypedFormControl("", Validators.required),
+      folder: new UntypedFormControl("", Validators.required),
     });
 
     this.employeeForm = this.fb.group({
-      firstName: new FormControl("", Validators.required),
-      lastName: new FormControl("", Validators.required),
-      cin: new FormControl("", Validators.required),
-      deleveryDate: new FormControl("", Validators.required),
-      adresse: new FormControl("", Validators.required),
-      birthDate: new FormControl("", Validators.required),
-      childNumber: new FormControl("", Validators.required),
-      personalPhone: new FormControl("", Validators.required),
-      personalMail: new FormControl("", Validators.required),
-      statusF: new FormControl(""),
-      jobId: new FormControl(""),
+      firstName: new UntypedFormControl("", Validators.required),
+      lastName: new UntypedFormControl("", Validators.required),
+      cin: new UntypedFormControl("", Validators.required),
+      deleveryDate: new UntypedFormControl("", Validators.required),
+      adresse: new UntypedFormControl("", Validators.required),
+      birthDate: new UntypedFormControl("", Validators.required),
+      childNumber: new UntypedFormControl("", Validators.required),
+      personalPhone: new UntypedFormControl("", Validators.required),
+      personalMail: new UntypedFormControl("", Validators.required),
+      statusF: new UntypedFormControl(""),
+      jobId: new UntypedFormControl(""),
     });
 
     this.contractForm = this.fb.group({
-      startDate: new FormControl("", Validators.required),
-      duration: new FormControl("duration", Validators.required),
-      grossSalary: new FormControl("", [
+      startDate: new UntypedFormControl("", Validators.required),
+      duration: new UntypedFormControl("duration", Validators.required),
+      grossSalary: new UntypedFormControl("", [
         Validators.required,
         Validators.min(0),
         Validators.max(5000),
       ]),
-      netSalary: new FormControl("", [
+      netSalary: new UntypedFormControl("", [
         Validators.required,
         Validators.min(0),
         Validators.max(5000),
       ]),
-      contractType: new FormControl("", Validators.required),
+      contractType: new UntypedFormControl("", Validators.required),
     });
     this.departementForm = this.fb.group({
-      name: new FormControl("", Validators.required),
+      name: new UntypedFormControl("", Validators.required),
     });
     this.officeForm = this.fb.group({
-      name: new FormControl("", Validators.required),
-      mobile: new FormControl("", Validators.required),
-      phone: new FormControl("", Validators.required),
-      fax: new FormControl(""),
-      address: new FormControl("", Validators.required),
-      email: new FormControl("", [Validators.email, Validators.required]),
+      name: new UntypedFormControl("", Validators.required),
+      mobile: new UntypedFormControl("", Validators.required),
+      phone: new UntypedFormControl("", Validators.required),
+      fax: new UntypedFormControl(""),
+      address: new UntypedFormControl("", Validators.required),
+      email: new UntypedFormControl("", [Validators.email, Validators.required]),
     });
     this.jobForm = this.fb.group({
-      name: new FormControl("", Validators.required),
-      description: new FormControl("", Validators.required),
-      companyId: new FormControl(this.companyId, Validators.required),
+      name: new UntypedFormControl("", Validators.required),
+      description: new UntypedFormControl("", Validators.required),
+      companyId: new UntypedFormControl(this.companyId, Validators.required),
     });
     this.docForm = this.fb.group({
-      id: new FormControl("", Validators.required),
-      name: new FormControl("firstImg", Validators.required),
-      docType: new FormControl("PROFIL_IMG", Validators.required),
+      id: new UntypedFormControl("", Validators.required),
+      name: new UntypedFormControl("firstImg", Validators.required),
+      docType: new UntypedFormControl("PROFIL_IMG", Validators.required),
     });
   }
 

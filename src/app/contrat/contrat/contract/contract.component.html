@@ -52,7 +52,7 @@
     dataKey="id"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
-  >
+    >
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         <h5 class="m-0">Manage Contracts</h5>
@@ -97,243 +97,253 @@
         <td>{{ contract.contractType }}</td>
         <td>{{ contract.duration }}</td>
         <td>
-          <img
-            *ngIf="contract.empURl != null"
-            [src]="contract.empURl"
-            width="32"
-            style="vertical-align: middle"
-          />
+          @if (contract.empURl != null) {
+            <img
+              [src]="contract.empURl"
+              width="32"
+              style="vertical-align: middle"
+              />
+          }
 
-          <img
-            *ngIf="contract.empURl == null && contract.eId != null"
-            src="../assets/images/users/user.jpg"
-            width="32"
-            style="vertical-align: middle"
-          />
-          <span *ngIf="contract.eId == null" class="image-text"
-            >NO EMPLOYEE</span
-          >
-          <span *ngIf="contract.eId != null" class="image-text">{{
-            contract.empFullName
-          }}</span>
-        </td>
-        <td>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-success mr-2"
-            style="margin-right: 10px"
-            (click)="openDialog(contract.id)"
-          ></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger"
-            (click)="archive(contract.id)"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between">
-        In total there are {{ contracts ? contracts.length : 0 }} contracts.
-      </div>
-    </ng-template>
-  </p-table>
-</div>
-<!-- update dialogue -->
-<p-dialog
-  [(visible)]="updateDialog"
-  [style]="{ width: '1000px' }"
-  header="contarct Details"
-  [modal]="true"
-  styleClass="p-fluid"
->
-  <ng-template pTemplate="content">
-    <div class="field">
-      <form [formGroup]="contractForm">
-        <div class="row">
-          <div class="col-sm-6">
-            <label for="dateformat" class="label"
-              >Start date <span style="color: red">* </span></label
-            >
-            <p-calendar
-              dateFormat="yy-mm-dd"
-              inputId="dateformat"
-              [(ngModel)]="contract.startDate"
-              formControlName="startDate"
-            ></p-calendar>
-          </div>
-
-          <div class="col-sm-6">
-            <label>Gross Salary</label>
-
-            <p-inputNumber
-              inputId="minmaxfraction"
-              mode="decimal"
-              [minFractionDigits]="3"
-              [maxFractionDigits]="5"
-              [(ngModel)]="contract.grossSalary"
-              formControlName="grossSalary"
-            >
-            </p-inputNumber>
-          </div>
-          <div class="col-sm-6">
-            <label>Contract Type</label>
-            <p-dropdown
-              id="type"
-              [(ngModel)]="contract.contractType"
-              [options]="type"
-              [showClear]="true"
-              formControlName="contractType"
-              (onChange)="onChangeContractType($event)"
-            ></p-dropdown>
-          </div>
-          <div class="col-sm-6">
-            <label>Contract Duration</label>
-            <p-dropdown
-              id="duree"
-              [(ngModel)]="contract.duration"
-              [showClear]="true"
-              [options]="duration"
-              formControlName="duration"
-              (onChange)="onChangeDuration($event)"
-            >
-            </p-dropdown>
-          </div>
-
-          <div class="col-sm-6">
-            <label>Net Salary</label>
-            <p-inputNumber
-              inputId="minmaxfraction"
-              mode="decimal"
-              [minFractionDigits]="3"
-              [maxFractionDigits]="5"
-              [(ngModel)]="contract.netSalary"
-              formControlName="netSalary"
-            >
-            </p-inputNumber>
-          </div>
-          <div class="col-sm-6">
-            <label>Employee liste</label>
-            <p-dropdown
-              [options]="employees"
-              [(ngModel)]="selectedEmployee"
-              [filter]="true"
-              filterBy="firstName"
-              [showClear]="true"
-              placeholder="Select a employee"
-              (onChange)="onChangeEmployee($event)"
-            >
-              <ng-template pTemplate="selectedItem">
-                <div
-                  class="country-item country-item-value"
-                  *ngIf="selectedEmployee"
-                >
-                  <img [src]="selectedEmployee?.url" width="32" />
-                  <div>
-                    {{ selectedEmployee?.firstName }}
-                    {{ selectedEmployee?.lastName }}
-                  </div>
-                </div>
-              </ng-template>
-              <ng-template let-emp pTemplate="item">
-                <div class="country-item">
-                  <img *ngIf="emp.url != null" [src]="emp.url" width="32" />
-                  <img
-                    *ngIf="emp.url == null"
-                    src="\assets\images\users\user.jpg"
-                    width="32"
-                  />
-                  <div>{{ emp?.firstName }} {{ emp?.lastName }}</div>
-                </div>
-              </ng-template>
-            </p-dropdown>
-          </div>
-        </div>
-      </form>
-    </div>
-    <p-table
-      #dt
-      [value]="clauses"
-      [rows]="5"
-      [paginator]="true"
-      [globalFilterFields]="['title', 'description']"
-      [tableStyle]="{ 'min-width': '75rem' }"
-      [(selection)]="selectedClause"
-      [rowHover]="true"
-      dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
-    >
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-          <h5 class="m-0">liste clauses</h5>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 4rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
-          <th pSortableColumn="id" style="min-width: 5rem">
-            title<p-sortIcon field="title"></p-sortIcon>
-          </th>
-          <th pSortableColumn="description">description</th>
-          <th pSortableColumn="wirter">writer</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-clause>
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="clause"></p-tableCheckbox>
+          @if (contract.empURl == null && contract.eId != null) {
+            <img
+              src="../assets/images/users/user.jpg"
+              width="32"
+              style="vertical-align: middle"
+              />
+          }
+          @if (contract.eId == null) {
+            <span class="image-text"
+              >NO EMPLOYEE</span
+              >
+            }
+            @if (contract.eId != null) {
+              <span class="image-text">{{
+                contract.empFullName
+              }}</span>
+            }
           </td>
-          <td>{{ clause.title }}</td>
-          <td>{{ clause.description }}</td>
-          <td>{{ clause.writer.firstName }} {{ clause.writer.lastName }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              style="margin-right: 10px"
+              (click)="openDialog(contract.id)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger"
+              (click)="archive(contract.id)"
+            ></button>
+          </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="footer"> </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ contracts ? contracts.length : 0 }} contracts.
+        </div>
+      </ng-template>
     </p-table>
-  </ng-template>
+  </div>
+  <!-- update dialogue -->
+  <p-dialog
+    [(visible)]="updateDialog"
+    [style]="{ width: '1000px' }"
+    header="contarct Details"
+    [modal]="true"
+    styleClass="p-fluid"
+    >
+    <ng-template pTemplate="content">
+      <div class="field">
+        <form [formGroup]="contractForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <label for="dateformat" class="label"
+                >Start date <span style="color: red">* </span></label
+                >
+                <p-datepicker
+                  dateFormat="yy-mm-dd"
+                  inputId="dateformat"
+                  [(ngModel)]="contract.startDate"
+                  formControlName="startDate"
+                ></p-datepicker>
+              </div>
 
-  <ng-template pTemplate="footer">
-    <button
-      pButton
-      pRipple
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button-text"
-      (click)="hideDialog()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="Save"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)="updateContract(contract.id)"
-    ></button>
-  </ng-template>
-</p-dialog>
-<!-- fin update dialogue -->
-<!-- archive dialogue -->
-<p-dialog
-  [(visible)]="archiveDialog"
-  [style]="{ width: '1200px' }"
-  header="contarct archived liste"
-  [modal]="true"
-  styleClass="p-fluid"
->
-  <ng-template pTemplate="content">
-    <div class="field">
-      <p-table
-        #dt
-        [value]="archivedcontracts"
-        [rows]="10"
-        [paginator]="true"
+              <div class="col-sm-6">
+                <label>Gross Salary</label>
+
+                <p-inputNumber
+                  inputId="minmaxfraction"
+                  mode="decimal"
+                  [minFractionDigits]="3"
+                  [maxFractionDigits]="5"
+                  [(ngModel)]="contract.grossSalary"
+                  formControlName="grossSalary"
+                  >
+                </p-inputNumber>
+              </div>
+              <div class="col-sm-6">
+                <label>Contract Type</label>
+                <p-select
+                  id="type"
+                  [(ngModel)]="contract.contractType"
+                  [options]="type"
+                  [showClear]="true"
+                  formControlName="contractType"
+                  (onChange)="onChangeContractType($event)"
+                ></p-select>
+              </div>
+              <div class="col-sm-6">
+                <label>Contract Duration</label>
+                <p-select
+                  id="duree"
+                  [(ngModel)]="contract.duration"
+                  [showClear]="true"
+                  [options]="duration"
+                  formControlName="duration"
+                  (onChange)="onChangeDuration($event)"
+                  >
+                </p-select>
+              </div>
+
+              <div class="col-sm-6">
+                <label>Net Salary</label>
+                <p-inputNumber
+                  inputId="minmaxfraction"
+                  mode="decimal"
+                  [minFractionDigits]="3"
+                  [maxFractionDigits]="5"
+                  [(ngModel)]="contract.netSalary"
+                  formControlName="netSalary"
+                  >
+                </p-inputNumber>
+              </div>
+              <div class="col-sm-6">
+                <label>Employee liste</label>
+                <p-select
+                  [options]="employees"
+                  [(ngModel)]="selectedEmployee"
+                  [filter]="true"
+                  filterBy="firstName"
+                  [showClear]="true"
+                  placeholder="Select a employee"
+                  (onChange)="onChangeEmployee($event)"
+                  >
+                  <ng-template pTemplate="selectedItem">
+                    @if (selectedEmployee) {
+                      <div
+                        class="country-item country-item-value"
+                        >
+                        <img [src]="selectedEmployee?.url" width="32" />
+                        <div>
+                          {{ selectedEmployee?.firstName }}
+                          {{ selectedEmployee?.lastName }}
+                        </div>
+                      </div>
+                    }
+                  </ng-template>
+                  <ng-template let-emp pTemplate="item">
+                    <div class="country-item">
+                      @if (emp.url != null) {
+                        <img [src]="emp.url" width="32" />
+                      }
+                      @if (emp.url == null) {
+                        <img
+                          src="\assets\images\users\user.jpg"
+                          width="32"
+                          />
+                      }
+                      <div>{{ emp?.firstName }} {{ emp?.lastName }}</div>
+                    </div>
+                  </ng-template>
+                </p-select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <p-table
+          #dt
+          [value]="clauses"
+          [rows]="5"
+          [paginator]="true"
+          [globalFilterFields]="['title', 'description']"
+          [tableStyle]="{ 'min-width': '75rem' }"
+          [(selection)]="selectedClause"
+          [rowHover]="true"
+          dataKey="id"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true"
+          >
+          <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+              <h5 class="m-0">liste clauses</h5>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th pSortableColumn="id" style="min-width: 5rem">
+                title<p-sortIcon field="title"></p-sortIcon>
+              </th>
+              <th pSortableColumn="description">description</th>
+              <th pSortableColumn="wirter">writer</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-clause>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="clause"></p-tableCheckbox>
+              </td>
+              <td>{{ clause.title }}</td>
+              <td>{{ clause.description }}</td>
+              <td>{{ clause.writer.firstName }} {{ clause.writer.lastName }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer"> </ng-template>
+        </p-table>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Save"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="updateContract(contract.id)"
+        ></button>
+      </ng-template>
+    </p-dialog>
+    <!-- fin update dialogue -->
+    <!-- archive dialogue -->
+    <p-dialog
+      [(visible)]="archiveDialog"
+      [style]="{ width: '1200px' }"
+      header="contarct archived liste"
+      [modal]="true"
+      styleClass="p-fluid"
+      >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <p-table
+            #dt
+            [value]="archivedcontracts"
+            [rows]="10"
+            [paginator]="true"
         [globalFilterFields]="[
           'id',
           'startDate',
@@ -341,80 +351,80 @@
           'contractType',
           'duration'
         ]"
-        [tableStyle]="{ 'min-width': '75rem' }"
-        [(selection)]="selectedArchivedcontracts"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true"
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 4rem">
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th pSortableColumn="id" style="min-width: 5rem">
-              Id<p-sortIcon field="id"></p-sortIcon>
-            </th>
-            <th pSortableColumn="startDate">
-              Start_Date<p-sortIcon field="startDate"></p-sortIcon>
-            </th>
-            <th pSortableColumn="contractType" style="min-width: 10rem">
-              Gross_Salary<p-sortIcon field="grossSalary"></p-sortIcon>
-            </th>
-            <th pSortableColumn="duration ">
-              Contract_Type <p-sortIcon field="contractType"></p-sortIcon>
-            </th>
-            <th pSortableColumn="inventoryStatus" style="min-width: 10rem">
-              Duration <p-sortIcon field="duration"></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-contract>
-          <tr>
-            <td>
-              <p-tableCheckbox [value]="contract"></p-tableCheckbox>
-            </td>
-            <td>{{ contract.id }}</td>
-            <td>{{ contract.startDate }}</td>
-            <td>{{ contract.grossSalary }}</td>
-            <td>{{ contract.contractType }}</td>
-            <td>{{ contract.duration }}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-          <div class="flex align-items-center justify-content-between">
-            In total there are
-            {{ archivedcontracts ? archivedcontracts.length : 0 }} deleted
-            contracts.
-          </div>
-        </ng-template>
-      </p-table>
-    </div>
-  </ng-template>
+            [tableStyle]="{ 'min-width': '75rem' }"
+            [(selection)]="selectedArchivedcontracts"
+            [rowHover]="true"
+            dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
+            >
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 4rem">
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id" style="min-width: 5rem">
+                  Id<p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="startDate">
+                  Start_Date<p-sortIcon field="startDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="contractType" style="min-width: 10rem">
+                  Gross_Salary<p-sortIcon field="grossSalary"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duration ">
+                  Contract_Type <p-sortIcon field="contractType"></p-sortIcon>
+                </th>
+                <th pSortableColumn="inventoryStatus" style="min-width: 10rem">
+                  Duration <p-sortIcon field="duration"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-contract>
+              <tr>
+                <td>
+                  <p-tableCheckbox [value]="contract"></p-tableCheckbox>
+                </td>
+                <td>{{ contract.id }}</td>
+                <td>{{ contract.startDate }}</td>
+                <td>{{ contract.grossSalary }}</td>
+                <td>{{ contract.contractType }}</td>
+                <td>{{ contract.duration }}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex align-items-center justify-content-between">
+                In total there are
+                {{ archivedcontracts ? archivedcontracts.length : 0 }} deleted
+                contracts.
+              </div>
+            </ng-template>
+          </p-table>
+        </div>
+      </ng-template>
 
-  <ng-template pTemplate="footer">
-    <button
-      pButton
-      pRipple
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button-text"
-      (click)="hideArchive()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="activate"
-      icon="pi pi-sun"
-      class="p-button-success p-button-text"
-      (click)="activateSelectedcContract()"
-      (click)="hideArchive()"
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideArchive()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="activate"
+          icon="pi pi-sun"
+          class="p-button-success p-button-text"
+          (click)="activateSelectedcContract()"
+          (click)="hideArchive()"
       [disabled]="
         !selectedArchivedcontracts || !selectedArchivedcontracts.length
       "
-    ></button>
-  </ng-template>
-</p-dialog>
-<!-- fin archive dialogue -->
-<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+        ></button>
+      </ng-template>
+    </p-dialog>
+    <!-- fin archive dialogue -->
+    <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

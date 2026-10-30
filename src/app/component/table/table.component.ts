@@ -7,9 +7,9 @@ import { Employee } from './../../../models/employee';
 import { Department } from './../../../models/department';
 import { Office } from './../../../models/office';
 import { Validators } from '@angular/forms';
-import { FormControl } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { EmployeeService } from './../../services/RH/employee.service';
@@ -24,7 +24,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-table',
     templateUrl: 'table.component.html',
     providers: [DatePipe, DialogService, MessageService, ConfirmationService],
-
+    standalone: false
 })
 export class TableComponent implements OnInit {
 projects!:Project[];
@@ -33,7 +33,7 @@ archivedprojects!:Project[];
 currentDate=formatDate(new Date(),'yyyy-MM-dd','en_US');
 addDialogue:Boolean=false;
 editDialogue:Boolean=false;
-projectForm!:FormGroup;
+projectForm!:UntypedFormGroup;
 offices!:Office[];
 selectedOffice!:Office;
 departments!:Department[];
@@ -49,7 +49,7 @@ filtredEmployees!:Employee[];
     private employeeService:EmployeeService,
      public dialogService:DialogService,
     public messageService:MessageService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
      public confirmationService:ConfirmationService,
      private officeService:OfficeService,
      private departementService:DepartementService,
@@ -76,12 +76,12 @@ filtredEmployees!:Employee[];
   openAdd(){
     this.addDialogue=true;
     this.projectForm= this.fb.group({
-      name : new FormControl("",Validators.required),
-      description : new FormControl("",Validators.required),
-      startDate : new FormControl("",Validators.required),
-      deadLine : new FormControl("",Validators.required),
-      client : new FormControl("",Validators.required),
-      idCompany: new FormControl((Number(localStorage.getItem("companyid"))),Validators.required)
+      name : new UntypedFormControl("",Validators.required),
+      description : new UntypedFormControl("",Validators.required),
+      startDate : new UntypedFormControl("",Validators.required),
+      deadLine : new UntypedFormControl("",Validators.required),
+      client : new UntypedFormControl("",Validators.required),
+      idCompany: new UntypedFormControl((Number(localStorage.getItem("companyid"))),Validators.required)
     })
     this.employeeService.findActiveByCompany(Number(localStorage.getItem("companyid"))).subscribe((data)=>{
       this.employees=data;

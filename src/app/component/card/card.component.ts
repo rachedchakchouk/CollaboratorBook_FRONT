@@ -10,10 +10,10 @@ import { EmployeeService } from './../../services/RH/employee.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Component, Input, OnInit } from '@angular/core';
 @Component({
-  selector: 'app-card',
-  templateUrl: 'card.component.html',
-  providers: [DialogService],
-
+    selector: 'app-card',
+    templateUrl: 'card.component.html',
+    providers: [DialogService],
+    standalone: false
 })
 export class CardsComponent implements OnInit{
 employee!:Employee;

@@ -4,9 +4,9 @@
     [value]="employees"
     [paginator]="true"
     [rows]="9"
-    layout="grid"
+    [layout]="layouts[0]"
   >
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex flex-column md:flex-row md:justify-content-between">
         <button
           pButton
@@ -17,11 +17,12 @@
           class="p-button-warning"
           (click)="deletedListe()"
         ></button>
-        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        <p-selectButton [options]="layoutOptions" [(ngModel)]="layouts[0]" optionLabel="label" optionValue="value" [allowEmpty]="false"></p-selectButton>
       </div>
     </ng-template>
 
-    <ng-template let-employee pTemplate="listItem">
+    <ng-template #list let-employeeItems>
+      <ng-container *ngFor="let employee of employeeItems">
       <div class="col-12">
         <div class="product-list-item">
           <img [src]="employee.url" [alt]="" />
@@ -60,8 +61,11 @@
           </div>
         </div>
       </div>
+      </ng-container>
     </ng-template>
-    <ng-template let-employee pTemplate="gridItem">
+    <ng-template #grid let-employeeItems>
+      <div class="grid grid-nogutter">
+      <ng-container *ngFor="let employee of employeeItems">
       <div class="p-col-12 p-md-4">
         <div class="product-grid-item card">
           <div class="product-grid-item-top">
@@ -90,6 +94,8 @@
              
           </div>
         </div>
+      </div>
+      </ng-container>
       </div>
     </ng-template>
   </p-dataView>
@@ -302,12 +308,13 @@
         [rows]="9"
         layout="list"
       >
-        <ng-template pTemplate="header">
+        <ng-template #header>
           <div
             class="flex flex-column md:flex-row md:justify-content-between"
           ></div>
         </ng-template>
-        <ng-template let-aemployee pTemplate="listItem">
+        <ng-template #list let-aemployeeItems>
+          <ng-container *ngFor="let aemployee of aemployeeItems">
           <div class="col-12">
             <div class="product-list-item">
               <img [src]="aemployee.url" [alt]="" />
@@ -330,6 +337,7 @@
               </div>
             </div>
           </div>
+          </ng-container>
         </ng-template>
       </p-dataView>
     </ng-template>

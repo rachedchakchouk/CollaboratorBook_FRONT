@@ -1,5 +1,5 @@
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,51 +17,42 @@ import {ToastModule} from 'primeng/toast';
 import {ToolbarModule} from 'primeng/toolbar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {DialogModule} from 'primeng/dialog';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CalendarModule} from 'primeng/calendar';
+import { DatePickerModule } from "primeng/datepicker";
 import {StepsModule} from 'primeng/steps';
-import {DropdownModule} from 'primeng/dropdown';
+import { SelectModule } from "primeng/select";
 import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
-import {InputSwitchModule} from 'primeng/inputswitch';
-@NgModule({
-  declarations: [
-    AjouterContratComponent,
-    ClosesComponent,
-    AjouterclosesComponent,
-    ContractComponent
-  ],
-  imports: [
-    CommonModule,
-    ContratRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    TableModule,
-    SelectButtonModule,
-    ButtonModule,
-    ToastModule,
-    ToolbarModule,
-    FileUploadModule,
-    DialogModule,
-    DynamicDialogModule,
-    CalendarModule,
-    ConfirmDialogModule,
-    StepsModule,
-    DropdownModule,
-    CheckboxModule,
-    RadioButtonModule,
-    InputNumberModule,
-    CardModule,
-    DividerModule,
-    AccordionModule,
-    InputSwitchModule
-  ]
-  
-})
+import { ToggleSwitchModule } from "primeng/toggleswitch";
+@NgModule({ declarations: [
+        AjouterContratComponent,
+        ClosesComponent,
+        AjouterclosesComponent,
+        ContractComponent
+    ], imports: [CommonModule,
+        ContratRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TableModule,
+        SelectButtonModule,
+        ButtonModule,
+        ToastModule,
+        ToolbarModule,
+        FileUploadModule,
+        DialogModule,
+        DatePickerModule,
+        ConfirmDialogModule,
+        StepsModule,
+        SelectModule,
+        CheckboxModule,
+        RadioButtonModule,
+        InputNumberModule,
+        CardModule,
+        DividerModule,
+        AccordionModule,
+        ToggleSwitchModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ContratModule { }

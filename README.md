@@ -16,8 +16,8 @@ Backend (Spring Boot microservices): [CollaboratorBook_BACK](https://github.com/
 
 ## Tech stack
 
-Angular 13 · TypeScript 4.4 · RxJS · Bootstrap 5 / ng-bootstrap · PrimeNG · Chart.js (ng2-charts)
-· ngx-toastr · @auth0/angular-jwt
+Angular 21 · TypeScript 5.9 · RxJS 7 · Bootstrap 5 / ng-bootstrap · PrimeNG 21 (Lara theme) · Ignite UI for Angular
+· ApexCharts (ng-apexcharts) · @auth0/angular-jwt
 
 ## Project structure
 
@@ -37,7 +37,7 @@ src/models/               # TypeScript models
 
 ## Run locally
 
-Prerequisites: Node.js 16 (Angular 13), npm, and the backend services running
+Prerequisites: Node.js 20.19+ or 22.12+ (Angular 21), npm, and the backend services running
 (gateway on `http://localhost:8888`).
 
 ```bash

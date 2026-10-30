@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-sm-6">
             <label for="dateformat" class="label">Start date <span style="color: red;">* </span></label>
-            <p-calendar formControlName="startDate" dateFormat="yy-mm-dd" inputId="dateformat"></p-calendar>
+            <p-datepicker formControlName="startDate" dateFormat="yy-mm-dd" inputId="dateformat"></p-datepicker>
           </div>
 
 
@@ -29,17 +29,17 @@
 
           <div class="col-sm-6">
              <label>Contract Type</label>
-            <p-dropdown id="type" placeholder="Select a contract type" formControlName="contractType"
-              (onChange)="onChangeContractType($event)" [options]="type" [showClear]="true"></p-dropdown>
+            <p-select id="type" placeholder="Select a contract type" formControlName="contractType"
+              (onChange)="onChangeContractType($event)" [options]="type" [showClear]="true"></p-select>
 
 
           </div>
           <div class="col-sm-6">
             <label>Contract Duration</label>
-            <p-dropdown id="duree" placeholder="Select a contract duration" [options]="duration"
+            <p-select id="duree" placeholder="Select a contract duration" [options]="duration"
               formControlName="duration" (onChange)="onChangeDuration($event)" [showClear]="true"
               [disabled]="f_duratin">
-            </p-dropdown>
+            </p-select>
           </div>
           
         </div>
