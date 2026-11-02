@@ -1,12 +1,11 @@
 import { Validators } from '@angular/forms';
-import { FormControl } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { EmployeeService } from './../../../services/RH/employee.service';
 import { Document } from './../../../../models/document';
 import { DocumentService } from './../../../services/RH/document.service';
 import { Employee } from './../../../../models/employee';
-import { element } from "protractor";
 import { Company } from "./../../../../models/company";
 import { CompanyService } from "./../../../services/Buissness/company.service";
 import { Router } from "@angular/router";
@@ -20,10 +19,11 @@ import { Clause } from "./../../../../models/clause";
 import { forEach } from "jszip";
 
 @Component({
-  selector: "app-contract",
-  templateUrl: "./contract.component.html",
-  styleUrls: ["./contract.component.scss"],
-  providers: [MessageService, ConfirmationService],
+    selector: "app-contract",
+    templateUrl: "./contract.component.html",
+    styleUrls: ["./contract.component.scss"],
+    providers: [MessageService, ConfirmationService],
+    standalone: false
 })
 export class ContractComponent implements OnInit {
   f_duratin!: boolean;
@@ -47,7 +47,7 @@ export class ContractComponent implements OnInit {
   items!: MenuItem[];
   image!:Document;
   contractmodel!: Contract;
-  contractForm!: FormGroup;
+  contractForm!: UntypedFormGroup;
   type: String[] = ["CDI", "CDD", "CIVP", "INTERSHIP"];
   duration: String[] = [
     "ONE_MONTH",
@@ -59,7 +59,7 @@ export class ContractComponent implements OnInit {
     "OTHER",
   ];
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private clauseService: ClauseService,
     private contractService: ContractService,
     private messageService: MessageService,
@@ -152,19 +152,19 @@ e.url=photos[0].downloadUrl
   }
   openDialog(id: number) {
     this.contractForm = this.fb.group({
-      startDate: new FormControl("", Validators.required),
-      duration: new FormControl("", Validators.required),
-      grossSalary: new FormControl("", [
+      startDate: new UntypedFormControl("", Validators.required),
+      duration: new UntypedFormControl("", Validators.required),
+      grossSalary: new UntypedFormControl("", [
         Validators.required,
         Validators.min(0),
         Validators.max(5000),
       ]),
-      netSalary: new FormControl("", [
+      netSalary: new UntypedFormControl("", [
         Validators.required,
         Validators.min(0),
         Validators.max(5000),
       ]),
-      contractType: new FormControl("", Validators.required),
+      contractType: new UntypedFormControl("", Validators.required),
     });
     this.clauseService.getActiveByCompany(Number(localStorage.getItem("companyid"))).subscribe((res)=>{this.clauses=res})
     this.contractService.getById(id).subscribe((res) => {

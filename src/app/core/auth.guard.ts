@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CanActivate, Router, UrlTree } from "@angular/router";
+import { Router, UrlTree } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 /**
@@ -7,7 +7,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
  * access token can open them, the others are sent back to the sign-in page.
  */
 @Injectable({ providedIn: "root" })
-export class AuthGuard implements CanActivate {
+export class AuthGuard  {
   private readonly jwtHelper = new JwtHelperService();
 
   constructor(private router: Router) {}

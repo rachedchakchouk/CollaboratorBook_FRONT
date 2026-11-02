@@ -5,9 +5,10 @@ import { Component, OnInit } from "@angular/core";
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 
 @Component({
-  selector: "app-ajoutercloses",
-  templateUrl: "./ajoutercloses.component.html",
-  styleUrls: ["./ajoutercloses.component.scss"],
+    selector: "app-ajoutercloses",
+    templateUrl: "./ajoutercloses.component.html",
+    styleUrls: ["./ajoutercloses.component.scss"],
+    standalone: false
 })
 export class AjouterclosesComponent implements OnInit {
   clause: Clause = new Clause();

@@ -1,0 +1,54 @@
+# Dependabot : mises à jour groupées, hebdomadaires (lundi 06:00, heure de Tunis).
+# Les montées majeures d'Angular / PrimeNG / Ignite UI / ng-bootstrap se font à la main
+# (ng update étape par étape) ; les alertes et correctifs de sécurité restent actifs.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Africa/Tunis"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    labels: ["dépendances"]
+    groups:
+      securite-npm:
+        applies-to: security-updates
+        patterns: ["*"]
+      angular:
+        applies-to: version-updates
+        patterns:
+          - "@angular/*"
+          - "@angular-devkit/*"
+          - "@schematics/*"
+          - "zone.js"
+          - "typescript"
+        update-types: ["minor", "patch"]
+      npm-mineures-correctives:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@angular-devkit/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "zone.js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "primeng"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@primeuix/themes"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "igniteui-angular"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@igniteui/angular-schematics"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@ng-bootstrap/ng-bootstrap"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "ng-apexcharts"
+        update-types: ["version-update:semver-major"]

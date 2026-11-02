@@ -3,8 +3,9 @@ import {NgbNavChangeEvent} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-  selector: 'app-ngbd-nav',
-  templateUrl: './nav.component.html'
+    selector: 'app-ngbd-nav',
+    templateUrl: './nav.component.html',
+    standalone: false
 })
 export class NgbdnavBasicComponent {
   currentJustify = 'start';

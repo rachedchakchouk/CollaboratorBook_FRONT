@@ -12,19 +12,25 @@ import { DialogService } from "primeng/dynamicdialog";
 import { salesChartOptions } from "./../../dashboard/dashboard-components/sales-ratio/sales-ratio.component";
 import { Document } from "./../../../models/document";
 import { DocumentService } from "./../../services/RH/document.service";
-import { element } from "protractor";
 import { Employee } from "./../../../models/employee";
 import { EmployeeService } from "./../../services/RH/employee.service";
 import { Component, OnInit } from "@angular/core";
 import { timeStamp } from 'console';
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNG } from "primeng/config";
 @Component({
-  selector: 'app-buttons',
-  templateUrl: "buttons.component.html",
-  styleUrls: ["./buttons.scss"],
-  providers: [DialogService,CardsComponent],
+    selector: 'app-buttons',
+    templateUrl: "buttons.component.html",
+    styleUrls: ["./buttons.scss"],
+    providers: [DialogService, CardsComponent],
+    standalone: false
 })
 export class ButtonsComponent implements OnInit {
+  /** Layout of each DataView (list/grid), switched by the p-selectButton that replaces p-dataViewLayoutOptions (removed in PrimeNG 18). */
+  layouts: Array<"list" | "grid"> = ["grid"];
+  layoutOptions = [
+    { label: "List", value: "list" },
+    { label: "Grid", value: "grid" },
+  ];
   url!: String;
   employees!: Employee[];
   aEmployees!:Employee[];
@@ -49,7 +55,7 @@ export class ButtonsComponent implements OnInit {
     private contractService: ContractService,
     private route:Router,
     private cardsComponent : CardsComponent,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNG
   ) {}
 
   ngOnInit() {

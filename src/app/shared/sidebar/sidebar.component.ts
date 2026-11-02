@@ -6,8 +6,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 //declare var $: any;
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html'
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    standalone: false
 })
 export class SidebarComponent implements OnInit {
   showMenu = '';

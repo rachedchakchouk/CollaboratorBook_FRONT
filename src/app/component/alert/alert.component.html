@@ -1,28 +1,32 @@
 <div class="card">
   <h5>Collaborator</h5>
-  <p-tabView>
-      <p-tabPanel>
-        <ng-template pTemplate = "header">
-          
-          <span  pBadge  value="{{employees?.length}}" >All</span>
-          
-      </ng-template>
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value="0"><span  pBadge  value="{{employees?.length}}" >All</span></p-tab>
+      <p-tab value="1"><span  pBadge  value="{{employeesByOffice?.length}}" >{{officeTitle}}</span></p-tab>
+      <p-tab value="2"><span  pBadge  value="{{employeesByDepartement?.length}}" >{{depTitle}} </span></p-tab>
+      <p-tab value="3"><span  pBadge  value="{{employeesByjob?.length}}" >{{jobtitle}} </span></p-tab>
+      <p-tab value="4"><span  pBadge  value="{{projectsListe?.length}} Prj" >Projects</span></p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0">
         <div class="card">
           <p-dataView
             #dv
             [value]="employees"
             [paginator]="true"
             [rows]="4"
-            layout="list"
+            [layout]="layouts[0]"
           >
-            <ng-template pTemplate="header">
+            <ng-template #header>
               <div class="flex flex-column md:flex-row md:justify-content-between">
               
-                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                <p-selectButton [options]="layoutOptions" [(ngModel)]="layouts[0]" optionLabel="label" optionValue="value" [allowEmpty]="false"></p-selectButton>
               </div>
             </ng-template>
         
-            <ng-template let-employee pTemplate="listItem">
+            <ng-template #list let-employeeItems>
+              <ng-container *ngFor="let employee of employeeItems">
               <div class="col-12">
                 <div class="product-list-item">
                   <img [src]="employee.url" [alt]="" />
@@ -53,8 +57,11 @@
                   </div>
                 </div>
               </div>
+              </ng-container>
             </ng-template>
-            <ng-template let-employee pTemplate="gridItem">
+            <ng-template #grid let-employeeItems>
+              <div class="grid grid-nogutter">
+              <ng-container *ngFor="let employee of employeeItems">
               <div class="p-col-12 p-md-4">
                 <div class="product-grid-item card">
                   <div class="product-grid-item-top">
@@ -82,6 +89,8 @@
                      
                   </div>
                 </div>
+              </div>
+              </ng-container>
               </div>
             </ng-template>
           </p-dataView>
@@ -228,13 +237,8 @@
         
         
         </div>
-      </p-tabPanel>
-      <p-tabPanel  >
-        <ng-template pTemplate = "header">
-          
-          <span  pBadge  value="{{employeesByOffice?.length}}" >{{officeTitle}}</span>
-          
-      </ng-template>
+      </p-tabpanel>
+      <p-tabpanel value="1">
         <div class="card">
          <h5>Employee List of {{officeTitle}} </h5> 
           <p-dataView
@@ -242,16 +246,17 @@
             [value]="employeesByOffice"
             [paginator]="true"
             [rows]="4"
-            layout="list"
+            [layout]="layouts[1]"
           >
-            <ng-template pTemplate="header">
+            <ng-template #header>
               <div class="flex flex-column md:flex-row md:justify-content-between">
                
-                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                <p-selectButton [options]="layoutOptions" [(ngModel)]="layouts[1]" optionLabel="label" optionValue="value" [allowEmpty]="false"></p-selectButton>
               </div>
             </ng-template>
         
-            <ng-template let-employee pTemplate="listItem">
+            <ng-template #list let-employeeItems>
+              <ng-container *ngFor="let employee of employeeItems">
               <div class="col-12">
                 <div class="product-list-item">
                   <img [src]="employee.url" [alt]="" />
@@ -282,8 +287,11 @@
                   </div>
                 </div>
               </div>
+              </ng-container>
             </ng-template>
-            <ng-template let-employee pTemplate="gridItem">
+            <ng-template #grid let-employeeItems>
+              <div class="grid grid-nogutter">
+              <ng-container *ngFor="let employee of employeeItems">
               <div class="p-col-12 p-md-4">
                 <div class="product-grid-item card">
                   <div class="product-grid-item-top">
@@ -312,6 +320,8 @@
                      
                   </div>
                 </div>
+              </div>
+              </ng-container>
               </div>
             </ng-template>
           </p-dataView>
@@ -504,30 +514,25 @@
         
          
         </div>
-    </p-tabPanel>
-    
-      <p-tabPanel  >
-        <ng-template pTemplate = "header">
-          
-          <span  pBadge  value="{{employeesByDepartement?.length}}" >{{depTitle}} </span>
-          
-      </ng-template>
+      </p-tabpanel>
+      <p-tabpanel value="2">
       <div class="card">
         <p-dataView
           #dv
           [value]="employeesByDepartement"
           [paginator]="true"
           [rows]="4"
-          layout="list"
+          [layout]="layouts[2]"
         >
-          <ng-template pTemplate="header">
+          <ng-template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between">
              
-              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+              <p-selectButton [options]="layoutOptions" [(ngModel)]="layouts[2]" optionLabel="label" optionValue="value" [allowEmpty]="false"></p-selectButton>
             </div>
           </ng-template>
       
-          <ng-template let-employee pTemplate="listItem">
+          <ng-template #list let-employeeItems>
+            <ng-container *ngFor="let employee of employeeItems">
             <div class="col-12">
               <div class="product-list-item">
                 <img [src]="employee.url" [alt]="" />
@@ -558,8 +563,11 @@
                 </div>
               </div>
             </div>
+            </ng-container>
           </ng-template>
-          <ng-template let-employee pTemplate="gridItem">
+          <ng-template #grid let-employeeItems>
+            <div class="grid grid-nogutter">
+            <ng-container *ngFor="let employee of employeeItems">
             <div class="p-col-12 p-md-4">
               <div class="product-grid-item card">
                 <div class="product-grid-item-top">
@@ -587,6 +595,8 @@
                    
                 </div>
               </div>
+            </div>
+            </ng-container>
             </div>
           </ng-template>
         </p-dataView>
@@ -778,13 +788,8 @@
       
         
       </div>
-    </p-tabPanel>
-    <p-tabPanel  >
-      <ng-template pTemplate = "header">
-        
-        <span  pBadge  value="{{employeesByjob?.length}}" >{{jobtitle}} </span>
-        
-    </ng-template>
+      </p-tabpanel>
+      <p-tabpanel value="3">
       
         <div class="card">
           <p-dataView
@@ -792,16 +797,17 @@
             [value]="employeesByjob"
             [paginator]="true"
             [rows]="4"
-            layout="list"
+            [layout]="layouts[3]"
           >
-            <ng-template pTemplate="header">
+            <ng-template #header>
               <div class="flex flex-column md:flex-row md:justify-content-between">
                
-                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                <p-selectButton [options]="layoutOptions" [(ngModel)]="layouts[3]" optionLabel="label" optionValue="value" [allowEmpty]="false"></p-selectButton>
               </div>
             </ng-template>
         
-            <ng-template let-employee pTemplate="listItem">
+            <ng-template #list let-employeeItems>
+              <ng-container *ngFor="let employee of employeeItems">
               <div class="col-12">
                 <div class="product-list-item">
                   <img [src]="employee.url" [alt]="" />
@@ -832,8 +838,11 @@
                   </div>
                 </div>
               </div>
+              </ng-container>
             </ng-template>
-            <ng-template let-employee pTemplate="gridItem">
+            <ng-template #grid let-employeeItems>
+              <div class="grid grid-nogutter">
+              <ng-container *ngFor="let employee of employeeItems">
               <div class="p-col-12 p-md-4">
                 <div class="product-grid-item card">
                   <div class="product-grid-item-top">
@@ -861,6 +870,8 @@
                      
                   </div>
                 </div>
+              </div>
+              </ng-container>
               </div>
             </ng-template>
           </p-dataView>
@@ -1052,23 +1063,15 @@
         
          
         </div>
-      </p-tabPanel>
-     
-        <p-tabPanel  >
-          <ng-template pTemplate = "header">
-            
-            <span  pBadge  value="{{projectsListe?.length}} Prj" >Projects</span>
-            
-        </ng-template>
+      </p-tabpanel>
+      <p-tabpanel value="4">
         <div   class="card" *ngFor="let p of projectsListe">
-          <p-tabView>
-          
-            <p-tabPanel  >
-              <ng-template pTemplate = "header">
-                
-                <span  pBadge  value="{{p.employeeList?.length}} " >{{p.name}}</span>
-                
-            </ng-template>
+          <p-tabs value="0">
+            <p-tablist>
+              <p-tab value="0"><span  pBadge  value="{{p.employeeList?.length}} " >{{p.name}}</span></p-tab>
+            </p-tablist>
+            <p-tabpanels>
+              <p-tabpanel value="0">
             <div class="card">
             
               <p-dataView
@@ -1080,7 +1083,8 @@
               >
               
             
-                <ng-template let-employee pTemplate="listItem">
+                <ng-template #list let-employeeItems>
+                  <ng-container *ngFor="let employee of employeeItems">
                   <div class="col-12">
                     <div class="product-list-item">
                       <img [src]="employee.url" [alt]="" />
@@ -1111,6 +1115,7 @@
                       </div>
                     </div>
                   </div>
+                  </ng-container>
                 </ng-template>
                
               </p-dataView>
@@ -1302,13 +1307,13 @@
             
              
             </div>
-          </p-tabPanel>
-        </p-tabView>
+              </p-tabpanel>
+            </p-tabpanels>
+          </p-tabs>
         </div>
-      </p-tabPanel>
-      
-     
-  </p-tabView>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

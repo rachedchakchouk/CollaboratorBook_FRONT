@@ -22,11 +22,10 @@ import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
 import { FileUploadModule } from "primeng/fileupload";
 import { DialogModule } from "primeng/dialog";
-import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { CalendarModule } from "primeng/calendar";
+import { DatePickerModule } from "primeng/datepicker";
 import { StepsModule } from "primeng/steps";
-import { DropdownModule } from "primeng/dropdown";
+import { SelectModule } from "primeng/select";
 import { CheckboxModule } from "primeng/checkbox";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { InputNumberModule } from "primeng/inputnumber";
@@ -56,7 +55,7 @@ import { OfficesComponent } from './offices/offices.component';
 import { DepartementComponent } from './departement/departement.component';
 import { JobComponent } from './job/job.component';
 import { CompanyComponent } from './company/company.component';
-import {TabViewModule} from 'primeng/tabview';
+import { TabsModule } from "primeng/tabs";
 import { DocumentComponent } from './document/document.component';
 import {DataViewModule} from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
@@ -80,11 +79,10 @@ import {TimelineModule} from 'primeng/timeline';
     ToolbarModule,
     FileUploadModule,
     DialogModule,
-    DynamicDialogModule,
-    CalendarModule,
+    DatePickerModule,
     ConfirmDialogModule,
     StepsModule,
-    DropdownModule,
+    SelectModule,
     CheckboxModule,
     RadioButtonModule,
     InputNumberModule,
@@ -110,7 +108,7 @@ import {TimelineModule} from 'primeng/timeline';
     IgxSwitchModule,
     DataViewModule,
     TagModule,
-    TabViewModule,
+    TabsModule,
     BadgeModule,
     DockModule,
     GalleriaModule,

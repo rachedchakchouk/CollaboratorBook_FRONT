@@ -1,15 +1,16 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { User } from "../../../../models/user";
 import { UserService } from "../../../services/Security/user.service";
 import { Employee } from "../../../../models/employee";
 
 @Component({
-  selector: "app-signin",
-  templateUrl: "./signin.component.html",
-  styleUrls: ["./signin.component.scss"],
+    selector: "app-signin",
+    templateUrl: "./signin.component.html",
+    styleUrls: ["./signin.component.scss"],
+    standalone: false
 })
 export class SigninComponent implements OnInit {
   employee!: Employee;
@@ -18,9 +19,9 @@ export class SigninComponent implements OnInit {
 
   user: User = new User();
   public invalidLogin: boolean = false;
-  formLogin: FormGroup = new FormGroup({
-    username: new FormControl("", Validators.required),
-    password: new FormControl("", Validators.required),
+  formLogin: UntypedFormGroup = new UntypedFormGroup({
+    username: new UntypedFormControl("", Validators.required),
+    password: new UntypedFormControl("", Validators.required),
   });
   constructor(
     private router: Router,

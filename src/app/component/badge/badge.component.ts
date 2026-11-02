@@ -18,26 +18,26 @@ import { DatePipe, Location } from "@angular/common";
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Clause } from "../../../models/clause";
 import {
-  FormBuilder,
+  UntypedFormBuilder,
   FormControl,
-  FormGroup,
+  UntypedFormGroup,
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ContractService } from "../../services/RH/contract.service";
 import { Galleria } from 'primeng/galleria';
 @Component({
-  selector: "app-contract",
-
-  templateUrl: "badge.component.html",
-  styleUrls: ["./badge.scss"],
-  providers: [DatePipe, DialogService, MessageService, ConfirmationService],
+    selector: "app-contract",
+    templateUrl: "badge.component.html",
+    styleUrls: ["./badge.scss"],
+    providers: [DatePipe, DialogService, MessageService, ConfirmationService],
+    standalone: false
 })
 export class BadgeComponent implements OnInit {
   employee!: Employee;
   statusF!: String[];
   //startDate!:Date;
-  employeePersonalForm!: FormGroup;
+  employeePersonalForm!: UntypedFormGroup;
   gs!: number;
   iduser:number=(Number(localStorage.getItem("idemployee")));
   posts!: Post[] ;
@@ -68,7 +68,7 @@ employeeId:number=history.state.data;
     private docService:DocumentService,
     public datepipe: DatePipe,
     private companyService:CompanyService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogService: DialogService,
     private projectService:ProjectService,
     private messageService: MessageService,

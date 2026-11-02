@@ -4,9 +4,10 @@ import { Clause } from "./../../../../models/clause";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-closes",
-  templateUrl: "./closes.component.html",
-  styleUrls: ["./closes.component.scss"],
+    selector: "app-closes",
+    templateUrl: "./closes.component.html",
+    styleUrls: ["./closes.component.scss"],
+    standalone: false
 })
 export class ClosesComponent implements OnInit {
   clauses!: Clause[];

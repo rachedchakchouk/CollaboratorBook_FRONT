@@ -1,9 +1,8 @@
 import { Validators } from '@angular/forms';
-import { FormControl } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Department } from "./../../../models/department";
-import { element } from "protractor";
 import { DepartementService } from "./../../services/Buissness/departement.service";
 import { MessageService } from "primeng/api";
 import { ConfirmationService } from "primeng/api";
@@ -15,10 +14,11 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-offices",
-  templateUrl: "./offices.component.html",
-  styleUrls: ["./offices.component.scss"],
-  providers: [DialogService, MessageService, ConfirmationService],
+    selector: "app-offices",
+    templateUrl: "./offices.component.html",
+    styleUrls: ["./offices.component.scss"],
+    providers: [DialogService, MessageService, ConfirmationService],
+    standalone: false
 })
 export class OfficesComponent implements OnInit {
   offices!: Office[];
@@ -28,11 +28,11 @@ export class OfficesComponent implements OnInit {
   depSize!: number;
   detailDialogue!:boolean;
   submitted!: boolean;
-  officeForm!:FormGroup;
+  officeForm!:UntypedFormGroup;
 
   constructor(
     private departmentService: DepartementService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private officeService: OfficeService,
     public dialogService: DialogService,
     private confirmationService: ConfirmationService,
@@ -49,12 +49,12 @@ export class OfficesComponent implements OnInit {
         
       });
       this.officeForm = this.fb.group({
-        name: new FormControl("", Validators.required),
-        mobile: new FormControl("", Validators.required),
-        phone: new FormControl("", Validators.required),
-        fax: new FormControl(""),
-        address: new FormControl("", Validators.required),
-        email: new FormControl("", [Validators.email, Validators.required]),
+        name: new UntypedFormControl("", Validators.required),
+        mobile: new UntypedFormControl("", Validators.required),
+        phone: new UntypedFormControl("", Validators.required),
+        fax: new UntypedFormControl(""),
+        address: new UntypedFormControl("", Validators.required),
+        email: new UntypedFormControl("", [Validators.email, Validators.required]),
       });
   }
 Departmentsize(id:number){

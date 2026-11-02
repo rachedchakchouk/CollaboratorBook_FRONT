@@ -10,14 +10,14 @@ import {
   OnInit,
 } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { Employee } from "../../../models/employee";
 
 declare var $: any;
 
 @Component({
-  selector: "app-navigation",
-  templateUrl: "./navigation.component.html",
+    selector: "app-navigation",
+    templateUrl: "./navigation.component.html",
+    standalone: false
 })
 export class NavigationComponent implements OnInit {
   urlprofileimg!:String;
@@ -27,7 +27,6 @@ export class NavigationComponent implements OnInit {
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
-  public config: PerfectScrollbarConfigInterface = {};
 
   public showSearch = false;
   employe: Employee = new Employee();

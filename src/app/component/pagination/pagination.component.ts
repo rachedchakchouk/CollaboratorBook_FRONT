@@ -1,7 +1,7 @@
 import { Validators } from "@angular/forms";
-import { FormControl } from "@angular/forms";
-import { FormGroup } from "@angular/forms";
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { EmployeeService } from "./../../services/RH/employee.service";
 import { LeaveService } from "./../../services/RH/leave.service";
@@ -10,10 +10,11 @@ import { Component, OnInit } from "@angular/core";
 import { REFUSED } from "dns";
 
 @Component({
-  selector: "app-ngbd-pagination",
-  templateUrl: "./pagination.component.html",
-  styleUrls: ["./paginator.scss"],
-  providers: [MessageService, ConfirmationService],
+    selector: "app-ngbd-pagination",
+    templateUrl: "./pagination.component.html",
+    styleUrls: ["./paginator.scss"],
+    providers: [MessageService, ConfirmationService],
+    standalone: false
 })
 export class NgbdpaginationBasicComponent implements OnInit {
   newLeaveDialg!: Boolean;
@@ -21,12 +22,12 @@ export class NgbdpaginationBasicComponent implements OnInit {
   leaves: Holday[] = [];
   selectedLeaves: Holday[] = [];
   submitted!: Boolean;
-  leaveForm!: FormGroup;
+  leaveForm!: UntypedFormGroup;
   duration!: String[];
   constructor(
     private leaveService: LeaveService,
     private employeeService: EmployeeService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
@@ -47,8 +48,8 @@ export class NgbdpaginationBasicComponent implements OnInit {
     this.newLeaveDialg = true;
     this.duration = ["HALF_DAY", "ONE_DAY", "TWO_DAYS", "THREE_DAYS"];
     this.leaveForm = this.fb.group({
-      startDate: new FormControl("", Validators.required),
-      typeLeave: new FormControl("", Validators.required),
+      startDate: new UntypedFormControl("", Validators.required),
+      typeLeave: new UntypedFormControl("", Validators.required),
     });
   }
   onChangeLeaveDurattion(event: any) {

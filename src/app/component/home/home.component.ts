@@ -1,14 +1,13 @@
 import { Comment } from "./../../../models/comment";
 import { CommentService } from "./../../services/RH/comment.service";
 import { Employee } from "./../../../models/employee";
-import { element } from "protractor";
 import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { DialogService } from "primeng/dynamicdialog";
 import { Validators } from "@angular/forms";
-import { FormControl } from "@angular/forms";
-import { FormBuilder } from "@angular/forms";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { Post } from "./../../../models/post";
 import { Document } from "./../../../models/document";
 import { DocumentService } from "./../../services/RH/document.service";
@@ -17,16 +16,17 @@ import { EmployeeService } from "./../../services/RH/employee.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
-  providers: [DialogService, MessageService, ConfirmationService],
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.scss"],
+    providers: [DialogService, MessageService, ConfirmationService],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   uploadedImg!: File;
-  postForm!: FormGroup;
-  commentForm!: FormGroup;
-  docForm!: FormGroup;
+  postForm!: UntypedFormGroup;
+  commentForm!: UntypedFormGroup;
+  docForm!: UntypedFormGroup;
   urlprofileimg!: String;
   profilimg!: Document;
   posts!: Post[];
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
     private employeeService: EmployeeService,
     private postService: PostService,
     private documentService: DocumentService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private commentService: CommentService
   ) {}
 
@@ -113,15 +113,15 @@ export class HomeComponent implements OnInit {
         });
       });
     this.postForm = this.fb.group({
-      text: new FormControl("", Validators.required),
-      photo: new FormControl("", Validators.required),
+      text: new UntypedFormControl("", Validators.required),
+      photo: new UntypedFormControl("", Validators.required),
     });
     this.commentForm = this.fb.group({
-      text: new FormControl("", Validators.required),
+      text: new UntypedFormControl("", Validators.required),
     });
     this.docForm = this.fb.group({
-      id: new FormControl("", Validators.required),
-      docType: new FormControl("POST_IMG", Validators.required),
+      id: new UntypedFormControl("", Validators.required),
+      docType: new UntypedFormControl("POST_IMG", Validators.required),
     });
   }
   addnewPost() {

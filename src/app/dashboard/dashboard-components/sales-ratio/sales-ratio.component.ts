@@ -30,8 +30,9 @@ export type salesChartOptions = {
 };
 
 @Component({
-  selector: 'app-sales-ratio',
-  templateUrl: './sales-ratio.component.html'
+    selector: 'app-sales-ratio',
+    templateUrl: './sales-ratio.component.html',
+    standalone: false
 })
 export class SalesRatioComponent implements OnInit {
 
